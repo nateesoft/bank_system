@@ -26,7 +26,7 @@ public class CbProjectControl extends BaseControl {
             rs.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-            e.printStackTrace();
+            
         }
 
         return listBean;
@@ -45,7 +45,7 @@ public class CbProjectControl extends BaseControl {
             rs.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-            e.printStackTrace();
+            
         }
 
         return bean;
@@ -67,7 +67,7 @@ public class CbProjectControl extends BaseControl {
             return true;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-            e.printStackTrace();
+            
             return false;
         }
     }
@@ -82,7 +82,7 @@ public class CbProjectControl extends BaseControl {
             return true;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-            e.printStackTrace();
+            
             return false;
         }
     }

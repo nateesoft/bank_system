@@ -163,7 +163,7 @@ public class ListWithdrawConfirmDialog extends BaseDialogSwing {
                     }
                 }
             } catch (Exception ex) {
-                ex.printStackTrace();
+                
             }
 
             //print passbook

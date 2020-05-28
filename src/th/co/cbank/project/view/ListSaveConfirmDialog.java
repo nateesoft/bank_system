@@ -164,7 +164,7 @@ public class ListSaveConfirmDialog extends BaseDialogSwing {
                     }
                 }
             } catch (Exception ex) {
-                ex.printStackTrace();
+                
             }
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());

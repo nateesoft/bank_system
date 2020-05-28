@@ -27,7 +27,7 @@ public class ModelControl extends BaseControl {
             }
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
 
         return list;

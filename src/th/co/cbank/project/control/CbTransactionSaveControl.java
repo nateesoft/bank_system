@@ -54,7 +54,7 @@ public class CbTransactionSaveControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
     }
@@ -68,7 +68,7 @@ public class CbTransactionSaveControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
     }
@@ -80,7 +80,7 @@ public class CbTransactionSaveControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
     }
@@ -95,7 +95,7 @@ public class CbTransactionSaveControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
     }
@@ -111,7 +111,7 @@ public class CbTransactionSaveControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
     }
@@ -128,7 +128,7 @@ public class CbTransactionSaveControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
     }
@@ -144,7 +144,7 @@ public class CbTransactionSaveControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
     }
@@ -160,7 +160,7 @@ public class CbTransactionSaveControl extends BaseControl {
             }
             return listBean.get(0);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return null;
         }
     }
@@ -175,7 +175,7 @@ public class CbTransactionSaveControl extends BaseControl {
             }
             return listBean.get(0);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return null;
         }
     }
@@ -221,7 +221,7 @@ public class CbTransactionSaveControl extends BaseControl {
             update(sql);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return false;
         }
     }
@@ -242,7 +242,7 @@ public class CbTransactionSaveControl extends BaseControl {
 
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
 
         if (LineMax == 0) {
@@ -265,7 +265,7 @@ public class CbTransactionSaveControl extends BaseControl {
 
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
 
         if (LineMax == 0) {
@@ -284,7 +284,7 @@ public class CbTransactionSaveControl extends BaseControl {
                     + "and t_date='" + t_date + "'";
             update(sql);
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 
@@ -297,7 +297,7 @@ public class CbTransactionSaveControl extends BaseControl {
                     + "and t_date='" + t_date + "'";
             update(sql);
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 
@@ -309,7 +309,7 @@ public class CbTransactionSaveControl extends BaseControl {
                     + "and t_booktype='INT'";
             update(sql1);
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 

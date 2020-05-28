@@ -47,7 +47,7 @@ public class AddressControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
     }
@@ -64,7 +64,7 @@ public class AddressControl extends BaseControl {
                 return listBean.get(0);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return null;
         }
     }
@@ -94,7 +94,7 @@ public class AddressControl extends BaseControl {
 
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 
@@ -123,7 +123,7 @@ public class AddressControl extends BaseControl {
                     + "and addr_type='" + bean.getAddr_type() + "'";
             update(sql);
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 

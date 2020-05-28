@@ -435,7 +435,7 @@ public class TransactionAdvanceDialog extends BaseDialogSwing{
 
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
             JOptionPane.showMessageDialog(this, e.getMessage());
             clearForm();
         }
@@ -540,7 +540,7 @@ public class TransactionAdvanceDialog extends BaseDialogSwing{
                             MySQLConnect.exeUpdate(sql);
                         } catch (Exception e) {
                             JOptionPane.showMessageDialog(this, e.getMessage());
-                            e.printStackTrace();
+                            
                         }
                     }
 
@@ -719,7 +719,7 @@ public class TransactionAdvanceDialog extends BaseDialogSwing{
             MySQLConnect.exeUpdate(sql);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
-            e.printStackTrace();
+            
         }
 
         //update cb_profile
@@ -740,13 +740,13 @@ public class TransactionAdvanceDialog extends BaseDialogSwing{
                 MySQLConnect.exeUpdate(sql1);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
-                e.printStackTrace();
+                
             }
 
             rs.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
-            e.printStackTrace();
+            
         }
     }
 

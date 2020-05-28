@@ -3469,7 +3469,7 @@ public class SavingDialog extends BaseDialogSwing {
             return true;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error MySQL !", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
+            
         }
 
         return false;

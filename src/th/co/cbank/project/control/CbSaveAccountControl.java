@@ -62,7 +62,7 @@ public class CbSaveAccountControl extends BaseControl {
             ArrayList<CbSaveAccountBean> listBean = mappingBean(rs);
             return listBean;
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
 
@@ -78,7 +78,7 @@ public class CbSaveAccountControl extends BaseControl {
             ArrayList<CbSaveAccountBean> listBean = mappingBean(rs);
             return listBean;
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
 
@@ -92,7 +92,7 @@ public class CbSaveAccountControl extends BaseControl {
 
             return listBean;
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
 
@@ -119,7 +119,7 @@ public class CbSaveAccountControl extends BaseControl {
             }
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
 
         return listBean;
@@ -163,7 +163,7 @@ public class CbSaveAccountControl extends BaseControl {
             }
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
 
         return listBean;
@@ -180,7 +180,7 @@ public class CbSaveAccountControl extends BaseControl {
 
             return listBean.get(0);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return null;
         }
 
@@ -200,7 +200,7 @@ public class CbSaveAccountControl extends BaseControl {
 
             return listBean.get(0);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return null;
         }
 
@@ -248,7 +248,7 @@ public class CbSaveAccountControl extends BaseControl {
             rs.close();
             isSave = true;
         } catch (Exception e) {
-            e.printStackTrace();
+            
             isSave = false;
         }
 
@@ -289,7 +289,7 @@ public class CbSaveAccountControl extends BaseControl {
             update(sql2);
             isSave = true;
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
 
         return isSave;
@@ -524,7 +524,7 @@ public class CbSaveAccountControl extends BaseControl {
             }
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 
@@ -544,7 +544,7 @@ public class CbSaveAccountControl extends BaseControl {
             }
             rs1.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
 
         return totalAmount;
@@ -595,7 +595,7 @@ public class CbSaveAccountControl extends BaseControl {
 
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 
@@ -620,7 +620,7 @@ public class CbSaveAccountControl extends BaseControl {
 
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 
@@ -640,7 +640,7 @@ public class CbSaveAccountControl extends BaseControl {
 
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
 
         //อัพเดตยอดเงินแต่ละบัญชี            
@@ -662,13 +662,13 @@ public class CbSaveAccountControl extends BaseControl {
                             + "and account_code='" + accCode + "'";
                     update(sql2);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    
                 }
             }
 
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
 
         //update ความเคลื่อนไหว
@@ -702,14 +702,14 @@ public class CbSaveAccountControl extends BaseControl {
                             + "and t_index='" + rs.getString("t_index") + "'";
                     update(sqlUpd);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    
                 }
             }
 
             //JOptionPane.showMessageDialog(null, "ปรับข้อมูลให้ถูกต้องเรียบร้อยแล้ว");
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
 
         //update ข้อมูลรวมเงินฝากทุกบัญชี
@@ -725,12 +725,12 @@ public class CbSaveAccountControl extends BaseControl {
                             + "where p_custcode='" + rs.getString("b_cust_code") + "'";
                     update(sql1);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    
                 }
             }
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 
@@ -747,7 +747,7 @@ public class CbSaveAccountControl extends BaseControl {
                     + "and t_docno='" + t_docno + "'";
             update(sqlUpd);
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 
@@ -763,7 +763,7 @@ public class CbSaveAccountControl extends BaseControl {
                     + "and account_code='" + t_acccode + "' ";
             update(sqlUpd);
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 
@@ -1338,7 +1338,7 @@ public class CbSaveAccountControl extends BaseControl {
             }
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
 
         return listData;

@@ -35,7 +35,7 @@ public class ProfileControl extends BaseControl {
 
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
 
         return data.split(",");
@@ -52,7 +52,7 @@ public class ProfileControl extends BaseControl {
 
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
 
         }
 
@@ -96,27 +96,27 @@ public class ProfileControl extends BaseControl {
             try {
                 bean.setCard_Expire(DateUtil.toDate(rs.getDate("Card_Expire")));
             } catch (SQLException e) {
-                e.printStackTrace();
+                
             }
             try {
                 bean.setP_custBirthDay(rs.getDate("P_custBirthDay"));
             } catch (SQLException e) {
-                e.printStackTrace();
+                
             }
             try {
                 bean.setP_member_start(rs.getDate("P_member_start"));
             } catch (SQLException e) {
-                e.printStackTrace();
+                
             }
             try {
                 bean.setP_member_end(rs.getDate("P_member_end"));
             } catch (SQLException e) {
-                e.printStackTrace();
+                
             }
             try {
                 bean.setDowInCar_Target_Date(rs.getDate("Dow_Incar_Date"));
             } catch (SQLException e) {
-                e.printStackTrace();
+                
             }
 
             listBean.add(bean);
@@ -164,27 +164,27 @@ public class ProfileControl extends BaseControl {
             try {
                 bean.setCard_Expire(DateUtil.toDate(rs.getDate("Card_Expire")));
             } catch (SQLException e) {
-                e.printStackTrace();
+                
             }
             try {
                 bean.setP_custBirthDay(rs.getDate("P_custBirthDay"));
             } catch (SQLException e) {
-                e.printStackTrace();
+                
             }
             try {
                 bean.setP_member_start(rs.getDate("P_member_start"));
             } catch (SQLException e) {
-                e.printStackTrace();
+                
             }
             try {
                 bean.setP_member_end(rs.getDate("P_member_end"));
             } catch (SQLException e) {
-                e.printStackTrace();
+                
             }
             try {
                 bean.setDowInCar_Target_Date(rs.getDate("Dow_Incar_Date"));
             } catch (SQLException e) {
-                e.printStackTrace();
+                
             }
 
             pm.setProfileBean(bean);
@@ -212,7 +212,7 @@ public class ProfileControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
     }
@@ -223,7 +223,7 @@ public class ProfileControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean2(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
 
         return listBean;
@@ -240,7 +240,7 @@ public class ProfileControl extends BaseControl {
 
             return listProfile.get(0);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return null;
         }
     }
@@ -282,7 +282,7 @@ public class ProfileControl extends BaseControl {
             rs.close();
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            
 
         }
 
@@ -320,7 +320,7 @@ public class ProfileControl extends BaseControl {
                     + "where p_custCode='" + bean.getP_custCode() + "'";
             update(sql);
         } catch (Exception e) {
-            e.printStackTrace();
+            
 
         }
     }
@@ -336,7 +336,7 @@ public class ProfileControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList<>();
         }
     }
@@ -380,7 +380,7 @@ public class ProfileControl extends BaseControl {
 
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
 
         }
     }
@@ -400,7 +400,7 @@ public class ProfileControl extends BaseControl {
 
             return "" + max;
         } catch (Exception e) {
-            e.printStackTrace();
+            
 
         }
 
@@ -417,7 +417,7 @@ public class ProfileControl extends BaseControl {
             }
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
 
         return pMax;
@@ -459,7 +459,7 @@ public class ProfileControl extends BaseControl {
             }
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
 
         return hoonQty;
@@ -471,7 +471,7 @@ public class ProfileControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList<>();
         }
     }

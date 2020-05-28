@@ -116,7 +116,7 @@ public class RegisterDialog extends BaseDialogSwing {
                     System.err.println(e.getMessage());
                 }
             } catch (Exception ex) {
-                ex.printStackTrace();
+                
             }
 
             dispose();
@@ -126,7 +126,7 @@ public class RegisterDialog extends BaseDialogSwing {
                 f.createNewFile();
                 dispose();
             } catch (IOException ex) {
-                ex.printStackTrace();
+                
             }
         }
     }

@@ -32,7 +32,7 @@ public class CbWithdrawAllowControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
     }
@@ -43,7 +43,7 @@ public class CbWithdrawAllowControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
     }
@@ -58,7 +58,7 @@ public class CbWithdrawAllowControl extends BaseControl {
             }
             return listBean.get(0);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return null;
         }
     }
@@ -85,7 +85,7 @@ public class CbWithdrawAllowControl extends BaseControl {
 
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 
@@ -102,7 +102,7 @@ public class CbWithdrawAllowControl extends BaseControl {
                     + "cust_code='" + bean.getCust_code() + "'";
             update(sql);
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 
@@ -116,7 +116,7 @@ public class CbWithdrawAllowControl extends BaseControl {
                 maxIndex = rs.getInt("_index");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
 
         if (maxIndex < 1) {

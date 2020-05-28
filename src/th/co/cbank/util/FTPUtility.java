@@ -95,7 +95,7 @@ public class FTPUtility {
             return success;
 
         } catch (IOException e) {
-            e.printStackTrace();
+            
             return false;
         }
     }
@@ -154,14 +154,12 @@ public class FTPUtility {
                     try {
                         bis.close();
                     } catch (IOException ioe) {
-                        ioe.printStackTrace();
                     }
                 }
                 if (bos != null) {
                     try {
                         bos.close();
                     } catch (IOException ioe) {
-                        ioe.printStackTrace();
                     }
                 }
             }
@@ -195,12 +193,12 @@ public class FTPUtility {
                 return false;
             }
         } catch (NoRouteToHostException e) {
-            e.printStackTrace();
+            
             if (ftp.isConnected()) {
                 try {
                     ftp.disconnect();
                 } catch (IOException f) {
-                    e.printStackTrace();
+                    
                 }
             }
 //            JOptionPane.showMessageDialog(frame, "ไม่พบ FTP Server : " + server);
@@ -210,29 +208,29 @@ public class FTPUtility {
                 try {
                     ftp.disconnect();
                 } catch (IOException f) {
-                    e.printStackTrace();
+                    
                 }
             }
 //            JOptionPane.showMessageDialog(frame, "ไมรู้จัก FTP Server : " + server);
             return false;
         } catch (ConnectException e) {
-            e.printStackTrace();
+            
             if (ftp.isConnected()) {
                 try {
                     ftp.disconnect();
                 } catch (IOException f) {
-                    e.printStackTrace();
+                    
                 }
             }
 //            JOptionPane.showMessageDialog(null, e.getMessage() + " ConnectException..");
             return false;
         } catch (SocketException e) {
-            e.printStackTrace();
+            
             if (ftp.isConnected()) {
                 try {
                     ftp.disconnect();
                 } catch (IOException f) {
-                    e.printStackTrace();
+                    
 //                    JOptionPane.showMessageDialog(null, f.getMessage() + " SocketException..");
                 }
             }
@@ -240,13 +238,13 @@ public class FTPUtility {
 //                    + "การเชื่อมต่ออินเตอร์เน็ต หรือ ระบบเน็ตเวิค ของท่าน!!!");
             return false;
         } catch (IOException e) {
-            e.printStackTrace();
+            
 //            JOptionPane.showMessageDialog(null, e.getMessage() + " IOException..");
             if (ftp.isConnected()) {
                 try {
                     ftp.disconnect();
                 } catch (IOException f) {
-                    e.printStackTrace();
+                    
                 }
             }
 //            JOptionPane.showMessageDialog(frame, "เกิดปัญหาการเชื่อมต่อ กรุณาตรวจเช็ค! \n"
@@ -266,7 +264,7 @@ public class FTPUtility {
             }
 
         } catch (HeadlessException | IOException e) {
-            e.printStackTrace();
+            
             return false;
         }
         return true;
@@ -284,7 +282,7 @@ public class FTPUtility {
                 this.port = "21";
                 return true;
             } catch (IOException ex) {
-                ex.printStackTrace();
+                
             }
         }
 

@@ -89,7 +89,7 @@ public class ViewReport extends BaseControl {
                     rs2.close();
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, e.getMessage());
-                    e.printStackTrace();
+                    
                 }
 
                 JasperReport jasperReport = (JasperReport) JRLoader.loadObject(getClass().getResource(AppConstants.JASPER_BUY_HOON_REPORT));
@@ -107,7 +107,7 @@ public class ViewReport extends BaseControl {
             rs.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-            e.printStackTrace();
+            
         }
     }
 
@@ -160,7 +160,7 @@ public class ViewReport extends BaseControl {
                     rs2.close();
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, e.getMessage());
-                    e.printStackTrace();
+                    
                 }
 
                 JasperReport jasperReport = (JasperReport) JRLoader.loadObject(getClass().getResource(AppConstants.JASPER_SELL_HOON_REPORT));
@@ -229,7 +229,7 @@ public class ViewReport extends BaseControl {
                     rs2.close();
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, e.getMessage());
-                    e.printStackTrace();
+                    
                 }
 
                 JasperReport jasperReport = (JasperReport) JRLoader.loadObject(getClass().getResource(AppConstants.JASPER_TRANSFER_HOON_REPORT));

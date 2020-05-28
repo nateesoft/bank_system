@@ -9,7 +9,7 @@ public class BaseControl {
         try {
             return MySQLConnect.exeUpdate(sql);
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
 
         return -1;

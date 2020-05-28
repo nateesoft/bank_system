@@ -68,7 +68,7 @@ public class PassBook_PSiPR9 {
                 JasperPrintManager.printReport(jasperPrint, false);
             } catch (JRException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage());
-                e.printStackTrace();
+                
             }
         }
 
@@ -123,7 +123,7 @@ public class PassBook_PSiPR9 {
                 JasperPrintManager.printReport(jasperPrint, false);
             } catch (JRException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage());
-                e.printStackTrace();
+                
             }
         }
         return param;
@@ -275,7 +275,7 @@ public class PassBook_PSiPR9 {
             JasperPrintManager.printReport(jasperPrint, true);
         } catch (JRException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-            e.printStackTrace();
+            
         }
     }
 
@@ -294,7 +294,7 @@ public class PassBook_PSiPR9 {
             JasperPrintManager.printReport(jasperPrint, true);
         } catch (JRException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-            e.printStackTrace();
+            
         }
     }
 
@@ -315,7 +315,7 @@ public class PassBook_PSiPR9 {
             JasperPrintManager.printReport(jasperPrint, false);
         } catch (JRException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-            e.printStackTrace();
+            
         }
     }
 
@@ -327,7 +327,7 @@ public class PassBook_PSiPR9 {
             JasperPrintManager.printReport(jasperPrint, false);
         } catch (JRException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-            e.printStackTrace();
+            
         }
     }
 
@@ -353,7 +353,7 @@ public class PassBook_PSiPR9 {
             JasperPrintManager.printReport(jasperPrint, true);
         } catch (JRException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-            e.printStackTrace();
+            
         }
     }
 

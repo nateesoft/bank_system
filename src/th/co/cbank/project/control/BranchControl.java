@@ -110,7 +110,7 @@ public class BranchControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
     }

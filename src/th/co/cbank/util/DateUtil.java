@@ -147,7 +147,7 @@ public class DateUtil {
 
             return c.getTime();
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return null;
         }
     }

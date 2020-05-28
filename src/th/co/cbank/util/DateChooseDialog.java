@@ -518,7 +518,7 @@ private void cbMonthKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_c
                 System.out.println(selectedDate.getTime());
                 dispose();
             } catch (NumberFormatException e) {
-                e.printStackTrace();
+                
                 selectedDate = null;
             }
 

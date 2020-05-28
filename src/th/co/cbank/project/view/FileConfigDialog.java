@@ -714,7 +714,7 @@ public class FileConfigDialog extends BaseDialogSwing {
                 ftp_list_dir.append("Closed Connection.\n");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            
         }
     }
 }

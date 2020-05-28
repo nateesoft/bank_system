@@ -27,7 +27,7 @@ public class CbFeeControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
     }
@@ -38,7 +38,7 @@ public class CbFeeControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
     }
@@ -53,7 +53,7 @@ public class CbFeeControl extends BaseControl {
             }
             return listBean.get(0);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return null;
         }
     }
@@ -73,7 +73,7 @@ public class CbFeeControl extends BaseControl {
 
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 
@@ -85,7 +85,7 @@ public class CbFeeControl extends BaseControl {
                     + "where exp_id='" + bean.getExp_id() + "'";
             update(sql);
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 
@@ -95,7 +95,7 @@ public class CbFeeControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
     }
@@ -110,7 +110,7 @@ public class CbFeeControl extends BaseControl {
             }
             return listBean.get(0);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return null;
         }
     }
@@ -130,7 +130,7 @@ public class CbFeeControl extends BaseControl {
             rs.close();
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return false;
         }
     }
@@ -144,7 +144,7 @@ public class CbFeeControl extends BaseControl {
             update(sql);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return false;
         }
     }

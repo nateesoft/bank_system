@@ -31,7 +31,7 @@ public class CbCancelAccountControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
     }
@@ -43,7 +43,7 @@ public class CbCancelAccountControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
     }
@@ -58,7 +58,7 @@ public class CbCancelAccountControl extends BaseControl {
             }
             return listBean.get(0);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return null;
         }
     }
@@ -81,7 +81,7 @@ public class CbCancelAccountControl extends BaseControl {
 
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 
@@ -96,7 +96,7 @@ public class CbCancelAccountControl extends BaseControl {
                     + "where date_cancel='" + bean.getDate_cancel() + "'";
             update(sql);
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 }

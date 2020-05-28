@@ -292,7 +292,7 @@ public class EditProfileDialog extends BaseDialogSwing {
 
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 
@@ -317,7 +317,7 @@ public class EditProfileDialog extends BaseDialogSwing {
 
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 }

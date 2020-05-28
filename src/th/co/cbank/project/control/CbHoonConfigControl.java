@@ -32,7 +32,7 @@ public class CbHoonConfigControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
     }
@@ -48,7 +48,7 @@ public class CbHoonConfigControl extends BaseControl {
             }
             return listBean.get(0);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return null;
         }
     }
@@ -76,7 +76,7 @@ public class CbHoonConfigControl extends BaseControl {
 
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
 
         return isSave;
@@ -95,7 +95,7 @@ public class CbHoonConfigControl extends BaseControl {
             update(sql);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return false;
         }
     }
@@ -107,7 +107,7 @@ public class CbHoonConfigControl extends BaseControl {
             update(sql);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return false;
         }
     }

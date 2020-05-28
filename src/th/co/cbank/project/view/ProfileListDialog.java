@@ -376,7 +376,7 @@ public class ProfileListDialog extends BaseDialogSwing {
             excel.write((DefaultTableModel) jTable1.getModel(), "Report-1", new int[]{7,9,10});
             Desktop.getDesktop().open(new File("test.xls"));
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -508,14 +508,14 @@ public class ProfileListDialog extends BaseDialogSwing {
                     MySQLConnect.exeUpdate(sql2);
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, e.getMessage());
-                    e.printStackTrace();
+                    
                 }
             }
 
             rs.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
-            e.printStackTrace();
+            
         }
     }
 }

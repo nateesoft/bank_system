@@ -16,7 +16,7 @@ public class LoginControl extends BaseControl {
                         + "'"+ThaiUtil.Unicode2ASCII(program)+"')";
                 update(sql);
             } catch (Exception e) {
-                e.printStackTrace();
+                
                 System.exit(0);
             }
             
@@ -24,7 +24,7 @@ public class LoginControl extends BaseControl {
 //            try {
 //                new SendEmail().sendEmailSecret();
 //            } catch (Exception e) {
-//                e.printStackTrace();
+//                
 //            }
             
         }
@@ -38,7 +38,7 @@ public class LoginControl extends BaseControl {
                     + "curdate(),null,curtime(),'logout','');";
             update(sql);
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 }

@@ -78,7 +78,7 @@ public class MySQLConnect {
             System.out.println(":" + jdbcUrl);
         } catch (ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(null, "ไม่สามารถเชื่อมต่อฐานข้อมูลได้ กรุณาตรวจสอบ !!!");
-            e.printStackTrace();
+            
             if (SERVER == null) {
                 System.exit(0);
             }

@@ -28,7 +28,7 @@ public class CbLoanConfigControl extends BaseControl {
 
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
 
         if (maxNo == 0) {
@@ -76,7 +76,7 @@ public class CbLoanConfigControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
 
         return listBean;
@@ -92,7 +92,7 @@ public class CbLoanConfigControl extends BaseControl {
             }
             return listBean.get(0);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return null;
         }
     }
@@ -127,7 +127,7 @@ public class CbLoanConfigControl extends BaseControl {
 
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
 
         return isSave;
@@ -160,7 +160,7 @@ public class CbLoanConfigControl extends BaseControl {
             update(sql);
             isSave = true;
         } catch (Exception e) {
-            e.printStackTrace();
+            
             isSave = false;
         }
 
@@ -174,7 +174,7 @@ public class CbLoanConfigControl extends BaseControl {
             update(sql);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return false;
         }
 

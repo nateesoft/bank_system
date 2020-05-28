@@ -30,7 +30,7 @@ public class CbMemberTypeControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
     }
@@ -45,7 +45,7 @@ public class CbMemberTypeControl extends BaseControl {
             }
             return listBean.get(0);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return null;
         }
     }
@@ -66,7 +66,7 @@ public class CbMemberTypeControl extends BaseControl {
             return true;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-            e.printStackTrace();
+            
             return false;
         }
     }
@@ -81,7 +81,7 @@ public class CbMemberTypeControl extends BaseControl {
             return true;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-            e.printStackTrace();
+            
             return false;
         }
     }

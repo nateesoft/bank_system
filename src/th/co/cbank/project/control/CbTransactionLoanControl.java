@@ -61,7 +61,7 @@ public class CbTransactionLoanControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
     }
@@ -75,7 +75,7 @@ public class CbTransactionLoanControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
     }
@@ -88,7 +88,7 @@ public class CbTransactionLoanControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
     }
@@ -102,7 +102,7 @@ public class CbTransactionLoanControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
     }
@@ -119,7 +119,7 @@ public class CbTransactionLoanControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
     }
@@ -134,7 +134,7 @@ public class CbTransactionLoanControl extends BaseControl {
             }
             return listBean.get(0);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return null;
         }
     }
@@ -182,7 +182,7 @@ public class CbTransactionLoanControl extends BaseControl {
             rs.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-            e.printStackTrace();
+            
         }
 
         if (LineMax == 0) {
@@ -206,7 +206,7 @@ public class CbTransactionLoanControl extends BaseControl {
             rs.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-            e.printStackTrace();
+            
         }
 
         if (LineMax == 0) {
@@ -225,7 +225,7 @@ public class CbTransactionLoanControl extends BaseControl {
             update(sql);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-            e.printStackTrace();
+            
         }
     }
 }

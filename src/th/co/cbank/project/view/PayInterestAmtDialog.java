@@ -242,7 +242,7 @@ public class PayInterestAmtDialog extends BaseDialogSwing {
             excel.write((DefaultTableModel) tbData.getModel(), "Report-3", new int[]{3, 4});
             Desktop.getDesktop().open(new File("Pay Interest.xls"));
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 

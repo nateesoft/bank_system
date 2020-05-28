@@ -208,7 +208,7 @@ public class LoadExcelAccountLoanDialog extends BaseDialogSwing {
                             process();
                             btnLoad.setEnabled(true);
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            
                         }
                     }
                 }).start();
@@ -496,7 +496,7 @@ public class LoadExcelAccountLoanDialog extends BaseDialogSwing {
             }
             br.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 

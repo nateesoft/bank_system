@@ -7554,7 +7554,7 @@ public class MainDialog extends BaseSwing {
             try {
                 fExit.createNewFile();
             } catch (IOException ex) {
-                ex.printStackTrace();
+                
             }
         }
 
@@ -9001,7 +9001,7 @@ public class MainDialog extends BaseSwing {
                 txtWithdrawalBaht.requestFocus();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
 
@@ -9100,7 +9100,7 @@ public class MainDialog extends BaseSwing {
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException ex) {
-                        ex.printStackTrace();
+                        
                     }
 
                     btnTimeShow.setText(sTime.format(new Date()));
@@ -9224,7 +9224,7 @@ public class MainDialog extends BaseSwing {
             resetBuyHoon();
             jTabbedPane5.setSelectedIndex(0);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
@@ -9283,7 +9283,7 @@ public class MainDialog extends BaseSwing {
             resetSaleHoon();
             jTabbedPane5.setSelectedIndex(1);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
@@ -9497,7 +9497,7 @@ public class MainDialog extends BaseSwing {
 
                 rs.close();
             } catch (Exception e) {
-                e.printStackTrace();
+                
                 JOptionPane.showMessageDialog(this, e.getMessage());
             }
         }
@@ -9528,7 +9528,7 @@ public class MainDialog extends BaseSwing {
                     rs.close();
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, e.getMessage());
-                    e.printStackTrace();
+                    
                 }
 
                 int dayCheckINT = DateUtil.getDayDiff(lastPaymentDate, new Date());
@@ -9662,7 +9662,7 @@ public class MainDialog extends BaseSwing {
         try {
             depositMoney();
         } catch (Exception e) {
-            e.printStackTrace();
+            
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
 
@@ -10186,7 +10186,7 @@ public class MainDialog extends BaseSwing {
                 loadSummary();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
 
@@ -10229,7 +10229,7 @@ public class MainDialog extends BaseSwing {
                 getProfileControl().update(sql3);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
 
         // อัพเดต Running
@@ -10323,7 +10323,7 @@ public class MainDialog extends BaseSwing {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
@@ -10572,7 +10572,7 @@ public class MainDialog extends BaseSwing {
                     + "and cust_code='" + txtProfileCode.getText() + "'";
             getLoanAccountControl().update(sql);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
 
@@ -10618,7 +10618,7 @@ public class MainDialog extends BaseSwing {
 
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
 
@@ -10857,7 +10857,7 @@ public class MainDialog extends BaseSwing {
                         try {
                             confirmPaymentEff();
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            
                             JOptionPane.showMessageDialog(this, e.getMessage());
                         }
 
@@ -10874,7 +10874,7 @@ public class MainDialog extends BaseSwing {
                     try {
                         confirmPaymentEff();
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        
                         JOptionPane.showMessageDialog(this, e.getMessage());
                     }
 
@@ -11077,7 +11077,7 @@ public class MainDialog extends BaseSwing {
             pc.printPaymentLoan(loanBean);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "พบปัญหาในการพิมพ์ข้อมูล !!!\n" + e.getMessage());
-            e.printStackTrace();
+            
         }
 
         txtPaymentDate.setText("");

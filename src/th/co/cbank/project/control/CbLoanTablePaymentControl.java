@@ -46,7 +46,7 @@ public class CbLoanTablePaymentControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
     }
@@ -59,7 +59,7 @@ public class CbLoanTablePaymentControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
     }
@@ -76,7 +76,7 @@ public class CbLoanTablePaymentControl extends BaseControl {
             }
             return listBean.get(0);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return null;
         }
     }
@@ -91,7 +91,7 @@ public class CbLoanTablePaymentControl extends BaseControl {
             }
             return listBean.get(0);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return null;
         }
     }
@@ -131,7 +131,7 @@ public class CbLoanTablePaymentControl extends BaseControl {
 
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 
@@ -159,7 +159,7 @@ public class CbLoanTablePaymentControl extends BaseControl {
                     + "and loan_index='" + bean.getLoan_index() + "'";
             update(sql);
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 
@@ -179,7 +179,7 @@ public class CbLoanTablePaymentControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return rs;
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
         return null;
     }

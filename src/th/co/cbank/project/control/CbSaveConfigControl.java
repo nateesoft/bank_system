@@ -96,7 +96,7 @@ public class CbSaveConfigControl extends BaseControl {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
             Log.write.error(e.getMessage());
-            e.printStackTrace();
+            
         }
 
         return bean;
@@ -147,7 +147,7 @@ public class CbSaveConfigControl extends BaseControl {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
             Log.write.error(e.getMessage());
-            e.printStackTrace();
+            
         }
 
         return bean;
@@ -192,7 +192,7 @@ public class CbSaveConfigControl extends BaseControl {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
             Log.write.error(e.getMessage());
-            e.printStackTrace();
+            
         }
 
         return bean;

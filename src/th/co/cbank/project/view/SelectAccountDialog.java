@@ -37,7 +37,7 @@ public class SelectAccountDialog extends BaseDialogSwing {
                 rs.close();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
-                e.printStackTrace();
+                
             }
 
             if (count == 1) {
@@ -65,7 +65,7 @@ public class SelectAccountDialog extends BaseDialogSwing {
                 rs.close();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
-                e.printStackTrace();
+                
             }
             
             if (count == 1) {

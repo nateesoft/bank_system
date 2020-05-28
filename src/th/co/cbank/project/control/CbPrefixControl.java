@@ -24,7 +24,7 @@ public class CbPrefixControl extends BaseControl {
             rs.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-            e.printStackTrace();
+            
         }
 
         return listBean;
@@ -43,7 +43,7 @@ public class CbPrefixControl extends BaseControl {
             rs.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-            e.printStackTrace();
+            
         }
 
         return bean;
@@ -65,7 +65,7 @@ public class CbPrefixControl extends BaseControl {
             return true;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-            e.printStackTrace();
+            
             return false;
         }
     }
@@ -80,7 +80,7 @@ public class CbPrefixControl extends BaseControl {
             return true;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-            e.printStackTrace();
+            
             return false;
         }
     }

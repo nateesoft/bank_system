@@ -31,7 +31,7 @@ public class DocumentGarunteeControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
     }
@@ -43,7 +43,7 @@ public class DocumentGarunteeControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
     }
@@ -58,7 +58,7 @@ public class DocumentGarunteeControl extends BaseControl {
             }
             return listBean.get(0);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return null;
         }
     }
@@ -81,7 +81,7 @@ public class DocumentGarunteeControl extends BaseControl {
 
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
 
         return result;
@@ -98,7 +98,7 @@ public class DocumentGarunteeControl extends BaseControl {
             update(sql);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
 
         return false;
@@ -109,7 +109,7 @@ public class DocumentGarunteeControl extends BaseControl {
             String sql = "delete from document_garuntee where doc_no='" + loanDocCode + "'";
             update(sql);
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 }

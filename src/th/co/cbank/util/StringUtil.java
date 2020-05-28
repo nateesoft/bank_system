@@ -135,7 +135,7 @@ public class StringUtil {
                 resultData = dc.format(num.doubleValue());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
         return resultData;
     }

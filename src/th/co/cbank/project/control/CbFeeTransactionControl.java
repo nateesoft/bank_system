@@ -35,7 +35,7 @@ public class CbFeeTransactionControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
     }
@@ -47,7 +47,7 @@ public class CbFeeTransactionControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return new ArrayList();
         }
     }
@@ -62,7 +62,7 @@ public class CbFeeTransactionControl extends BaseControl {
             }
             return listBean.get(0);
         } catch (Exception e) {
-            e.printStackTrace();
+            
             return null;
         }
     }
@@ -79,7 +79,7 @@ public class CbFeeTransactionControl extends BaseControl {
                     + "'" + bean.getFee_cust_code() + "', curdate(), curtime())";
             update(sql);
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 
@@ -97,7 +97,7 @@ public class CbFeeTransactionControl extends BaseControl {
                     + "where fee_code='" + bean.getFee_code() + "'";
             update(sql);
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 }

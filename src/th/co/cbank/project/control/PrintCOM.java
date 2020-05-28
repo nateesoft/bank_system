@@ -263,12 +263,12 @@ public final class PrintCOM extends BaseControl {
                     try {
                         serialPort = (SerialPort) portId.open("SimpleWriteApp", 2000);
                     } catch (PortInUseException e) {
-                        e.printStackTrace();
+                        
                     }
                     try {
                         outputStream = serialPort.getOutputStream();
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        
                     }
                     try {
                         serialPort.setSerialPortParams(9600,
@@ -276,7 +276,7 @@ public final class PrintCOM extends BaseControl {
                                 SerialPort.STOPBITS_1,
                                 SerialPort.PARITY_NONE);
                     } catch (UnsupportedCommOperationException e) {
-                        e.printStackTrace();
+                        
                     }
 
                     initPrinter();
@@ -299,7 +299,7 @@ public final class PrintCOM extends BaseControl {
                             serialPort.close();
                         }
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        
                     }
                 }
             }
@@ -324,13 +324,13 @@ public final class PrintCOM extends BaseControl {
                         try {
                             serialPort = (SerialPort) portId.open("SimpleWriteApp", 2000);
                         } catch (PortInUseException e) {
-                            e.printStackTrace();
+                            
                             return;
                         }
                         try {
                             outputStream = serialPort.getOutputStream();
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            
                             System.exit(0);
                         }
                         try {
@@ -339,7 +339,7 @@ public final class PrintCOM extends BaseControl {
                                     SerialPort.STOPBITS_1,
                                     SerialPort.PARITY_NONE);
                         } catch (UnsupportedCommOperationException e) {
-                            e.printStackTrace();
+                            
                         }
 
                         initPrinter();
@@ -362,7 +362,7 @@ public final class PrintCOM extends BaseControl {
                                 serialPort.close();
                             }
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            
                         }
                     }
                 }
@@ -556,12 +556,12 @@ public final class PrintCOM extends BaseControl {
                     try {
                         serialPort = (SerialPort) portId.open("SimpleWriteApp", 2000);
                     } catch (PortInUseException e) {
-                        e.printStackTrace();
+                        
                     }
                     try {
                         outputStream = serialPort.getOutputStream();
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        
                     }
                     try {
                         serialPort.setSerialPortParams(9600,
@@ -569,7 +569,7 @@ public final class PrintCOM extends BaseControl {
                                 SerialPort.STOPBITS_1,
                                 SerialPort.PARITY_NONE);
                     } catch (UnsupportedCommOperationException e) {
-                        e.printStackTrace();
+                        
                     }
 
                     initPrinter();
@@ -623,7 +623,7 @@ public final class PrintCOM extends BaseControl {
                             serialPort.close();
                         }
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        
                     }
                 }
             }
@@ -648,17 +648,17 @@ public final class PrintCOM extends BaseControl {
                     try {
                         serialPort = (SerialPort) portId.open("SimpleWriteApp", 2000);
                     } catch (PortInUseException e) {
-                        e.printStackTrace();
+                        
                     }
                     try {
                         outputStream = serialPort.getOutputStream();
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        
                     }
                     try {
                         serialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
                     } catch (UnsupportedCommOperationException e) {
-                        e.printStackTrace();
+                        
                     }
 
                     initPrinter();
@@ -713,7 +713,7 @@ public final class PrintCOM extends BaseControl {
                             serialPort.close();
                         }
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        
                     }
                 }
             }
@@ -779,17 +779,17 @@ public final class PrintCOM extends BaseControl {
                     try {
                         serialPort = (SerialPort) portId.open("SimpleWriteApp", 2000);
                     } catch (PortInUseException e) {
-                        e.printStackTrace();
+                        
                     }
                     try {
                         outputStream = serialPort.getOutputStream();
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        
                     }
                     try {
                         serialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
                     } catch (UnsupportedCommOperationException e) {
-                        e.printStackTrace();
+                        
                     }
 
                     initPrinter();
@@ -836,7 +836,7 @@ public final class PrintCOM extends BaseControl {
 
                         isPrint = true;
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        
 
                         isPrint = false;
                     }
@@ -910,17 +910,17 @@ public final class PrintCOM extends BaseControl {
                     try {
                         serialPort = (SerialPort) portId.open("SimpleWriteApp", 2000);
                     } catch (PortInUseException e) {
-                        e.printStackTrace();
+                        
                     }
                     try {
                         outputStream = serialPort.getOutputStream();
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        
                     }
                     try {
                         serialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
                     } catch (UnsupportedCommOperationException e) {
-                        e.printStackTrace();
+                        
                     }
 
                     initPrinter();
@@ -961,7 +961,7 @@ public final class PrintCOM extends BaseControl {
 
                         isPrint = true;
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        
 
                         isPrint = false;
                     }
@@ -1017,17 +1017,17 @@ public final class PrintCOM extends BaseControl {
                     try {
                         serialPort = (SerialPort) portId.open("SimpleWriteApp", 2000);
                     } catch (PortInUseException e) {
-                        e.printStackTrace();
+                        
                     }
                     try {
                         outputStream = serialPort.getOutputStream();
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        
                     }
                     try {
                         serialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
                     } catch (UnsupportedCommOperationException e) {
-                        e.printStackTrace();
+                        
                     }
 
                     initPrinter();
@@ -1068,7 +1068,7 @@ public final class PrintCOM extends BaseControl {
 
                         isPrint = true;
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        
 
                         isPrint = false;
                     }

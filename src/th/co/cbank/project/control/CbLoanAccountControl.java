@@ -60,7 +60,7 @@ public class CbLoanAccountControl extends BaseControl {
             }
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
 
         return listBean;
@@ -110,7 +110,7 @@ public class CbLoanAccountControl extends BaseControl {
             }
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
 
         return listBean;
@@ -137,7 +137,7 @@ public class CbLoanAccountControl extends BaseControl {
             }
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
 
         return listBean;
@@ -186,7 +186,7 @@ public class CbLoanAccountControl extends BaseControl {
 
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
 
         return bean;
@@ -238,7 +238,7 @@ public class CbLoanAccountControl extends BaseControl {
             }
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
             bean = null;
         }
 
@@ -297,7 +297,7 @@ public class CbLoanAccountControl extends BaseControl {
 
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
 
         return isSave;
@@ -331,7 +331,7 @@ public class CbLoanAccountControl extends BaseControl {
             }
             isSave = true;
         } catch (Exception e) {
-            e.printStackTrace();
+            
             isSave = false;
         }
 
@@ -374,7 +374,7 @@ public class CbLoanAccountControl extends BaseControl {
                     + "where loan_docno='" + bean.getLoan_docno() + "'";
             update(sql);
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
 
@@ -401,7 +401,7 @@ public class CbLoanAccountControl extends BaseControl {
             update(sql);
             isSaveReady = true;
         } catch (Exception e) {
-            e.printStackTrace();
+            
             isSaveReady = false;
         }
 
@@ -446,7 +446,7 @@ public class CbLoanAccountControl extends BaseControl {
                     + "where loan_docno='" + bean.getLoan_docno() + "'";
             update(sql);
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
     }
     
@@ -510,7 +510,7 @@ public class CbLoanAccountControl extends BaseControl {
             }
             rs.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            
         }
 
         return bean;
