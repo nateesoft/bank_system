@@ -49,6 +49,11 @@ public class PrintSavingBookDialog extends BaseDialogSwing {
         tbTransaction = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         btnPrint1 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("พิมพ์รายการฝากถอนย้อนหลัง");
@@ -135,14 +140,14 @@ public class PrintSavingBookDialog extends BaseDialogSwing {
 
             },
             new String [] {
-                "วันที่", "ประเภท", "ถอน", "ฝาก", "คงเหลือ", "หุ้น", "บรรทัด/แก้ไข", "สั่งพิมพ์", "เลขที่", "วันที่", "บรรทัดเดิม"
+                "วันที่", "ประเภท", "ถอน", "ฝาก", "คงเหลือ", "หุ้น", "บรรทัด/แก้ไข", "สั่งพิมพ์", "เลขที่", "วันที่", "บรรทัดเดิม", "ลำดับ"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true, true, false, false, false
+                false, false, false, false, false, false, true, true, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -165,6 +170,47 @@ public class PrintSavingBookDialog extends BaseDialogSwing {
                 btnPrint1ActionPerformed(evt);
             }
         });
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel5.setText("*** คำแนะนำ ***");
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel6.setText("1. ช่อง บรรทัด/แก้ไข => สามารถปรับแก้ได้ตั้งแต่ 1-24 เป็นลำดับต่อหน้าสมุด");
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel7.setText("2. ช่อง ลำดับ => สามารถปรับแก้ได้ เป็นเลขเรียงไปเรื่อยๆ");
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel8.setText("    ถ้าเกิน 24 ให้นับ 1 ใหม่ (เพราะเริ่มต้นหน้าใหม่)");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -189,7 +235,8 @@ public class PrintSavingBookDialog extends BaseDialogSwing {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnFind)
@@ -207,16 +254,19 @@ public class PrintSavingBookDialog extends BaseDialogSwing {
                     .addComponent(btnFind, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnPrint1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPrint1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -274,7 +324,7 @@ public class PrintSavingBookDialog extends BaseDialogSwing {
                         + "order by t_date, t_time, LineNo";
                 ResultSet rs = MySQLConnect.getResultSet(sql);
                 while (rs.next()) {
-                    Object[] p = new Object[11];
+                    Object[] p = new Object[12];
                     p[0] = simp.format(rs.getDate("t_date"));//01/05/58
                     p[1] = rs.getString("t_booktype");//DM
                     if (rs.getDouble("money_out") > 0) {
@@ -290,6 +340,7 @@ public class PrintSavingBookDialog extends BaseDialogSwing {
                     p[8] = rs.getString("t_docno");//เลขที่เอกสาร
                     p[9] = rs.getString("t_date");//เลขที่เอกสาร
                     p[10] = rs.getString("lineNo");//เลขที่เอกสาร
+                    p[11] = rs.getString("t_index");//ลำดับทั้งหมด
 
                     model.addRow(p);
                 }
@@ -325,7 +376,12 @@ public class PrintSavingBookDialog extends BaseDialogSwing {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JRadioButton rd1;
@@ -366,7 +422,7 @@ public class PrintSavingBookDialog extends BaseDialogSwing {
             ArrayList<CbTransactionSaveBean> listTran = getCbTransactionSaveControl().listCbTransactionSaveAllAddStatus11(txtAccCode.getText());
 
             if (listTran.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "ไม่พบรายงานความเคลื่อนไหว !");
+                JOptionPane.showMessageDialog(this, "ไม่พบรายงานความเคลื่อนไหว หรือไม่มีการเลือกบรรทัดที่ต้องพิมพ์ !");
             } else {
                 ArrayList<ReportGreenBean> listBean = new ArrayList<>();
                 ReportGreenBean bean1;
@@ -418,17 +474,6 @@ public class PrintSavingBookDialog extends BaseDialogSwing {
     private void saveStateTable() {
         DefaultTableModel model = (DefaultTableModel) tbTransaction.getModel();
         int size = model.getRowCount();
-
-        try {
-            String sql = "UPDATE cb_transaction_save "
-                    + "SET PrintChk= 'Y',"
-                    + "WHERE t_acccode='" + txtAccCode.getText() + "' "
-                    + "AND t_status in('2','3','8','11') ";
-            MySQLConnect.exeUpdate(sql);
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-
         for (int i = 0; i < size; i++) {
             boolean isCheck = Boolean.parseBoolean("" + tbTransaction.getValueAt(i, 7));
             int lineNo = Integer.parseInt("" + tbTransaction.getValueAt(i, 6));
@@ -436,15 +481,30 @@ public class PrintSavingBookDialog extends BaseDialogSwing {
             String t_docno = "" + tbTransaction.getValueAt(i, 8);
             String t_date = "" + tbTransaction.getValueAt(i, 9);
             int lineNoOld = Integer.parseInt("" + tbTransaction.getValueAt(i, 10));
+            int t_index = Integer.parseInt("" + tbTransaction.getValueAt(i, 11));
 
             if (isCheck) {
                 try {
                     String sql = "UPDATE cb_transaction_save "
                             + "SET PrintChk= 'N',"
-                            + "LineNo='" + lineNo + "' "
+                            + "LineNo='" + lineNo + "',"
+                            + "t_index='"+t_index+"' "
                             + "WHERE t_acccode='" + txtAccCode.getText() + "' "
                             + "AND LineNo='" + lineNoOld + "' "
-                            + "and t_status in('2','3','8','11') "
+                            + "AND t_docno='" + t_docno + "' "
+                            + "AND t_booktype='" + t_booktype + "' "
+                            + "AND t_date='" + t_date + "'";
+                    MySQLConnect.exeUpdate(sql);
+                } catch (Exception e) {
+                    System.err.println(e.getMessage());
+                }
+            } else {
+                try {
+                    String sql = "UPDATE cb_transaction_save "
+                            + "SET LineNo='" + lineNo + "', "
+                            + "t_index='"+t_index+"' "
+                            + "WHERE t_acccode='" + txtAccCode.getText() + "' "
+                            + "AND LineNo='" + lineNoOld + "' "
                             + "AND t_docno='" + t_docno + "' "
                             + "AND t_booktype='" + t_booktype + "' "
                             + "AND t_date='" + t_date + "'";
