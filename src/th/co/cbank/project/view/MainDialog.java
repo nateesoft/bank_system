@@ -672,7 +672,7 @@ public class MainDialog extends BaseSwing {
         jMenuItem37 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("ระบบบริหารธนาคารชุมชน V 1.0.6");
+        setTitle("ระบบบริหารธนาคารชุมชน V 1.0.6 05102020");
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -7308,21 +7308,9 @@ public class MainDialog extends BaseSwing {
     private void jMenuItem47ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem47ActionPerformed
         int conf = JOptionPane.showConfirmDialog(this, "กรุณายืนยันการอัพเดตโปรแกรม จาก Transaction ?");
         if (conf == JOptionPane.YES_OPTION) {
-            ArrayList<CbSaveAccountBean> listSaveAccount = getSaveAccountControl().listSaveAccount(" order by account_code ");
-            for (CbSaveAccountBean bean : listSaveAccount) {
-                String custCode = bean.getB_CUST_CODE();
-                String accCode = bean.getAccount_code();
-
-                getCbTransactionSaveControl().deleteData(custCode, accCode);
-
-                TransactionAdvanceDialog dialog = new TransactionAdvanceDialog(new javax.swing.JFrame(), true, custCode, accCode);
-                dialog.saveTransaction();
-            }
-
-            JOptionPane.showMessageDialog(this, "กระบวนการอัพเดตความเคลื่อนไหวเสร็จสมบูรณ์");
-
+            UpdateTransactionDialog updateDialog = new UpdateTransactionDialog(this, true);
+            updateDialog.setVisible(true);
             btnRegister.setText("เริ่มใหม่");
-
             //reset form
             btnRegister();
         }
@@ -7425,7 +7413,10 @@ public class MainDialog extends BaseSwing {
 
     private void btnTransactionSaveDialogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransactionSaveDialogActionPerformed
         if (!"".equals(txtAccCode.getText().trim()) && !"".equals(txtProfileCode.getText())) {
-            TransactionAdvanceDialog ta = new TransactionAdvanceDialog(this, true, txtProfileCode.getText(), txtAccCode.getText());
+            TransactionAdvanceDialog ta = new TransactionAdvanceDialog(this, true);
+            double balanceAmt = Double.parseDouble(txtBalance.getText().replace(",", ""));
+            double intAmt = Double.parseDouble(txtBalanceInterest.getText().replace(",", ""));
+            ta.initFormValues(txtProfileCode.getText(), txtAccCode.getText().trim(), balanceAmt, intAmt);
             ta.setVisible(true);
         }
     }//GEN-LAST:event_btnTransactionSaveDialogActionPerformed
@@ -8756,9 +8747,7 @@ public class MainDialog extends BaseSwing {
             getConfigControl().update(sql);
 
             JOptionPane.showMessageDialog(this, "บันทึกข้อมูลการฝากเงินเรียบร้อยแล้ว");
-            TransactionAdvanceDialog dialog = new TransactionAdvanceDialog(new javax.swing.JFrame(), true,
-                    txtProfileCode.getText(), txtAccCode.getText());
-            dialog.saveTransaction();
+            TransactionAdvanceMethod.saveTransaction(txtProfileCode.getText(), txtAccCode.getText(), tSave.getT_balance(), tSave.getT_interest());
 
             //load transaction
             loadTransactionPerson();
@@ -8970,9 +8959,7 @@ public class MainDialog extends BaseSwing {
                 getConfigControl().update(sql);
 
                 JOptionPane.showMessageDialog(this, "บันทึกข้อมูลการถอนเงินเรียบร้อยแล้ว");
-                TransactionAdvanceDialog dialog = new TransactionAdvanceDialog(new javax.swing.JFrame(), true,
-                        txtProfileCode.getText(), txtAccCode.getText());
-                dialog.saveTransaction();
+                TransactionAdvanceMethod.saveTransaction(txtProfileCode.getText(), txtAccCode.getText(), tSave.getT_balance(), tSave.getT_interest());
 
                 loadSummary();
 

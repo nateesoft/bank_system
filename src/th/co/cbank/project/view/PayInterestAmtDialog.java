@@ -249,7 +249,7 @@ public class PayInterestAmtDialog extends BaseDialogSwing {
     private void showDetail() {
         int row = tbData.getSelectedRow();
         if (row != -1) {
-            TransactionAdvanceDialog ta = new TransactionAdvanceDialog(null, true, tbData.getValueAt(row, 5).toString(), tbData.getValueAt(row, 1).toString());
+            TransactionAdvanceDialog ta = new TransactionAdvanceDialog(null, true);
             ta.setVisible(true);
         }
     }

@@ -45,6 +45,13 @@
             <file>file:/D:/NetbeansProjects/CBankSystem/src/th/co/cbank/project/control/MySQLConnect.java</file>
             <file>file:/D:/NetbeansProjects/CBankSystem/src/th/co/cbank/project/control/BalanceControl.java</file>
         </group>
-        <group/>
+        <group>
+            <file>file:/D:/GitHubProject/bank_system/src/th/co/cbank/project/view/MainDialog.java</file>
+            <file>file:/D:/GitHubProject/bank_system/src/th/co/cbank/project/view/TransactionAdvanceMethod.java</file>
+            <file>file:/D:/GitHubProject/bank_system/src/th/co/cbank/project/view/UpdateTransactionDialog.java</file>
+            <file>file:/D:/GitHubProject/bank_system/src/th/co/cbank/project/control/CbSaveAccountControl.java</file>
+            <file>file:/D:/GitHubProject/bank_system/src/th/co/cbank/project/control/CbTransactionSaveControl.java</file>
+            <file>file:/D:/GitHubProject/bank_system/src/th/co/cbank/project/view/PrintSavingBookDialog.java</file>
+        </group>
     </open-files>
 </project-private>

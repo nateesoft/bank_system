@@ -257,6 +257,9 @@ public class PrintLoanBookDialog extends BaseDialogSwing {
         if (rd1.isSelected()) {
             printLoanFrontBook();
         } else if (rd3.isSelected()) {
+            if(txtLoanCode.getText().trim().equals("")){
+                return;
+            }
             try {
                 tbTransaction.setFont(new Font(AppConstants.DEFAULT_FONT, Font.PLAIN, AppConstants.DEFAULT_FONT_SIZE));
                 tbTransaction.setRowHeight(30);

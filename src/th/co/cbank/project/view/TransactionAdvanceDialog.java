@@ -2,45 +2,45 @@ package th.co.cbank.project.view;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.event.KeyEvent;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.apache.log4j.Logger;
 import th.co.cbank.util.JTableUtil;
-import th.co.cbank.util.DateFormat;
-import th.co.cbank.util.NumberFormat;
-import th.co.cbank.util.ThaiUtil;
-import th.co.cbank.project.control.MySQLConnect;
-import th.co.cbank.project.control.Value;
-import th.co.cbank.project.model.CbTransactionSaveBean;
-import th.co.cbank.project.model.CbSaveConfigBean;
 
-public class TransactionAdvanceDialog extends BaseDialogSwing{
+public class TransactionAdvanceDialog extends BaseDialogSwing {
+
     private final Logger logger = Logger.getLogger(TransactionAdvanceDialog.class);
 
-    public TransactionAdvanceDialog(java.awt.Frame parent, boolean modal, String t_custcode, String t_acccode) {
+    public TransactionAdvanceDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds());
 
         initTable();
-        txtCustCode.setText(t_custcode);
-        txtAccCode.setText(t_acccode);
+    }
+
+    public void initFormValues(String custCode, String accCode, double netBalance, double intAmt) {
+        txtCustCode.setText(custCode);
+        txtAccCode.setText(accCode);
+        txtNetBalance.setText("" + netBalance);
+        txtInt.setText("" + intAmt);
 
         calc();
     }
-    
-    private void calc(){
+
+    private void calc() {
         if (txtCustCode.getText().trim().equals("")) {
             txtCustCode.requestFocus();
         } else if (txtAccCode.getText().trim().equals("")) {
             txtAccCode.requestFocus();
         } else {
-            findData(txtCustCode.getText(), txtAccCode.getText(), true);
+            clearModel();
+            List<String[]> modelList = TransactionAdvanceMethod.findData(txtCustCode.getText(), txtAccCode.getText(), true);
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            for (String[] obj : modelList) {
+                model.addRow(obj);
+            }
         }
     }
 
@@ -321,7 +321,7 @@ public class TransactionAdvanceDialog extends BaseDialogSwing{
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        calc();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtCustCodeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCustCodeKeyPressed
@@ -346,7 +346,10 @@ public class TransactionAdvanceDialog extends BaseDialogSwing{
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        saveTransaction();
+        double netBalance = Double.parseDouble(txtNetBalance.getText().replace(",", ""));
+        double intAmt = Double.parseDouble(txtInt.getText().replace(",", ""));
+        TransactionAdvanceMethod.saveTransaction(txtCustCode.getText(), txtAccCode.getText(), netBalance, intAmt);
+        JOptionPane.showMessageDialog(this, "บันทึกข้อมูลเรียบร้อย");
     }//GEN-LAST:event_jButton4ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -407,299 +410,6 @@ public class TransactionAdvanceDialog extends BaseDialogSwing{
         txtCustCode.requestFocus();
     }
 
-    public void findData(String custCode, String accCode, boolean addModel) {
-
-        double show1 = 0.00;//ฝาก
-        double show2 = 0.00;//ถอน
-        double show3 = 0.00;//คงเหลือ
-        double show4 = 0.00;//กำไรทบต้น
-        double show5 = 0.00;//ยอดเงินสุทธิ
-
-        clearModel();
-
-        String tCustCode = custCode;
-        String tAccCode = accCode;
-        String date = "";
-        try {
-            String sql = "select t_date from cb_transaction_save "
-                    + "where t_status in('2','3','8') "
-                    + "and t_custcode='" + tCustCode + "' "
-                    + "and t_acccode='" + tAccCode + "' "
-                    + "group by t_date "
-                    + "order by t_date";
-            ResultSet rs = MySQLConnect.getResultSet(sql);
-            while (rs.next()) {
-                date += DateFormat.getLocale_ddMMyyyy(rs.getDate("t_date")) + ",";
-            }
-            date += DateFormat.getLocale_ddMMyyyy(new Date());
-
-            rs.close();
-        } catch (Exception e) {
-            
-            JOptionPane.showMessageDialog(this, e.getMessage());
-            clearForm();
-        }
-
-        //add to model
-        String[] dates = date.split(",");
-        Date dateStart = DateFormat.getLocal_ddMMyyyy(dates[0]);
-        Date dateEnd = DateFormat.getLocal_ddMMyyyy(dates[dates.length - 1]);
-//        Date dateEnd = DateFormat.getLocal_ddMMyyyy("31/12/2559");
-
-        Calendar c = Calendar.getInstance();
-        c.setTime(dateStart);
-
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        boolean isLoop = false;
-        CbSaveConfigBean cfBean = getSaveConfigControl().listSaveConfig(tAccCode);
-        int dayCount = 0;
-        String temp_date = "";
-
-        double all_balance = 0.00;//เก็บยอดเงิน balance
-        double all_interest = 0.00;//เก็บยอดยกมาของดอกเบี้ย
-        double all_money = 0.00;//เงินต้น
-        int LineNo = 0;
-
-        while (!isLoop) {
-            String dateStr = DateFormat.getLocale_ddMMyyyy(c.getTime());
-            if (temp_date.equals("")) {
-                temp_date = dateStr;
-            }
-            if (!temp_date.equals(dateStr)) {
-                dayCount++;
-            }
-
-            ItemRows data = new ItemRows();
-            data.setT_date(c.getTime());
-            data.setT_time("");
-            data.setT_docno("");
-            data.setRemark("");
-            data.setInterest_rate(cfBean.getTypeINT());
-            data.setT_day(dayCount);
-            data.setBalance(all_balance);
-            data.setT_interest((data.getT_day() * data.getInterest_rate() * all_balance) / (36500));
-            data.setT_interest_balance(all_interest);
-            data.setPrinciple(all_money);
-
-            boolean isDateIn = false;
-            for (int i = 0; i < dates.length; i++) {
-                if (dates[i].equals(DateFormat.getLocale_ddMMyyyy(c.getTime()))) {
-                    ArrayList<CbTransactionSaveBean> listBean = getCbTransactionSaveControl().getTransaction(tCustCode, tAccCode, c.getTime());
-                    double temp_all_interest = all_interest;
-
-                    for (int j = 0; j < listBean.size(); j++) {
-                        CbTransactionSaveBean bean1 = (CbTransactionSaveBean) listBean.get(j);
-
-                        ItemRows data2 = new ItemRows();
-                        data2.setT_date(bean1.getT_date());
-                        data2.setT_time(bean1.getT_time());
-                        data2.setT_docno(bean1.getT_docno());
-                        all_balance += bean1.getT_amount();
-
-                        //เก็บเฉพาะเงินต้น
-                        all_money += bean1.getT_amount();
-                        data2.setPrinciple(all_money);
-                        data2.setBalance(all_balance);
-                        data2.setT_interest((data2.getT_day() * data2.getInterest_rate() * all_balance) / (36500));
-                        data2.setT_day(0);
-
-                        all_interest = data.getT_interest() + temp_all_interest;
-                        //temp_all_interest = 0;
-
-                        if (bean1.getT_amount() >= 0) {
-                            data2.setDeposit(bean1.getT_amount());
-                            data2.setRemark("<html><font color=blue><b>ฝากเงิน</b></font></html>");
-                            show1 += bean1.getT_amount();
-                            data2.setT_interest_balance(all_interest);
-                        } else {
-                            data2.setWithdraw(bean1.getT_amount());
-                            data2.setRemark("<html><font color=red><b>ถอนเงิน</b></font></html>");
-                            show2 += bean1.getT_amount() * -1;
-                            data2.setT_interest_balance(all_interest);
-                        }
-
-                        data2.setInterest_rate(cfBean.getTypeINT());
-                        data2.setIsPrint("Y");
-                        LineNo++;
-
-                        data2.setLineNo("" + LineNo);
-                        data2.setProfit(data2.getBalance() - data2.getPrinciple());
-                        if (addModel) {
-                            model.addRow(data2.toObject());
-                        }
-
-                        //update recode
-                        try {
-                            String sql = "update cb_transaction_save set "
-                                    + "t_balance='" + data2.getBalance() + "' "
-                                    + "where t_custcode='" + tCustCode + "' "
-                                    + "and t_acccode='" + tAccCode + "' "
-                                    + "and t_docno='" + data2.getT_docno() + "' "
-                                    + "and t_time='" + data2.getT_time() + "' "
-                                    + "and t_status in('2','3','8')";
-                            MySQLConnect.exeUpdate(sql);
-                        } catch (Exception e) {
-                            JOptionPane.showMessageDialog(this, e.getMessage());
-                            
-                        }
-                    }
-
-                    isDateIn = true;
-                    dayCount = 0;
-                    break;
-                }
-            }
-
-            boolean isUpdate = false;
-            //check เงื่อนไขการจ่ายดอกเบี้ยเพิ่ม
-            if (cfBean.getPayType().equals("2")) {
-                int dd_db1 = cfBean.getCbPayType1();
-                int mm_db1 = cfBean.getCbPayType2();
-                Calendar c1 = Calendar.getInstance(Locale.ENGLISH);
-                c1.setTime(c.getTime());//เอาปีของความเคลื่อนไหวก่อนหน้า เพื่อเลือกวันที่คำนวณ
-                c1.set(Calendar.DATE, dd_db1);
-                c1.set(Calendar.MONTH, mm_db1 - 1);
-                if (c1.getTime().compareTo(c.getTime()) == 0) {
-                    data.setT_time("00:00:00");
-                    data.setRemark("<html><font color=green><b>ดอกเบี้ยทบเงินต้น</b></font></html>");
-                    data.setIsPrint("Y");
-                    LineNo++;
-                    data.setLineNo("" + LineNo);
-
-                    data.setBalance(all_balance + data.getT_interest() + data.getT_interest_balance());
-                    data.setDeposit_interest(data.getT_interest() + data.getT_interest_balance());
-                    show4 += data.getDeposit_interest();
-                    data.setT_interest_balance(0);
-                    all_interest = 0;//clear ดอกเบี้ยทบต้นออก
-                    data.setT_interest(0);
-                    dayCount = 0;
-                    all_balance = data.getBalance();
-                    isUpdate = true;
-
-                    //insert ดอกเบี้ยฝาก
-                    CbTransactionSaveBean bean = new CbTransactionSaveBean();
-                    bean.setT_date(data.getT_date());
-                    bean.setT_time(data.getT_time());
-                    bean.setT_acccode(tAccCode);
-                    bean.setT_custcode(tCustCode);
-                    bean.setT_description(ThaiUtil.Unicode2ASCII("ฝากเงิน(ดอกเบี้ย)"));
-                    bean.setT_amount(data.getDeposit_interest());
-                    bean.setT_empcode("system");
-                    bean.setT_docno("");
-                    bean.setT_booktype("INT");
-                    bean.setLineNo(0);
-                    bean.setPrintChk("Y");
-                    bean.setT_balance(data.getBalance());
-                    bean.setT_index(0);
-                    bean.setMoney_in(data.getDeposit_interest());
-                    bean.setMoney_out(0);
-                    bean.setBranchCode(Value.BRANCH_CODE);
-                    bean.setT_interest(0);
-                    bean.setT_fee(0);
-                    bean.setT_status("11");
-
-                    if (bean.getT_amount() > 0) {
-                        getCbTransactionSaveControl().saveCbTransactionSave(bean);
-                    }
-                }
-            } else if (cfBean.getPayType().equals("3")) {
-                //ช่วงที่ 1
-                int dd_db1 = cfBean.getCbPayType3();
-                int mm_db1 = cfBean.getCbPayType4();
-                Calendar c1 = Calendar.getInstance(Locale.ENGLISH);
-                c1.setTime(c.getTime());//เอาปีของความเคลื่อนไหวก่อนหน้า เพื่อเลือกวันที่คำนวณ
-                c1.set(Calendar.DATE, dd_db1);
-                c1.set(Calendar.MONTH, mm_db1 - 1);
-                //จบช่วงที่ 1
-
-                //ช่วงที่ 2
-                int dd_db2 = cfBean.getCbPayType5();
-                int mm_db2 = cfBean.getCbPayType6();
-                Calendar c2 = Calendar.getInstance(Locale.ENGLISH);
-                c2.setTime(c.getTime());//เอาปีของความเคลื่อนไหวก่อนหน้า เพื่อเลือกวันที่คำนวณ
-                c2.set(Calendar.DATE, dd_db2);
-                c2.set(Calendar.MONTH, mm_db2 - 1);
-                //จบช่วงที่ 2
-
-                if (c1.getTime().compareTo(c.getTime()) == 0 || c2.getTime().compareTo(c.getTime()) == 0) {
-                    data.setT_time("00:00:00");
-                    data.setRemark("<html><font color=green><b>ดอกเบี้ยทบเงินต้น</b></font></html>");
-                    data.setIsPrint("Y");
-                    LineNo++;
-                    data.setLineNo("" + LineNo);
-
-                    data.setBalance(all_balance + data.getT_interest() + data.getT_interest_balance());
-                    data.setDeposit_interest(data.getT_interest() + data.getT_interest_balance());
-                    show4 += data.getDeposit_interest();
-                    data.setT_interest_balance(0);
-                    all_interest = 0;//clear ดอกเบี้ยทบต้นออก
-                    data.setT_interest(0);
-                    dayCount = 0;
-                    all_balance = data.getBalance();
-                    isUpdate = true;
-
-                    //insert ดอกเบี้ยฝาก
-                    CbTransactionSaveBean bean = new CbTransactionSaveBean();
-                    bean.setT_date(data.getT_date());
-                    bean.setT_time(data.getT_time());
-                    bean.setT_acccode(tAccCode);
-                    bean.setT_custcode(tCustCode);
-                    bean.setT_description(ThaiUtil.Unicode2ASCII("ฝากเงิน(ดอกเบี้ย)"));
-                    bean.setT_amount(data.getDeposit_interest());
-                    bean.setT_empcode("system");
-                    bean.setT_docno("");
-                    bean.setT_booktype("INT");
-                    bean.setLineNo(0);
-                    bean.setPrintChk("Y");
-                    bean.setT_balance(data.getBalance());
-                    bean.setT_index(0);
-                    bean.setMoney_in(data.getDeposit_interest());
-                    bean.setMoney_out(0);
-                    bean.setBranchCode(Value.BRANCH_CODE);
-                    bean.setT_interest(0);
-                    bean.setT_fee(0);
-                    bean.setT_status("11");
-                    if (bean.getT_amount() > 0) {
-                        getCbTransactionSaveControl().saveCbTransactionSave(bean);
-                    }
-                }
-            }//end paytype 3
-
-            if (!isDateIn) {
-                data.setProfit(data.getBalance() - data.getPrinciple());
-                if (addModel) {
-                    model.addRow(data.toObject());
-                }
-            }
-
-            if (isDateIn && isUpdate) {
-                data.setProfit(data.getBalance() - data.getPrinciple());
-                if (addModel) {
-                    model.addRow(data.toObject());
-                }
-            }
-
-            if (c.getTime().compareTo(dateEnd) == 0) {
-                data.setProfit(data.getBalance() - data.getPrinciple());
-                if (addModel) {
-                    model.addRow(data.toObject());
-                }
-                isLoop = true;
-            } else {
-                c.add(Calendar.DATE, 1);
-            }
-        }//end while loop
-
-        show3 = show1 - show2;
-        show5 = show3 + show4;
-        txtDeposit.setText(NumberFormat.showDouble2(show1));
-        txtWithdraw.setText(NumberFormat.showDouble2(show2));
-        txtBalance.setText(NumberFormat.showDouble2(show3));
-        txtInterest.setText(NumberFormat.showDouble2(show4));
-        txtNetBalance.setText(NumberFormat.showDouble2(show5));
-        txtInt.setText(NumberFormat.showDouble2(all_interest));
-    }
-
     private void clearModel() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         int size = jTable1.getRowCount();
@@ -708,241 +418,4 @@ public class TransactionAdvanceDialog extends BaseDialogSwing{
         }
     }
 
-    public void saveTransaction() {
-        //update cb_save_account
-        try {
-            String sql = "update cb_save_account set "
-                    + "b_balance='" + txtNetBalance.getText().replace(",", "") + "',"
-                    + "b_interest='" + txtInt.getText().replace(",", "") + "' "
-                    + "where b_cust_code='" + txtCustCode.getText() + "' "
-                    + "and account_code='" + txtAccCode.getText() + "'";
-            MySQLConnect.exeUpdate(sql);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-            
-        }
-
-        //update cb_profile
-        try {
-            String sql = "select * from cb_save_account "
-                    + "where b_cust_code='" + txtCustCode.getText() + "' "
-                    + "and account_code='" + txtAccCode.getText() + "'";
-            ResultSet rs = MySQLConnect.getResultSet(sql);
-            double netTotal = 0.00;
-            while (rs.next()) {
-                netTotal += rs.getDouble("b_balance");
-            }
-
-            try {
-                String sql1 = "update cb_profile set "
-                        + "save_balance='" + netTotal + "' "
-                        + "where p_custcode='" + txtCustCode.getText() + "'";
-                MySQLConnect.exeUpdate(sql1);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e.getMessage());
-                
-            }
-
-            rs.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-            
-        }
-    }
-
-    class ItemRows {
-
-        private Date t_date;
-        private String t_time;
-        private String t_docno;
-        private int t_day;
-        private double t_interest;
-        private double t_interest_balance;//ยอดยกมา
-        private double deposit;
-        private double deposit_interest;
-        private double withdraw;
-        private double balance;
-        private double principle;//เงินต้น
-        private String remark;
-        private double profit;
-        private double interest_rate;//อัตราดอกเบี้ยต่อปี
-        private String isPrint = "N";
-        private String LineNo = "";
-
-        public ItemRows() {
-        }
-
-        public ItemRows(Date t_date, String t_time, String t_docno, int t_day, double t_interest,
-                double t_interest_balance, double deposit, double deposit_interest, double withdraw,
-                double balance, double principle, String remark, double profit, double interest_rate,
-                String isPrint, String LineNo) {
-            this.t_date = t_date;
-            this.t_time = t_time;
-            this.t_docno = t_docno;
-            this.t_day = t_day;
-            this.t_interest = t_interest;
-            this.t_interest_balance = t_interest_balance;
-            this.deposit = deposit;
-            this.deposit_interest = deposit_interest;
-            this.withdraw = withdraw;
-            this.balance = balance;
-            this.principle = principle;
-            this.remark = remark;
-            this.profit = profit;
-            this.interest_rate = interest_rate;
-            this.isPrint = isPrint;
-            this.LineNo = LineNo;
-        }
-
-        public Object[] toObject() {
-            String data = "";
-            data += remark + "_";
-            data += DateFormat.getLocale_ddMMyyyy(t_date) + "_";
-            data += t_time + "_";
-            data += t_docno + "_";
-            data += t_day + "_";
-            data += NumberFormat.showDouble4(t_interest) + "_";
-            data += NumberFormat.showDouble4(t_interest_balance) + "_";
-            data += NumberFormat.showDouble2(deposit) + "_";
-            data += NumberFormat.showDouble2(deposit_interest) + "_";
-            data += NumberFormat.showDouble2(withdraw) + "_";
-            data += NumberFormat.showDouble2(balance) + "_";
-            data += NumberFormat.showDouble2(principle) + "_";
-            data += NumberFormat.showDouble2(profit) + "_";
-            data += NumberFormat.showDouble2(interest_rate) + "_";
-            data += isPrint + "_";
-            data += LineNo + "_";
-
-            return data.split("_");
-        }
-
-        public String getLineNo() {
-            return LineNo;
-        }
-
-        public void setLineNo(String LineNo) {
-            this.LineNo = LineNo;
-        }
-
-        public Date getT_date() {
-            return t_date;
-        }
-
-        public void setT_date(Date t_date) {
-            this.t_date = t_date;
-        }
-
-        public String getT_time() {
-            return t_time;
-        }
-
-        public void setT_time(String t_time) {
-            this.t_time = t_time;
-        }
-
-        public String getT_docno() {
-            return t_docno;
-        }
-
-        public void setT_docno(String t_docno) {
-            this.t_docno = t_docno;
-        }
-
-        public int getT_day() {
-            return t_day;
-        }
-
-        public void setT_day(int t_day) {
-            this.t_day = t_day;
-        }
-
-        public double getT_interest() {
-            return t_interest;
-        }
-
-        public void setT_interest(double t_interest) {
-            this.t_interest = t_interest;
-        }
-
-        public double getT_interest_balance() {
-            return t_interest_balance;
-        }
-
-        public void setT_interest_balance(double t_interest_balance) {
-            this.t_interest_balance = t_interest_balance;
-        }
-
-        public double getDeposit() {
-            return deposit;
-        }
-
-        public void setDeposit(double deposit) {
-            this.deposit = deposit;
-        }
-
-        public double getDeposit_interest() {
-            return deposit_interest;
-        }
-
-        public void setDeposit_interest(double deposit_interest) {
-            this.deposit_interest = deposit_interest;
-        }
-
-        public double getWithdraw() {
-            return withdraw;
-        }
-
-        public void setWithdraw(double withdraw) {
-            this.withdraw = withdraw;
-        }
-
-        public double getBalance() {
-            return balance;
-        }
-
-        public void setBalance(double balance) {
-            this.balance = balance;
-        }
-
-        public double getPrinciple() {
-            return principle;
-        }
-
-        public void setPrinciple(double principle) {
-            this.principle = principle;
-        }
-
-        public String getRemark() {
-            return remark;
-        }
-
-        public void setRemark(String remark) {
-            this.remark = remark;
-        }
-
-        public double getProfit() {
-            return profit;
-        }
-
-        public void setProfit(double profit) {
-            this.profit = profit;
-        }
-
-        public double getInterest_rate() {
-            return interest_rate;
-        }
-
-        public void setInterest_rate(double interest_rate) {
-            this.interest_rate = interest_rate;
-        }
-
-        public String isIsPrint() {
-            return isPrint;
-        }
-
-        public void setIsPrint(String isPrint) {
-            this.isPrint = isPrint;
-        }
-
-    }
 }
