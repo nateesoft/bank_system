@@ -75,12 +75,11 @@ public class ConfigControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             ArrayList<ConfigBean> listBean = mappingBean(rs);
             if (listBean.isEmpty()) {
-                return null;
+                return new ConfigBean();
             }
             return listBean.get(0);
         } catch (Exception e) {
-            
-            return null;
+            return new ConfigBean();
         }
     }
 
