@@ -294,14 +294,23 @@ public class PrintSavingBookDialog extends BaseDialogSwing {
         sa.setVisible(true);
         if (sa.getSelectText() != null) {
             txtAccCode.setText(sa.getSelectText());
+            DefaultTableModel model = (DefaultTableModel) tbTransaction.getModel();
+            clearModel(model);
         }
     }//GEN-LAST:event_btnFindActionPerformed
+
+    private void clearModel(DefaultTableModel model) {
+        int size = model.getRowCount();
+        for (int i = 0; i < size; i++) {
+            model.removeRow(0);
+        }
+    }
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
         if (rd1.isSelected()) {
             printFrontBook();
         } else if (rd3.isSelected()) {
-            if(txtAccCode.getText().trim().equals("")){
+            if (txtAccCode.getText().trim().equals("")) {
                 return;
             }
             try {
@@ -313,16 +322,16 @@ public class PrintSavingBookDialog extends BaseDialogSwing {
                 JTableUtil.alignRight(tbTransaction, 4);
 
                 DefaultTableModel model = (DefaultTableModel) tbTransaction.getModel();
-                int size = model.getRowCount();
-                for (int i = 0; i < size; i++) {
-                    model.removeRow(0);
-                }
+                clearModel(model);
                 SimpleDateFormat simp = new SimpleDateFormat("dd/MM/yy", Locale.ENGLISH);
                 String sql = "select * from cb_transaction_save "
                         + "where t_acccode='" + txtAccCode.getText() + "' "
                         + "and t_status in('2','3','8', '11') "
                         + "order by t_date, t_time, LineNo";
+                System.out.println(sql);
                 ResultSet rs = MySQLConnect.getResultSet(sql);
+                int backupLineNo = 0;
+                int backupIndex = 0;
                 while (rs.next()) {
                     Object[] p = new Object[12];
                     p[0] = simp.format(rs.getDate("t_date"));//01/05/58
@@ -335,14 +344,29 @@ public class PrintSavingBookDialog extends BaseDialogSwing {
                     p[3] = NumberFormat.showDouble2(rs.getDouble("money_in"));//99,999,999.99
                     p[4] = NumberFormat.showDouble2(rs.getDouble("t_balance"));//99,999,999.99
                     p[5] = rs.getInt("t_hoon");//9,999.99;
-                    p[6] = rs.getInt("lineNo");//99;
-                    p[7] = rs.getString("printChk").equals("N");
+                    int lineNo = rs.getInt(("lineNo"));
+                    boolean isCheck = rs.getString("printChk").equals("N");
+                    if (lineNo == 0) {
+                        lineNo = (backupLineNo + 1) > 24 ? 1 : (backupLineNo + 1);
+                        isCheck = true;
+                    }
+                    if (lineNo == backupLineNo) {
+                        lineNo = (backupLineNo + 1) > 24 ? 1 : (backupLineNo + 1);
+                    }
+                    p[6] = lineNo; //24;
+                    p[7] = isCheck;
                     p[8] = rs.getString("t_docno");//เลขที่เอกสาร
                     p[9] = rs.getString("t_date");//เลขที่เอกสาร
                     p[10] = rs.getString("lineNo");//เลขที่เอกสาร
-                    p[11] = rs.getString("t_index");//ลำดับทั้งหมด
+                    int index = rs.getInt("t_index");
+                    if (index == 0 || index == backupIndex) {
+                        index = backupIndex + 1;
+                    }
+                    p[11] = index;//ลำดับทั้งหมด
 
                     model.addRow(p);
+                    backupLineNo = lineNo;
+                    backupIndex = index;
                 }
             } catch (Exception e) {
                 System.err.println(e.getMessage());
@@ -488,7 +512,7 @@ public class PrintSavingBookDialog extends BaseDialogSwing {
                     String sql = "UPDATE cb_transaction_save "
                             + "SET PrintChk= 'N',"
                             + "LineNo='" + lineNo + "',"
-                            + "t_index='"+t_index+"' "
+                            + "t_index='" + t_index + "' "
                             + "WHERE t_acccode='" + txtAccCode.getText() + "' "
                             + "AND LineNo='" + lineNoOld + "' "
                             + "AND t_docno='" + t_docno + "' "
@@ -502,7 +526,7 @@ public class PrintSavingBookDialog extends BaseDialogSwing {
                 try {
                     String sql = "UPDATE cb_transaction_save "
                             + "SET LineNo='" + lineNo + "', "
-                            + "t_index='"+t_index+"' "
+                            + "t_index='" + t_index + "' "
                             + "WHERE t_acccode='" + txtAccCode.getText() + "' "
                             + "AND LineNo='" + lineNoOld + "' "
                             + "AND t_docno='" + t_docno + "' "
