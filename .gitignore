@@ -1,5 +1,7 @@
 lib
 *.log
-dist
+/dist
 /build/
-database
+/database
+/itfinger_conf.txt
+/nbproject
