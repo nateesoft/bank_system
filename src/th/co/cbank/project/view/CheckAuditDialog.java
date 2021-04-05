@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import org.apache.log4j.Logger;
@@ -11,6 +12,7 @@ import th.co.cbank.util.ThaiUtil;
 import th.co.cbank.project.constants.AppConstants;
 import th.co.cbank.project.control.MySQLConnect;
 import th.co.cbank.util.NumberFormat;
+import th.co.cbank.util.TableUtil;
 
 public class CheckAuditDialog extends BaseDialogSwing {
     private final Logger logger = Logger.getLogger(CheckAuditDialog.class);
@@ -42,6 +44,24 @@ public class CheckAuditDialog extends BaseDialogSwing {
         
         JTableHeader h4 = tbTransactionLoan.getTableHeader();
         h4.setFont(new Font(AppConstants.DEFAULT_FONT, Font.BOLD, 12));
+        
+        // init table
+        TableUtil.alignTable(tbProfile, 3, SwingConstants.RIGHT);
+        TableUtil.alignTable(tbProfile, 4, SwingConstants.RIGHT);
+        TableUtil.alignTable(tbProfile, 5, SwingConstants.RIGHT);
+        
+        TableUtil.alignTable(tbTransaction, 3, SwingConstants.RIGHT);
+        TableUtil.alignTable(tbTransaction, 4, SwingConstants.RIGHT);
+        TableUtil.alignTable(tbTransaction, 5, SwingConstants.RIGHT);
+        TableUtil.alignTable(tbTransaction, 6, SwingConstants.RIGHT);
+        TableUtil.alignTable(tbTransaction, 7, SwingConstants.RIGHT);
+        
+        TableUtil.alignTable(tbSaveAccount, 2, SwingConstants.RIGHT);
+        TableUtil.alignTable(tbSaveAccount, 3, SwingConstants.RIGHT);
+        
+        TableUtil.alignTable(tbTransactionLoan, 3, SwingConstants.RIGHT);
+        TableUtil.alignTable(tbTransactionLoan, 4, SwingConstants.RIGHT);
+        TableUtil.alignTable(tbTransactionLoan, 5, SwingConstants.RIGHT);
 
         tbProfile.requestFocus();
     }
@@ -153,7 +173,7 @@ public class CheckAuditDialog extends BaseDialogSwing {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -210,7 +230,7 @@ public class CheckAuditDialog extends BaseDialogSwing {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, false, true, true
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -403,19 +423,18 @@ public class CheckAuditDialog extends BaseDialogSwing {
         }
 
         try {
-            String sql = "select p_index, p_custcode, p_custname, "
-                    + "p_custsurname, save_balance,hoon_qty,loan_balance "
+            String sql = "select p_custcode,p_custname,p_custsurname,save_balance,hoon_qty,loan_balance "
                     + "from cb_profile order by p_custcode";
             ResultSet rs = MySQLConnect.getResultSet(sql);
             int count = 1;
             while (rs.next()) {
                 model1.addRow(new Object[]{
                     count,
-                    rs.getString(2),
-                    ThaiUtil.ASCII2Unicode(rs.getString(3)+" "+rs.getString(4)),
-                    rs.getString(5),
-                    rs.getString(6),
-                    rs.getString(7)
+                    rs.getString("p_custcode"),
+                    ThaiUtil.ASCII2Unicode(rs.getString("p_custname")+" "+rs.getString("p_custsurname")),
+                    NumberFormat.showDouble2(rs.getString("save_balance")),
+                    NumberFormat.showDouble2(rs.getString("hoon_qty")),
+                    NumberFormat.showDouble2(rs.getString("loan_balance"))
                 });
                 count++;
             }
@@ -449,15 +468,15 @@ public class CheckAuditDialog extends BaseDialogSwing {
         String custCode = "" + tbProfile.getValueAt(tbProfile.getSelectedRow(), 1);
 
         try {
-            String sql = "select b_cust_code, account_code, b_balance,b_fee "
+            String sql = "select b_cust_code,account_code, b_balance,b_fee "
                     + "from cb_save_account where b_cust_code='" + custCode + "'";
             ResultSet rs1 = MySQLConnect.getResultSet(sql);
             while (rs1.next()) {
                 model2.addRow(new Object[]{
-                    rs1.getString(1),
-                    rs1.getString(2),
-                    rs1.getString(3),
-                    rs1.getString(4)
+                    rs1.getString("b_cust_code"),
+                    rs1.getString("account_code"),
+                    NumberFormat.showDouble2(rs1.getString("b_balance")),
+                    NumberFormat.showDouble2(rs1.getString("b_fee"))
                 });
             }
 
@@ -481,11 +500,11 @@ public class CheckAuditDialog extends BaseDialogSwing {
                     rs1.getString("t_acccode"),
                     rs1.getString("t_date")+" "+rs1.getString("t_time"),
                     ThaiUtil.ASCII2Unicode(rs1.getString("t_description")),
-                    rs1.getString("t_amount"),
-                    rs1.getString("money_in"),
-                    rs1.getString("money_out"),
-                    rs1.getString("t_fee"),
-                    rs1.getString("t_balance")
+                    NumberFormat.showDouble2(rs1.getString("t_amount")),
+                    NumberFormat.showDouble2(rs1.getString("money_in")),
+                    NumberFormat.showDouble2(rs1.getString("money_out")),
+                    NumberFormat.showDouble2(rs1.getString("t_fee")),
+                    NumberFormat.showDouble2(rs1.getString("t_balance"))
                 });
 
                 deposit += rs1.getDouble(5);
@@ -513,9 +532,9 @@ public class CheckAuditDialog extends BaseDialogSwing {
                     rs1.getString("t_acccode"),
                     rs1.getString("t_date")+" "+rs1.getString("t_time"),
                     ThaiUtil.ASCII2Unicode(rs1.getString("t_description")),
-                    rs1.getString("t_amount"),
-                    rs1.getString("t_interest"),
-                    rs1.getString("t_balance")
+                    NumberFormat.showDouble2(rs1.getString("t_amount")),
+                    NumberFormat.showDouble2(rs1.getString("t_interest")),
+                    NumberFormat.showDouble2(rs1.getString("t_balance"))
                 });
             }
             rs1.close();

@@ -2,6 +2,7 @@ package th.co.cbank.project.view;
 
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Cursor;
 import th.co.cbank.project.model.BranchBean;
 import th.co.cbank.project.model.ProfileBean;
 import th.co.cbank.project.control.Value;
@@ -8492,14 +8493,19 @@ public class MainDialog extends BaseSwing {
     }
 
     private void loadDataAccount() {
+        if ("".equals(txtAccCode.getText())) {
+            txtAccCode.setText(Value.CUST_ACCOUNT_CODE);
+        }
+        
+        // update interest before load personal data
+        computeInterestAccount();
+        // end process
+        
         ProfileBean pBean = getProfileControl().listCbProfile(txtProfileCode.getText());
         txtStartAcc.setText(DateFormat.getLocale_ddMMyyyy(pBean.getP_member_start()));
         txtTotalValue.setText("" + pBean.getHoon_Qty());
         txtARProduct.setText(NumberFormat.showDouble2(pBean.getAR_Balance()));
         txtLimitLoanAmt.setText(NumberFormat.showDouble2((int) pBean.getLoan_Credit_Balance()));
-        if ("".equals(txtAccCode.getText())) {
-            txtAccCode.setText(Value.CUST_ACCOUNT_CODE);
-        }
 
         CbSaveAccountBean bean = getSaveAccountControl().getSaveAccountBean(txtAccCode.getText());
         if (bean != null) {
@@ -8547,7 +8553,7 @@ public class MainDialog extends BaseSwing {
                     break;
             }
 
-            loadTransactionPerson();
+            loadTransactionPerson(txtAccCode.getText());
         }
     }
 
@@ -8751,7 +8757,7 @@ public class MainDialog extends BaseSwing {
             TransactionAdvanceMethod.saveTransaction(txtProfileCode.getText(), txtAccCode.getText(), tSave.getT_balance(), tSave.getT_interest());
 
             //load transaction
-            loadTransactionPerson();
+            loadTransactionPerson(txtAccCode.getText());
 
             loadSummary();
 
@@ -10316,18 +10322,18 @@ public class MainDialog extends BaseSwing {
         }
     }
 
-    public void loadTransactionPerson() {
-        String where = " and t_acccode='" + txtAccCode.getText() + "' "
+    public void loadTransactionPerson(String accoutCode) {
+        String where = " and t_acccode='" + accoutCode + "' "
                 + "and t_status in('2','3','8','11') "
                 + "order by t_date,t_time ";
         ArrayList<CbTransactionSaveBean> listSave = getCbTransactionSaveControl().listTransactionSave(where);
-        DefaultTableModel mm = (DefaultTableModel) tbTransSave.getModel();
+        DefaultTableModel modelTbTransSave = (DefaultTableModel) tbTransSave.getModel();
         JTableUtil.alignRight(tbTransSave, 3);
         JTableUtil.alignRight(tbTransSave, 4);
         JTableUtil.alignRight(tbTransSave, 5);
-        int size = mm.getRowCount();
+        int size = modelTbTransSave.getRowCount();
         for (int i = 0; i < size; i++) {
-            mm.removeRow(0);
+            modelTbTransSave.removeRow(0);
         }
         String type = "";
         for (CbTransactionSaveBean sBean : listSave) {
@@ -10351,7 +10357,7 @@ public class MainDialog extends BaseSwing {
                 desc = ThaiUtil.ASCII2Unicode(sBean.getT_description());
             }
 
-            mm.addRow(new Object[]{
+            modelTbTransSave.addRow(new Object[]{
                 sBean.getT_docno(),
                 DateFormat.getLocale_ddMMyyyy(sBean.getT_date()),
                 sBean.getT_time(),
@@ -11422,5 +11428,15 @@ public class MainDialog extends BaseSwing {
     private void showAccountQty() {
         ArrayList<CbSaveAccountBean> listSc = getSaveAccountControl().listCbSaveAccount(txtProfileCode.getText());
         txtTotalAccount.setText("" + listSc.size());
+    }
+
+    private void computeInterestAccount() {
+        this.setCursor(new java.awt.Cursor(java.awt.Cursor.WAIT_CURSOR));
+        TransactionAdvanceMethod.findData(txtProfileCode.getText(), txtAccCode.getText(), false);
+        double all_balance = TransactionAdvanceMethod.balanceAmount;
+        double all_interest = TransactionAdvanceMethod.interestAmount;
+        TransactionAdvanceMethod.saveTransaction(txtProfileCode.getText(), txtAccCode.getText(), all_balance, all_interest);
+        TransactionAdvanceMethod.updateTransactionSaveRunning(txtProfileCode.getText(),  txtAccCode.getText());
+        this.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
     }
 }
