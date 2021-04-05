@@ -41,9 +41,6 @@ public class CloseAccountReportDialog extends BaseDialogSwing {
         this.parent = parent;
 
         initTable();
-
-        setLocation(0, 0);
-        setSize(parent.getMaximumSize());
     }
 
     @SuppressWarnings("unchecked")

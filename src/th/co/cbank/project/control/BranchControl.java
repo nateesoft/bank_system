@@ -3,6 +3,7 @@ package th.co.cbank.project.control;
 import th.co.cbank.project.model.BranchBean;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
 import th.co.cbank.util.ThaiUtil;
 
@@ -174,7 +175,7 @@ public class BranchControl extends BaseControl {
 
             rs.close();
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 
@@ -223,7 +224,7 @@ public class BranchControl extends BaseControl {
                     + "where code='" + bean.getCode() + "'";
             update(sql);
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 

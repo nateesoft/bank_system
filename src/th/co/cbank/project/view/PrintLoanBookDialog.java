@@ -298,7 +298,7 @@ public class PrintLoanBookDialog extends BaseDialogSwing {
                     model.addRow(p);
                 }
             } catch (Exception e) {
-                System.err.println(e.getMessage());
+                JOptionPane.showMessageDialog(null, e.getMessage());
             }
         }
     }//GEN-LAST:event_btnPrintActionPerformed
@@ -414,7 +414,7 @@ public class PrintLoanBookDialog extends BaseDialogSwing {
                     + "AND t_booktype='" + t_booktype + "'";
             MySQLConnect.exeUpdate(sql);
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 }

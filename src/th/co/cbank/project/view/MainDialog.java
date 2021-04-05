@@ -672,7 +672,7 @@ public class MainDialog extends BaseSwing {
         jMenuItem37 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("ระบบบริหารธนาคารชุมชน V 1.0.6 02042021");
+        setTitle("ระบบบริหารธนาคารชุมชน V 1.0.6 05042021");
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -5990,7 +5990,8 @@ public class MainDialog extends BaseSwing {
         });
         jMenu3.add(mnRptProfitCompany);
 
-        mnRptCheckAudit.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        mnRptCheckAudit.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        mnRptCheckAudit.setForeground(new java.awt.Color(0, 153, 153));
         mnRptCheckAudit.setText("รายงานความเคลื่อนไหวรายบุคคล");
         mnRptCheckAudit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -10619,7 +10620,7 @@ public class MainDialog extends BaseSwing {
             PrintCOM pc = new PrintCOM();
             pc.printPaymentLoan(loanBean);
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            System.err.println(e);
         }
 
         JOptionPane.showMessageDialog(this, "บันทึกข้อมูลเรียบร้อยแล้ว");

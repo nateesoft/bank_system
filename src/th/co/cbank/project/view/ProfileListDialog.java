@@ -34,9 +34,6 @@ public class ProfileListDialog extends BaseDialogSwing {
 
         init();
 
-        setLocation(0, 0);
-        setSize(parent.getMaximumSize());
-
         jTable1.requestFocus();
     }
 

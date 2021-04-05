@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import javax.swing.JOptionPane;
 
 public class DateFormat {
 
@@ -21,7 +22,7 @@ public class DateFormat {
         try {
             d1 = s.parse(d);
         } catch (ParseException e) {
-            System.err.println(e.getMessage());
+            System.err.println(e);
             Calendar c = Calendar.getInstance(Locale.ENGLISH);
             c.set(2015, 0, 1);
             d1 = c.getTime();

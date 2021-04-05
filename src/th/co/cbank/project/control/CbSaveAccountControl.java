@@ -414,7 +414,7 @@ public class CbSaveAccountControl extends BaseControl {
                                 update(sqlUpd);
                                 break;
                             } catch (Exception e) {
-                                System.err.println(e.getMessage());
+                                JOptionPane.showMessageDialog(null, e.getMessage());
                             }
                         }
                     } else if (PAY_TYPE.equals("2")) {
@@ -438,7 +438,7 @@ public class CbSaveAccountControl extends BaseControl {
                                 update(sqlUpd);
                                 break;
                             } catch (Exception e) {
-                                System.err.println(e.getMessage());
+                                JOptionPane.showMessageDialog(null, e.getMessage());
                             }
                         }
                     } else if (PAY_TYPE.equals("3")) {
@@ -500,7 +500,7 @@ public class CbSaveAccountControl extends BaseControl {
                                     isUpdate = true;
                                     break;
                                 } catch (Exception e) {
-                                    System.err.println(e.getMessage());
+                                    JOptionPane.showMessageDialog(null, e.getMessage());
                                 }
                             }
                         }
@@ -519,7 +519,7 @@ public class CbSaveAccountControl extends BaseControl {
                             + "and t_acccode='" + t_acccode + "'";
                     update(sqlUpd);
                 } catch (Exception e) {
-                    System.err.println(e.getMessage());
+                    JOptionPane.showMessageDialog(null, e.getMessage());
                 }
             }
             rs.close();
@@ -588,7 +588,7 @@ public class CbSaveAccountControl extends BaseControl {
                         update(sqlUpd);
                         System.out.println("Update: " + count);
                     } catch (Exception e) {
-                        System.err.println(e.getMessage());
+                        JOptionPane.showMessageDialog(null, e.getMessage());
                     }
                 }
             }
@@ -614,7 +614,7 @@ public class CbSaveAccountControl extends BaseControl {
                             + "where p_custcode='" + b_cust_code + "'";
                     update(sqlUpd);
                 } catch (Exception e) {
-                    System.err.println(e.getMessage());
+                    JOptionPane.showMessageDialog(null, e.getMessage());
                 }
             }
 

@@ -2,6 +2,7 @@ package th.co.cbank.project.control;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
 import th.co.cbank.util.ThaiUtil;
 import th.co.cbank.project.model.CbUserBean;
@@ -84,7 +85,7 @@ public class CbUserControl extends BaseControl {
 
             rs.close();
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 
@@ -110,7 +111,7 @@ public class CbUserControl extends BaseControl {
                     + "where username='" + bean.getUsername() + "'";
             update(sql);
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 

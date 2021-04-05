@@ -27,8 +27,6 @@ public class HoonInvestDialog extends BaseDialogSwing {
 
         txtTotalHoonAmt.setText(NumberFormat.showDouble2(getProfileControl().getTotalHoonQty()));
 
-        setLocation(0, 0);
-        setSize(parent.getMaximumSize());
         txtProfitOpAmt.requestFocus();
     }
 

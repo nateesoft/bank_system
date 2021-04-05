@@ -382,13 +382,13 @@ public class LoadExcelAccountLoanDialog extends BaseDialogSwing {
 
             br.close();
         } catch (FileNotFoundException e) {
-            System.err.println(e.getMessage());
+            System.err.println(e);
             taLog.append("<< ERROR >> " + e.getMessage() + "\n");
         } catch (IOException e) {
             System.err.println("Error: " + e.getMessage() + " , " + idCard1);
             taLog.append("<< ERROR >> " + e.getMessage() + "\n");
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            System.err.println(e);
             taLog.append("<< ERROR >> " + e.getMessage() + "\n");
         }
 

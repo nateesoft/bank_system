@@ -366,7 +366,7 @@ public class LoginDialog extends BaseDialogSwing {
 
                     rss.close();
                 } catch (Exception e) {
-                    System.err.println(e.getMessage());
+                    System.err.println(e);
                     Log.write.error(e.getMessage());
                 }
 

@@ -44,9 +44,6 @@ public class ConfigDialog2 extends BaseDialogSwing {
         loadHoonList();
         loadConfigLoadList();
 
-        setLocation(0, 0);
-        setSize(parent.getMaximumSize());
-
         txtAccPrefix.requestFocus();
     }
 
@@ -3056,7 +3053,7 @@ public class ConfigDialog2 extends BaseDialogSwing {
         try {
             bean.setProgramStartDate(simp.parse(date));
         } catch (ParseException e) {
-            System.err.println(e.getMessage());
+            System.err.println(e);
         }
 
         if (chkBranchPrefix.isSelected()) {
@@ -4231,7 +4228,7 @@ public class ConfigDialog2 extends BaseDialogSwing {
                 cbPrintSlipDriver.addItem(printService1.getName());
             }
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            System.err.println(e);
         }
 
     }
@@ -4248,7 +4245,7 @@ public class ConfigDialog2 extends BaseDialogSwing {
                 }
             }
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            System.err.println(e);
         }
 
     }
@@ -4492,7 +4489,7 @@ public class ConfigDialog2 extends BaseDialogSwing {
             typeINT = typeINT - (typeINT * taxINT / 100.00);
             txtTypeINT.setText("" + typeINT);
         } catch (NumberFormatException e) {
-            System.err.println(e.getMessage());
+            System.err.println(e);
             return 0.00;
         }
 
@@ -4700,7 +4697,7 @@ public class ConfigDialog2 extends BaseDialogSwing {
         try {
             bean.setTAX(Double.parseDouble(txtTax.getText()));
         } catch (NumberFormatException e) {
-            System.err.println(e.getMessage());
+            System.err.println(e);
         }
 
         bean.setCbPayType1(cbPayType1.getSelectedIndex());
@@ -4762,7 +4759,7 @@ public class ConfigDialog2 extends BaseDialogSwing {
             double total = (a + b + c);
             txtLoanINT.setText(dec.format(total));
         } catch (NumberFormatException e) {
-            System.err.println(e.getMessage());
+            System.err.println(e);
         }
 
     }

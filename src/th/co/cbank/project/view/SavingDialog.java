@@ -76,10 +76,6 @@ public class SavingDialog extends BaseDialogSwing {
 
         txtMemberStartDate.setText(DateFormat.getLocale_ddMMyyyy(new Date()));
         chkDisableMember.setVisible(!isRegister);
-        //jTabbedPane1.setEnabledAt(1, !isRegister);
-
-        setLocation(0, 0);
-        setSize(parent.getMaximumSize());
 
         txtCode.requestFocus();
     }
@@ -2890,7 +2886,7 @@ public class SavingDialog extends BaseDialogSwing {
 
             return yearCurrent - yearStart;
         } catch (NumberFormatException e) {
-            System.err.println(e.getMessage());
+            System.err.println(e);
         }
 
         return 0;
@@ -2924,7 +2920,7 @@ public class SavingDialog extends BaseDialogSwing {
             Double.parseDouble(txtFeeMember.getText().replace(",", ""));
             feeCheck = true;
         } catch (NumberFormatException e) {
-            System.err.println(e.getMessage());
+            System.err.println(e);
         }
 
         String idCard = txtCode.getText();
@@ -3027,7 +3023,7 @@ public class SavingDialog extends BaseDialogSwing {
             try {
                 bean.setP_fee(Double.parseDouble(txtFeeMember.getText()));
             } catch (NumberFormatException e) {
-                System.err.println(e.getMessage());
+                System.err.println(e);
                 bean.setP_fee(0.00);
             }
 
@@ -3036,7 +3032,7 @@ public class SavingDialog extends BaseDialogSwing {
                 try {
                     new File("img").mkdir();
                 } catch (Exception e) {
-                    System.err.println(e.getMessage());
+                    System.err.println(e);
                 }
                 try {
                     BufferedImage originalImage = ImageIO.read(this.imgFile);
@@ -3275,14 +3271,14 @@ public class SavingDialog extends BaseDialogSwing {
             try {
                 cbProfileStatus.setSelectedItem(Integer.parseInt(p.getP_cust_status()));
             } catch (NumberFormatException e) {
-                System.err.println(e.getMessage());
+                System.err.println(e);
             }
 
             cb_prefix.setSelectedItem(p.getP_prefix());
             try {
                 cbProfileStatus.setSelectedIndex(Integer.parseInt(p.getP_cust_status()));
             } catch (Exception e) {
-                System.err.println(e.getMessage());
+                System.err.println(e);
             }
 
             cbReligion.setSelectedItem(p.getP_cust_religion());

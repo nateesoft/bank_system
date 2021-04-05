@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import javax.swing.JOptionPane;
 
 public class CopyFile {
     private final Logger logger = Logger.getLogger(CopyFile.class);
@@ -28,7 +29,7 @@ public class CopyFile {
                 os.close();
             }
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            System.err.println(e);
         }
 
     }

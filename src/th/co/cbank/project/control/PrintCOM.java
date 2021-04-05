@@ -59,7 +59,7 @@ public final class PrintCOM extends BaseControl {
                             String sql2 = "update cb_config set PrintSlipPort='" + comports[0] + "'";
                             update(sql2);
                         } catch (Exception e) {
-                            System.err.println(e.getMessage());
+                            JOptionPane.showMessageDialog(null, e.getMessage());
                         }
                     } else if (comports.length > 1) {
                         //ให้ผู้ใช้งานเลือก port สำหรับการเชื่อมต่อ
@@ -70,7 +70,7 @@ public final class PrintCOM extends BaseControl {
                             String sql2 = "update cb_config set PrintSlipPort=''";
                             update(sql2);
                         } catch (Exception e) {
-                            System.err.println(e.getMessage());
+                            JOptionPane.showMessageDialog(null, e.getMessage());
                         }
                     }
                 }

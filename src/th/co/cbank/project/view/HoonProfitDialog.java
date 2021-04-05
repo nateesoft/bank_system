@@ -776,7 +776,7 @@ public class HoonProfitDialog extends BaseDialogSwing {
             MySQLConnect.exeUpdate(sql1);
             MySQLConnect.exeUpdate(sql2);
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
         CbHoonSummaryBean bean = new CbHoonSummaryBean();
@@ -851,7 +851,7 @@ public class HoonProfitDialog extends BaseDialogSwing {
 
                         sqlMPoint.close();
                     } catch (Exception e) {
-                        System.err.println(e.getMessage());
+                        JOptionPane.showMessageDialog(null, e.getMessage());
                     }
 
                     double totalARAmount = 0.00;
@@ -898,13 +898,13 @@ public class HoonProfitDialog extends BaseDialogSwing {
                                 + "where HoonCode='" + HoonCode + "' "
                                 + "and year_at is null");
                     } catch (Exception e) {
-                        System.err.println(e.getMessage());
+                        JOptionPane.showMessageDialog(null, e.getMessage());
                     }
                 }
 
                 rsHoon.close();
             } catch (Exception e) {
-                System.err.println(e.getMessage());
+                JOptionPane.showMessageDialog(null, e.getMessage());
             }
 
             String listBalance = "select * from cb_hoon_balance";

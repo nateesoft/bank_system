@@ -30,8 +30,6 @@ public class ReportInvoiceHoon extends javax.swing.JDialog {
 
         model = (DefaultTableModel) tableData.getModel();
         initTable();
-        setLocation(0, 0);
-        setSize(parent.getMaximumSize());
         txtIdCard.requestFocus();
     }
 

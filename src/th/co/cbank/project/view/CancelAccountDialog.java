@@ -30,7 +30,7 @@ public class CancelAccountDialog extends BaseDialogSwing {
                     + "user_code varchar(40) default '')";
             MySQLConnect.exeUpdate(sql);
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
         initTable();

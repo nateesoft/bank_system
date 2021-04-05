@@ -223,7 +223,7 @@ public class AddCreditLoanDialog extends BaseDialogSwing {
                 double d = Double.parseDouble(txtCreditAmt1.getText());
                 txtLoanMaxAmt.setText("" + d);
             } catch (NumberFormatException e) {
-                System.err.println(e.getMessage());
+                System.err.println(e);
             }
         }
     }//GEN-LAST:event_txtCreditAmt1KeyReleased

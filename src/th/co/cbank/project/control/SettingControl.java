@@ -3,6 +3,7 @@ package th.co.cbank.project.control;
 import th.co.cbank.project.model.GroupBean;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
 import th.co.cbank.util.ThaiUtil;
 
@@ -24,7 +25,7 @@ public class SettingControl extends BaseControl {
             }
             rs.close();
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
         return listBean;
@@ -42,7 +43,7 @@ public class SettingControl extends BaseControl {
             }
             rs.close();
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
         return bean;
@@ -63,7 +64,7 @@ public class SettingControl extends BaseControl {
 
             rs.close();
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 
@@ -75,7 +76,7 @@ public class SettingControl extends BaseControl {
                     + "where groupcode='" + bean.getGroupCode() + "'";
             update(sql);
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 

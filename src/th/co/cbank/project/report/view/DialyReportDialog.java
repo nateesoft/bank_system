@@ -22,9 +22,6 @@ public class DialyReportDialog extends BaseDialogSwing {
         
         this.parent = parent;
         init();
-        
-        setLocation(0, 0);
-        setSize(parent.getMaximumSize());
     }
 
     @SuppressWarnings("unchecked")

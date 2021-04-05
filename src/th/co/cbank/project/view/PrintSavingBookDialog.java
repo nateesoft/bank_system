@@ -369,7 +369,7 @@ public class PrintSavingBookDialog extends BaseDialogSwing {
                     backupIndex = index;
                 }
             } catch (Exception e) {
-                System.err.println(e.getMessage());
+                JOptionPane.showMessageDialog(null, e.getMessage());
             }
         }
     }//GEN-LAST:event_btnPrintActionPerformed
@@ -520,7 +520,7 @@ public class PrintSavingBookDialog extends BaseDialogSwing {
                             + "AND t_date='" + t_date + "'";
                     MySQLConnect.exeUpdate(sql);
                 } catch (Exception e) {
-                    System.err.println(e.getMessage());
+                    JOptionPane.showMessageDialog(null, e.getMessage());
                 }
             } else {
                 try {
@@ -534,7 +534,7 @@ public class PrintSavingBookDialog extends BaseDialogSwing {
                             + "AND t_date='" + t_date + "'";
                     MySQLConnect.exeUpdate(sql);
                 } catch (Exception e) {
-                    System.err.println(e.getMessage());
+                    JOptionPane.showMessageDialog(null, e.getMessage());
                 }
             }
         }

@@ -39,9 +39,6 @@ public class HoonReportAllDialog extends BaseDialogSwing {
         initTable();
 
         txtDate2.setText(DateFormat.getLocale_ddMMyyyy(new Date()));
-
-        setLocation(0, 0);
-        setSize(parent.getMaximumSize());
     }
 
     @SuppressWarnings("unchecked")

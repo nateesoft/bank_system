@@ -2,6 +2,7 @@ package th.co.cbank.project.view;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
 import th.co.cbank.project.model.CbSaveAccountBean;
 
@@ -37,7 +38,7 @@ public class WaitDialog extends BaseDialogSwing {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
-                    System.err.println(e.getMessage());
+                    System.err.println(e);
                 }
 
                 dispose();

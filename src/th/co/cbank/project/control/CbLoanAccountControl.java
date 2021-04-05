@@ -3,6 +3,7 @@ package th.co.cbank.project.control;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
 import th.co.cbank.util.DateFormat;
 import th.co.cbank.util.ThaiUtil;
@@ -289,7 +290,7 @@ public class CbLoanAccountControl extends BaseControl {
                             + "where LoanCode='" + bean.getLoan_type() + "'";
                     update(sql2);
                 } catch (Exception e) {
-                    System.err.println(e.getMessage());
+                    JOptionPane.showMessageDialog(null, e.getMessage());
                 }
 
                 isSave = true;

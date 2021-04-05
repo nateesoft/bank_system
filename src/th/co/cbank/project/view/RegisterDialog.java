@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
 import th.co.cbank.project.control.GetMD5;
 
@@ -113,7 +114,7 @@ public class RegisterDialog extends BaseDialogSwing {
                     out.close();
                     fw.close();
                 } catch (IOException e) {
-                    System.err.println(e.getMessage());
+                    System.err.println(e);
                 }
             } catch (Exception ex) {
                 

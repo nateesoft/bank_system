@@ -26,9 +26,6 @@ public class ConfigDialog extends BaseDialogSwing {
 
         loadListGroup();
         loadListUser();
-        
-        setLocation(0, 0);
-        setSize(parent.getMaximumSize());
 
         txtBranchCode.requestFocus();
     }
