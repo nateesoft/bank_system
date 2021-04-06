@@ -26,6 +26,7 @@ import th.co.cbank.project.control.ViewReport;
 import th.co.cbank.project.model.BranchBean;
 import th.co.cbank.project.model.CbSaveConfigBean;
 import th.co.cbank.util.DateChooseDialog;
+import th.co.cbank.util.TableUtil;
 
 public class OpenAccountReport extends BaseDialogSwing {
     private final Logger logger = Logger.getLogger(OpenAccountReport.class);
@@ -426,10 +427,7 @@ public class OpenAccountReport extends BaseDialogSwing {
 
     private void showAll() {
         DefaultTableModel model = (DefaultTableModel) tbTransaction.getModel();
-        int size = model.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
 
         try {
             String sql = "select b_start, account_code, type_name,b_fee,typeName,"

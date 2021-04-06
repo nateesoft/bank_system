@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.apache.log4j.Logger;
 import th.co.cbank.util.JTableUtil;
+import th.co.cbank.util.TableUtil;
 
 public class TransactionAdvanceDialog extends BaseDialogSwing {
 
@@ -412,10 +413,7 @@ public class TransactionAdvanceDialog extends BaseDialogSwing {
 
     private void clearModel() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        int size = jTable1.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
     }
 
 }

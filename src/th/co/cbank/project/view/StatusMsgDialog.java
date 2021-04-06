@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import th.co.cbank.util.ThaiUtil;
 import th.co.cbank.project.constants.AppConstants;
 import th.co.cbank.project.model.CbStatusBean;
+import th.co.cbank.util.TableUtil;
 
 public class StatusMsgDialog extends BaseDialogSwing {
     private final Logger logger = Logger.getLogger(StatusMsgDialog.class);
@@ -283,10 +284,7 @@ public class StatusMsgDialog extends BaseDialogSwing {
     private void loadExpenseData() {
         ArrayList<CbStatusBean> listExp = getStatusControl().listExpense();
         DefaultTableModel model = (DefaultTableModel) tbStatus.getModel();
-        int size = model.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
 
         for (int i = 0; i < listExp.size(); i++) {
             CbStatusBean bean = (CbStatusBean) listExp.get(i);

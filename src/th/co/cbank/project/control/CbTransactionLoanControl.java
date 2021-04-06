@@ -6,7 +6,9 @@ import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
 import th.co.cbank.util.DateFormat;
 import th.co.cbank.project.model.CbTransactionLoanBean;
+import th.co.cbank.util.NumberFormat;
 import th.co.cbank.util.StringUtil;
+import th.co.cbank.util.ThaiUtil;
 
 public class CbTransactionLoanControl extends BaseControl {
     private final Logger logger = Logger.getLogger(CbTransactionLoanControl.class);
@@ -227,5 +229,32 @@ public class CbTransactionLoanControl extends BaseControl {
             JOptionPane.showMessageDialog(null, e.getMessage());
             
         }
+    }
+    
+    public static ArrayList<Object[]> getTransactionListWhereCustCode(String custCode){
+        ArrayList<Object[]> list = new ArrayList();
+        try {
+            String sql = "select t_date, t_time, t_custcode, t_acccode, t_balance, "
+                    + "t_amount,t_interest,t_description "
+                    + "from cb_transaction_loan "
+                    + "where t_custcode='" + custCode + "' "
+                    + "order by t_date, t_time";
+            ResultSet rs1 = MySQLConnect.getResultSet(sql);
+            while (rs1.next()) {
+                list.add(new Object[]{
+                    rs1.getString("t_acccode"),
+                    rs1.getString("t_date")+" "+rs1.getString("t_time"),
+                    ThaiUtil.ASCII2Unicode(rs1.getString("t_description")),
+                    NumberFormat.showDouble2(rs1.getString("t_amount")),
+                    NumberFormat.showDouble2(rs1.getString("t_interest")),
+                    NumberFormat.showDouble2(rs1.getString("t_balance"))
+                });
+            }
+            rs1.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        
+        return list;
     }
 }

@@ -12,6 +12,7 @@ import th.co.cbank.project.constants.AppConstants;
 import th.co.cbank.project.control.MySQLConnect;
 import th.co.cbank.project.control.Value;
 import th.co.cbank.project.log.Log;
+import th.co.cbank.util.TableUtil;
 
 public class ListCustomerDialog extends BaseDialogSwing {
     private final Logger logger = Logger.getLogger(ListCustomerDialog.class);
@@ -192,10 +193,7 @@ public class ListCustomerDialog extends BaseDialogSwing {
         tHeader.setFont(new Font(AppConstants.DEFAULT_FONT, Font.BOLD, AppConstants.DEFAULT_FONT_SIZE));
 
         DefaultTableModel model = (DefaultTableModel) tbApprove.getModel();
-        int size = model.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
 
         try {
             String sql = "select p_custCode, p_custName,p_custsurname,ApproveLimit "
@@ -220,10 +218,7 @@ public class ListCustomerDialog extends BaseDialogSwing {
 
     private void searchCustomer() {
         DefaultTableModel model = (DefaultTableModel) tbApprove.getModel();
-        int size = model.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
 
         try {
             String sql = "select p_custCode, p_custName,p_custsurname,ApproveLimit "

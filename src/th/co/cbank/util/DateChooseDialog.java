@@ -481,10 +481,7 @@ private void cbMonthKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_c
     }
 
     private void resetTableModel(DefaultTableModel model) {
-        int rowCount = model.getRowCount();
-        for (int i = 0; i < rowCount; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
     }
 
     /**

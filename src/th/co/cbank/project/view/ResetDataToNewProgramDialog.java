@@ -12,6 +12,7 @@ import th.co.cbank.util.ThaiUtil;
 import th.co.cbank.project.constants.AppConstants;
 import th.co.cbank.project.control.MySQLConnect;
 import th.co.cbank.project.log.Log;
+import th.co.cbank.util.TableUtil;
 
 public class ResetDataToNewProgramDialog extends BaseDialogSwing {
     private final Logger logger = Logger.getLogger(ResetDataToNewProgramDialog.class);
@@ -288,10 +289,7 @@ public class ResetDataToNewProgramDialog extends BaseDialogSwing {
 
     private void loadTables() {
         DefaultTableModel model = (DefaultTableModel) tbListTable.getModel();
-        int size = model.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
         try {
             String sql = "show tables";
             ResultSet rs = MySQLConnect.getResultSet(sql);

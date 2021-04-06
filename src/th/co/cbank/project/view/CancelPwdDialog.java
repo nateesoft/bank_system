@@ -1,9 +1,8 @@
 package th.co.cbank.project.view;
 
-import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
-import th.co.cbank.project.control.MySQLConnect;
+import th.co.cbank.project.control.CbUserControl;
 import th.co.cbank.project.control.Value;
 
 public class CancelPwdDialog extends BaseDialogSwing {
@@ -29,7 +28,7 @@ public class CancelPwdDialog extends BaseDialogSwing {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnCheckPassword = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txtPwd = new javax.swing.JPasswordField();
 
@@ -38,11 +37,11 @@ public class CancelPwdDialog extends BaseDialogSwing {
 
         jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jButton1.setText("ตกลง (OK)");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnCheckPassword.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnCheckPassword.setText("ตกลง (OK)");
+        btnCheckPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnCheckPasswordActionPerformed(evt);
             }
         });
 
@@ -61,7 +60,7 @@ public class CancelPwdDialog extends BaseDialogSwing {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtPwd, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(btnCheckPassword)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -72,7 +71,7 @@ public class CancelPwdDialog extends BaseDialogSwing {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
                         .addComponent(txtPwd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnCheckPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -97,33 +96,27 @@ public class CancelPwdDialog extends BaseDialogSwing {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            String sql = "select * "
-                    + "from cb_user "
-                    + "where username='" + Value.USER_CODE + "' "
-                    + "and password=md5('" + txtPwd.getText().trim() + "') ";
-            ResultSet rs = MySQLConnect.getResultSet(sql);
-            if (rs.next()) {
-                isPwdOk(true);
-            }else{
-                JOptionPane.showMessageDialog(this, "รหัสผ่านไม่ถูกต้อง");
-                txtPwd.selectAll();
-                txtPwd.requestFocus();
-            }
-
-            rs.close();
-        } catch (Exception e) {
-            isPwdOk(false);
-        }
-
-        dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnCheckPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckPasswordActionPerformed
+        checkPassword();
+    }//GEN-LAST:event_btnCheckPasswordActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnCheckPassword;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField txtPwd;
     // End of variables declaration//GEN-END:variables
+
+    private void checkPassword() {
+        boolean isValidUser = CbUserControl.validUserConfirm(Value.USER_CODE, txtPwd.getText().trim());
+        if (isValidUser) {
+            isPwdOk(true);
+        } else {
+            isPwdOk(false);
+            JOptionPane.showMessageDialog(this, "รหัสผ่านไม่ถูกต้อง");
+            txtPwd.selectAll();
+            txtPwd.requestFocus();
+        }
+        dispose();
+    }
 }

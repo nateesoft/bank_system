@@ -316,5 +316,20 @@ public class CbSaveConfigControl extends BaseControl {
             return false;
         }
     }
+    
+    public static boolean updateSaveRunningAndNoRunning(String accountType){
+        try {
+            String sql1 = "update cb_save_config set "
+                    + "SaveRunning=SaveRunning-1, "
+                    + "NoRunning=NoRunning-1 "
+                    + "where typeCode='" + accountType + "'";
+            MySQLConnect.exeUpdate(sql1);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            Log.write.error(e.getMessage());
+            return false;
+        }
+        return true;
+    }
 
 }

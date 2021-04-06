@@ -11,6 +11,7 @@ import th.co.cbank.util.ThaiUtil;
 import th.co.cbank.project.constants.AppConstants;
 import th.co.cbank.project.control.MySQLConnect;
 import th.co.cbank.project.control.Value;
+import th.co.cbank.util.TableUtil;
 
 public class ShowLoanAccountPrintDialog extends BaseDialogSwing {
     private final Logger logger = Logger.getLogger(ShowLoanAccountPrintDialog.class);
@@ -194,10 +195,7 @@ public class ShowLoanAccountPrintDialog extends BaseDialogSwing {
 
     private void loadListAccount() {
         DefaultTableModel model = (DefaultTableModel) tbAccountList.getModel();
-        int size = model.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
         tbAccountList.setFont(new Font(AppConstants.DEFAULT_FONT, Font.PLAIN, AppConstants.DEFAULT_FONT_SIZE));
         tbAccountList.setRowHeight(30);
         JTableHeader tHeader = tbAccountList.getTableHeader();
@@ -227,10 +225,7 @@ public class ShowLoanAccountPrintDialog extends BaseDialogSwing {
 
     private void loadListAccount(String text) {
         DefaultTableModel model = (DefaultTableModel) tbAccountList.getModel();
-        int size = model.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
         
         text = ThaiUtil.Unicode2ASCII(text);
         tbAccountList.setFont(new Font(AppConstants.DEFAULT_FONT, Font.PLAIN, AppConstants.DEFAULT_FONT_SIZE));

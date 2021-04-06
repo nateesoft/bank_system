@@ -41,6 +41,7 @@ import th.co.cbank.project.model.CbPrefixBean;
 import th.co.cbank.project.model.CbProjectBean;
 import th.co.cbank.util.DateChooseDialog;
 import th.co.cbank.util.ImagePreviewPanel;
+import th.co.cbank.util.TableUtil;
 
 public class SavingDialog extends BaseDialogSwing {
     private final Logger logger = Logger.getLogger(SavingDialog.class);
@@ -3588,10 +3589,7 @@ public class SavingDialog extends BaseDialogSwing {
 
     private void loadPersonApp() {
         DefaultTableModel model = (DefaultTableModel) tbListPersonApp.getModel();
-        int size = model.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
 
         String accountCode = txtCode.getText();
         ArrayList<CbWithdrawAllowBean> listWithdraw = getCbWithdrawAllowControl().listCbWithdrawAllow(accountCode);

@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import th.co.cbank.util.ThaiUtil;
 import th.co.cbank.project.constants.AppConstants;
 import th.co.cbank.project.model.CbExpenseBean;
+import th.co.cbank.util.TableUtil;
 
 public class ExpendDialog extends BaseDialogSwing {
     private final Logger logger = Logger.getLogger(ExpendDialog.class);
@@ -282,10 +283,7 @@ public class ExpendDialog extends BaseDialogSwing {
     private void loadExpenseData() {
         ArrayList<CbExpenseBean> listExp = getExpenseControl().listExpense();
         DefaultTableModel model = (DefaultTableModel) tbExpend.getModel();
-        int size = model.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
 
         for (int i = 0; i < listExp.size(); i++) {
             CbExpenseBean bean = (CbExpenseBean) listExp.get(i);

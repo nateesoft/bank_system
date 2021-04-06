@@ -19,6 +19,7 @@ import th.co.cbank.util.ThaiUtil;
 import th.co.cbank.project.constants.AppConstants;
 import th.co.cbank.project.control.MySQLConnect;
 import th.co.cbank.project.control.ViewReport;
+import th.co.cbank.util.TableUtil;
 
 public class ReportInvoiceHoon extends javax.swing.JDialog {
 
@@ -304,10 +305,7 @@ public class ReportInvoiceHoon extends javax.swing.JDialog {
     }
 
     private void find() {
-        int size = model.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
 
         String sql = "select p.p_custcode, concat(p_custname, ' ', p_custsurname) name, "
                 + "loan_docno, loan_docdate, loan_amount, loan_interest, loan_datepay, "

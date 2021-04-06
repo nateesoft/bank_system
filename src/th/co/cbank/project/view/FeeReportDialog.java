@@ -16,6 +16,7 @@ import th.co.cbank.util.ThaiUtil;
 import th.co.cbank.project.constants.AppConstants;
 import th.co.cbank.project.control.MySQLConnect;
 import th.co.cbank.project.control.ViewReport;
+import th.co.cbank.util.TableUtil;
 
 public class FeeReportDialog extends BaseDialogSwing {
     private final Logger logger = Logger.getLogger(FeeReportDialog.class);
@@ -182,10 +183,7 @@ public class FeeReportDialog extends BaseDialogSwing {
         tHeader.setFont(new Font(AppConstants.DEFAULT_FONT, Font.BOLD, AppConstants.DEFAULT_FONT_SIZE));
 
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        int size = model.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
 
         JTableUtil.alignCenter(jTable1, 0);
         JTableUtil.alignCenter(jTable1, 3);

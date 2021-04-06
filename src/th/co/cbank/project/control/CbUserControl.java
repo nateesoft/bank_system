@@ -114,5 +114,22 @@ public class CbUserControl extends BaseControl {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
+    
+    public static boolean validUserConfirm(String userCode, String password) {
+        boolean isValid = false;
+        try {
+            String sql = "select * from cb_user "
+                    + "where username='" + userCode + "' "
+                    + "and password=md5('" + password + "') ";
+            ResultSet rs = MySQLConnect.getResultSet(sql);
+            if (rs.next()) {
+                isValid = true;
+            }
+            rs.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        return isValid;
+    }
 
 }

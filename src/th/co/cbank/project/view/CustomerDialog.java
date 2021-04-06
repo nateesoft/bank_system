@@ -17,6 +17,7 @@ import th.co.cbank.project.model.CbLoanAccountBean;
 import th.co.cbank.project.model.CbSaveAccountBean;
 import th.co.cbank.util.NumberUtil;
 import th.co.cbank.util.StringUtil;
+import th.co.cbank.util.TableUtil;
 
 public class CustomerDialog extends BaseDialogSwing {
 
@@ -276,10 +277,7 @@ public class CustomerDialog extends BaseDialogSwing {
             //for save account
             int rows = tbCustomer.getSelectedRow();
             modelDetail = (DefaultTableModel) tbAccount.getModel();
-            int size = modelDetail.getRowCount();
-            for (int i = 0; i < size; i++) {
-                modelDetail.removeRow(0);
-            }
+            TableUtil.clearModel(modelDetail);
             
             ArrayList<CbSaveAccountBean> listBean = getSaveAccountControl().listCbSaveAccount("" + tbCustomer.getValueAt(rows, 1));
             for (int i = 0; i < listBean.size(); i++) {
@@ -294,10 +292,7 @@ public class CustomerDialog extends BaseDialogSwing {
             
             //for loan account
             modelDetail2 = (DefaultTableModel) tbLoanAccount.getModel();
-            int size2 = modelDetail2.getRowCount();
-            for (int i = 0; i < size2; i++) {
-                modelDetail2.removeRow(0);
-            }
+            TableUtil.clearModel(modelDetail2);
             
             ArrayList<CbLoanAccountBean> listLoan = getLoanAccountControl().listLoanAccountCust("" + tbCustomer.getValueAt(rows, 1));
             for(int i=0;i<listLoan.size();i++){
@@ -408,10 +403,7 @@ public class CustomerDialog extends BaseDialogSwing {
     }
 
     private void findCustomer() {
-        int sizeM = model.getRowCount();
-        for (int i = 0; i < sizeM; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
 
         ArrayList<ProfileBean> listData = getProfileControl().search(txtSearch.getText());
         for (int i = 0; i < listData.size(); i++) {

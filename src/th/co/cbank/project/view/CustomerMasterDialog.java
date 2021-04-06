@@ -9,6 +9,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import org.apache.log4j.Logger;
 import th.co.cbank.project.constants.AppConstants;
+import th.co.cbank.util.TableUtil;
 
 public class CustomerMasterDialog extends BaseDialogSwing {
 
@@ -209,10 +210,7 @@ public class CustomerMasterDialog extends BaseDialogSwing {
     }
 
     private void findCustomer() {
-        int sizeM = model.getRowCount();
-        for (int i = 0; i < sizeM; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
 
         ArrayList<ProfileBean> listData = getProfileControl().search(txtSearch.getText());
         for (int i = 0; i < listData.size(); i++) {

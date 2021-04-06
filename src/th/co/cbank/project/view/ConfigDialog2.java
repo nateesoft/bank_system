@@ -28,6 +28,7 @@ import th.co.cbank.project.log.Log;
 import th.co.cbank.project.model.CbHoonConfigBean;
 import th.co.cbank.project.model.CbLoanConfigBean;
 import th.co.cbank.project.model.CbSaveConfigBean;
+import th.co.cbank.util.TableUtil;
 
 public class ConfigDialog2 extends BaseDialogSwing {
 
@@ -4325,10 +4326,7 @@ public class ConfigDialog2 extends BaseDialogSwing {
 
     private void loadDataSaveType() {
         DefaultTableModel model = (DefaultTableModel) tbConfigSaveType.getModel();
-        int size = model.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
 
         ArrayList<CbSaveConfigBean> listBean = getSaveConfigControl().listSaveConfig();
         for (int i = 0; i < listBean.size(); i++) {
@@ -4498,10 +4496,7 @@ public class ConfigDialog2 extends BaseDialogSwing {
 
     private void loadHoonList() {
         DefaultTableModel model2 = (DefaultTableModel) jTable2.getModel();
-        int size = model2.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model2.removeRow(0);
-        }
+        TableUtil.clearModel(model2);
 
         ArrayList<CbHoonConfigBean> listHoonConfig = getHoonConfigControl().listCbHoonConfig();
         for (int i = 0; i < listHoonConfig.size(); i++) {
@@ -4622,10 +4617,7 @@ public class ConfigDialog2 extends BaseDialogSwing {
 
     private void loadConfigLoadList() {
         DefaultTableModel model1 = (DefaultTableModel) tbLoanConfig.getModel();
-        int sizeLoan = model1.getRowCount();
-        for (int i = 0; i < sizeLoan; i++) {
-            model1.removeRow(0);
-        }
+        TableUtil.clearModel(model1);
 
         ArrayList<CbLoanConfigBean> listLoan = getLoanConfigControl().listLoanConfig();
         for (int i = 0; i < listLoan.size(); i++) {

@@ -20,6 +20,7 @@ import th.co.cbank.project.model.CbSaveConfigBean;
 import th.co.cbank.project.model.CbTransactionSaveBean;
 import th.co.cbank.project.control.PassBook_PSiPR9;
 import th.co.cbank.project.model.ReportGreenBean;
+import th.co.cbank.util.TableUtil;
 
 public class PrintSavingBookDialog extends BaseDialogSwing {
 
@@ -300,10 +301,7 @@ public class PrintSavingBookDialog extends BaseDialogSwing {
     }//GEN-LAST:event_btnFindActionPerformed
 
     private void clearModel(DefaultTableModel model) {
-        int size = model.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
     }
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed

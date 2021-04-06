@@ -3,9 +3,8 @@ package th.co.cbank.project.view;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
-import th.co.cbank.project.control.MySQLConnect;
+import th.co.cbank.project.control.CbProfileControl;
 import th.co.cbank.project.control.Value;
-import th.co.cbank.project.log.Log;
 import th.co.cbank.project.model.ProfileBean;
 
 public class AddCreditLoanDialog extends BaseDialogSwing {
@@ -252,22 +251,14 @@ public class AddCreditLoanDialog extends BaseDialogSwing {
 
     private void saveLoanAllow() {
         //update ar credit amount
-        try {
-            String idCard = Value.CUST_CODE;
-            double tCreditAmt1 = Double.parseDouble(txtCreditAmt1.getText());
-            String sql = "update cb_profile set "
-                    + "Loan_Credit_Amt = '" + tCreditAmt1 + "',"
-                    + "Loan_Credit_Balance = '" + tCreditAmt1 + "' "
-                    + "where p_CustCode='" + idCard + "';";
-            MySQLConnect.exeUpdate(sql);
-
+        String idCard = Value.CUST_CODE;
+        double tCreditAmt1 = Double.parseDouble(txtCreditAmt1.getText());
+        boolean isUpdate = CbProfileControl.saveLoanAllow(idCard, tCreditAmt1);
+        if(isUpdate){
             //save history
-            JOptionPane.showMessageDialog(this, "บันทึกข้อมูลเรียบร้อยแล้ว");
+            JOptionPane.showMessageDialog(null, "บันทึกข้อมูลเรียบร้อยแล้ว");
             jButton1.setVisible(true);
             dispose();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-            Log.write.error(e.getMessage());
         }
     }
 

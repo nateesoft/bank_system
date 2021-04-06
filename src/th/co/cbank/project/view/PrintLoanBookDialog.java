@@ -20,6 +20,7 @@ import th.co.cbank.project.model.ProfileBean;
 import th.co.cbank.project.control.PassBook_PSiPR9;
 import th.co.cbank.project.model.ReportOrangeBean;
 import th.co.cbank.util.StringUtil;
+import th.co.cbank.util.TableUtil;
 
 public class PrintLoanBookDialog extends BaseDialogSwing {
 
@@ -264,10 +265,7 @@ public class PrintLoanBookDialog extends BaseDialogSwing {
                 tbTransaction.setFont(new Font(AppConstants.DEFAULT_FONT, Font.PLAIN, AppConstants.DEFAULT_FONT_SIZE));
                 tbTransaction.setRowHeight(30);
                 DefaultTableModel model = (DefaultTableModel) tbTransaction.getModel();
-                int size = model.getRowCount();
-                for (int i = 0; i < size; i++) {
-                    model.removeRow(0);
-                }
+                TableUtil.clearModel(model);
                 String sql = "select * from cb_transaction_loan "
                         + "where t_acccode='" + txtLoanCode.getText() + "' "
                         + "and LineNo>0 "

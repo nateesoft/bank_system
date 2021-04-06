@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.apache.log4j.Logger;
+import th.co.cbank.util.TableUtil;
 
 public class HoonProfitDialog extends BaseDialogSwing {
     private final Logger logger = Logger.getLogger(HoonProfitDialog.class);
@@ -1005,10 +1006,7 @@ public class HoonProfitDialog extends BaseDialogSwing {
         DefaultTableModel model = (DefaultTableModel) tbTransaction.getModel();
         tbTransaction.setRowHeight(30);
 
-        int size = model.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
 
         ArrayList<CbHoonSummaryBean> listBean = getSummaryControl().getAllData();
         for (int i = 0; i < listBean.size(); i++) {

@@ -20,6 +20,7 @@ import th.co.cbank.project.control.MySQLConnect;
 import th.co.cbank.project.model.CbMemberTypeBean;
 import th.co.cbank.project.model.ProfileMapping;
 import th.co.cbank.util.ExcelUtil;
+import th.co.cbank.util.TableUtil;
 
 public class ProfileList2Dialog extends BaseDialogSwing {
     private final Logger logger = Logger.getLogger(ProfileList2Dialog.class);
@@ -401,10 +402,7 @@ public class ProfileList2Dialog extends BaseDialogSwing {
 
     private void loadData() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        int size = model.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
 
         Date d1 = DateFormat.getLocal_ddMMyyyy(txtDate.getText());
         String sql = "select p.*, group_concat(account_code) listAcc, group_concat(loan_docno) listLoan "

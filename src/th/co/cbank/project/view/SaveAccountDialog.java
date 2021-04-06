@@ -191,10 +191,7 @@ public class SaveAccountDialog extends BaseDialogSwing {
     // End of variables declaration//GEN-END:variables
 
     private void loadData() {
-        int size = model.getRowCount();
-        for(int i=0;i<size;i++){
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
                 
         List<CbSaveAccountBean> listAccount = getSaveAccountControl().searchSaveAccount(ThaiUtil.Unicode2ASCII(txtSearch.getText()));
         for(int i=0;i<listAccount.size();i++){

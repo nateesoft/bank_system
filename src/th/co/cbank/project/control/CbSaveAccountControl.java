@@ -16,6 +16,7 @@ import th.co.cbank.project.model.CalendarBean;
 import th.co.cbank.project.model.CbSaveAccountBean;
 import th.co.cbank.project.model.SettingBean;
 import th.co.cbank.project.model.mapping.PayInterestAmtMapping;
+import th.co.cbank.util.NumberFormat;
 import th.co.cbank.util.StringUtil;
 
 public class CbSaveAccountControl extends BaseControl {
@@ -1153,5 +1154,58 @@ public class CbSaveAccountControl extends BaseControl {
         }
 
         return listData;
+    }
+    
+    public static int getMaxBookNo() {
+        int maxBookNo = 0;
+        try {
+            String sql0 = "select max(book_no) m_book_no from cb_save_account;";
+            ResultSet rs = MySQLConnect.getResultSet(sql0);
+            if (rs.next()) {
+                maxBookNo = rs.getInt("m_book_no");
+            }
+
+            rs.close();
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e.getMessage());
+        }
+        
+        return maxBookNo;
+    }
+    
+    public static boolean deleteAccountAndBookNo(String accountNo, int bookNo) {
+        try {
+            String sql = "delete from cb_save_account "
+                    + "where account_code='" + accountNo + "' "
+                    + "and book_no='" + bookNo + "'";
+            MySQLConnect.exeUpdate(sql);
+        } catch (Exception e) {
+             JOptionPane.showConfirmDialog(null, e.getMessage());
+             return false;
+        }
+        return true;
+    }
+    
+    public static ArrayList<Object[]> getAccountWhereCustCode(String custCode){
+        ArrayList<Object[]> list = new ArrayList();
+        try {
+            String sql = "select b_cust_code,account_code, b_balance,b_fee "
+                    + "from cb_save_account where b_cust_code='" + custCode + "'";
+            ResultSet rs1 = MySQLConnect.getResultSet(sql);
+            while (rs1.next()) {
+                list.add(new Object[]{
+                    rs1.getString("b_cust_code"),
+                    rs1.getString("account_code"),
+                    NumberFormat.showDouble2(rs1.getString("b_balance")),
+                    NumberFormat.showDouble2(rs1.getString("b_fee"))
+                });
+            }
+
+            rs1.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        
+        return list;
     }
 }

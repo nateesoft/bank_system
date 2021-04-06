@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import th.co.cbank.util.ThaiUtil;
 import th.co.cbank.project.constants.AppConstants;
 import th.co.cbank.project.model.CbMemberTypeBean;
+import th.co.cbank.util.TableUtil;
 
 public class MemberTypeDialog extends BaseDialogSwing {
     private final Logger logger = Logger.getLogger(MemberTypeDialog.class);
@@ -316,10 +317,7 @@ public class MemberTypeDialog extends BaseDialogSwing {
     private void loadMemberTypeData() {
         ArrayList<CbMemberTypeBean> listExp = getMemberTypeControl().listMemberType();
         DefaultTableModel model = (DefaultTableModel) tbMemberType.getModel();
-        int size = model.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
 
         for (int i = 0; i < listExp.size(); i++) {
             CbMemberTypeBean bean = (CbMemberTypeBean) listExp.get(i);

@@ -1,40 +1,30 @@
 package th.co.cbank.project.view;
 
 import java.awt.Font;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import org.apache.log4j.Logger;
 import th.co.cbank.util.DateFormat;
-import th.co.cbank.util.ThaiUtil;
 import th.co.cbank.project.constants.AppConstants;
-import th.co.cbank.project.control.MySQLConnect;
+import th.co.cbank.project.control.CancelAccontControl;
+import th.co.cbank.project.control.CbSaveAccountControl;
+import th.co.cbank.project.control.CbSaveConfigControl;
 import th.co.cbank.project.control.Value;
 import th.co.cbank.project.model.CbCancelAccountBean;
+import th.co.cbank.util.TableUtil;
 
 public class CancelAccountDialog extends BaseDialogSwing {
+
     private final Logger logger = Logger.getLogger(CancelAccountDialog.class);
 
     public CancelAccountDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
 
-        try {
-            String sql = "create table cb_cancel_account("
-                    + "date_cancel date default '2015-01-01',"
-                    + "time_cancel varchar(10) default '00:00:00',"
-                    + "account_no varchar(20) default '',"
-                    + "account_type varchar(5) default '',"
-                    + "user_code varchar(40) default '')";
-            MySQLConnect.exeUpdate(sql);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-
         initTable();
-        jButton4ActionPerformed(null);
+        findAccount();
         loadCancelData();
     }
 
@@ -45,8 +35,8 @@ public class CancelAccountDialog extends BaseDialogSwing {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbMaster = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnCancelProcess = new javax.swing.JButton();
+        btnFindAccountToCancel = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbCancelData = new javax.swing.JTable();
@@ -85,21 +75,21 @@ public class CancelAccountDialog extends BaseDialogSwing {
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(255, 204, 204));
-        jButton3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton3.setText("ยกเลิกบัญชี");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelProcess.setBackground(new java.awt.Color(255, 204, 204));
+        btnCancelProcess.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnCancelProcess.setText("ยกเลิกบัญชี");
+        btnCancelProcess.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnCancelProcessActionPerformed(evt);
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(153, 255, 102));
-        jButton4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jButton4.setText("ค้นหาข้อมูลบัญชีที่ต้องการยกเลิก");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnFindAccountToCancel.setBackground(new java.awt.Color(153, 255, 102));
+        btnFindAccountToCancel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnFindAccountToCancel.setText("ค้นหาข้อมูลบัญชีที่ต้องการยกเลิก");
+        btnFindAccountToCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnFindAccountToCancelActionPerformed(evt);
             }
         });
 
@@ -137,11 +127,11 @@ public class CancelAccountDialog extends BaseDialogSwing {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 940, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnFindAccountToCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3)
+                        .addComponent(btnCancelProcess)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2))
                     .addGroup(layout.createSequentialGroup()
@@ -156,8 +146,8 @@ public class CancelAccountDialog extends BaseDialogSwing {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancelProcess, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnFindAccountToCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -172,121 +162,22 @@ public class CancelAccountDialog extends BaseDialogSwing {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        int rowSel = tbMaster.getSelectedRow();
-        if (rowSel != -1) {
-            String accountNo = tbMaster.getValueAt(rowSel, 2).toString();
-            String accountType = tbMaster.getValueAt(rowSel, 5).toString();
-            int bookNo = Integer.parseInt(tbMaster.getValueAt(rowSel, 6).toString());
-            int conf = JOptionPane.showConfirmDialog(this, "ท่านต้องการยกเลิกบัญชีเลขที่ " + accountNo + " ใช่หรือไม่ ?");
-            if (conf == JOptionPane.YES_OPTION) {
-                CancelPwdDialog c = new CancelPwdDialog(null, true);
-                c.setVisible(true);
-
-                if (c.isPwdOk()) {
-                    //action
-                    /*
-                     1. ต้องยกเลิกภายในวันนั้น ข้ามวันไม่ได้ (ผ่าน)
-                     2. ยังไม่มีการฝากเงินเข้าไปในบัญชี (ผ่าน)
-                     3. ยังไม่มีการเปิดบัญชีต่อจากบัญชีที่เปิดผิดนี้                    
-                     */
-                    int maxBookNo = 0;
-                    try {
-                        String sql0 = "select max(book_no) m_book_no from cb_save_account;";
-                        ResultSet rs = MySQLConnect.getResultSet(sql0);
-                        if (rs.next()) {
-                            maxBookNo = rs.getInt("m_book_no");
-                        }
-
-                        rs.close();
-                    } catch (Exception e) {
-                        JOptionPane.showConfirmDialog(this, e.getMessage());
-                    }
-                    if (bookNo == maxBookNo) {
-                        /*
-                         1. ลบรายการออกจาก cb_save_account
-                         2. อัพเดต Running ย้อนกลับไป 1 ค่า
-                         */
-                        try {
-                            String sql = "delete from cb_save_account "
-                                    + "where account_code='" + accountNo + "' "
-                                    + "and book_no='" + bookNo + "'";
-                            MySQLConnect.exeUpdate(sql);
-
-                            String sql1 = "update cb_save_config set "
-                                    + "SaveRunning=SaveRunning-1, "
-                                    + "NoRunning=NoRunning-1 "
-                                    + "where typeCode='" + accountType + "'";
-                            MySQLConnect.exeUpdate(sql1);
-
-                            JOptionPane.showMessageDialog(this, "ยกเลิกบัญชี " + accountNo + " เรียบร้อยแล้ว");
-
-                            jButton4ActionPerformed(null);
-
-                            CbCancelAccountBean bean = new CbCancelAccountBean();
-                            bean.setAccount_no(accountNo);
-                            bean.setAccount_type(accountType);
-                            bean.setUser_code(Value.USER_CODE);
-
-                            getCbCancelAccountControl().saveCbCancelAccount(bean);
-
-                            loadCancelData();
-                        } catch (Exception e) {
-                            JOptionPane.showMessageDialog(this, e.getMessage());
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(this, "มีบัญชีที่เปิดหลังบัญชีนี้ ไม่สามารถลบข้อมูลนี้ได้ \n"
-                                + "ท่านสามารถยกเลิกบัญชีล่าสุดได้เท่านั้น !");
-                    }
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "กรุณาเลือกบัญชีที่ท่านต้องการยกเลิก !!!");
-            tbMaster.requestFocus();
-        }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void btnCancelProcessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelProcessActionPerformed
+        processToCancel();
+    }//GEN-LAST:event_btnCancelProcessActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        DefaultTableModel model = (DefaultTableModel) tbMaster.getModel();
-        int size = model.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
-
-        try {
-            String sql = "select b_cust_code,b_cust_name,"
-                    + "b_cust_lastname,account_code,account_type, TypeName,b_start,book_no "
-                    + "from cb_save_account s, cb_save_config c "
-                    + "where s.account_type=c.typecode "
-                    + "and b_start=curdate() "
-                    + "and b_balance=0 ";
-            ResultSet rs = MySQLConnect.getResultSet(sql);
-            while (rs.next()) {
-                model.addRow(new Object[]{
-                    rs.getString("b_cust_code"),
-                    ThaiUtil.ASCII2Unicode(rs.getString("b_cust_name") + " " + rs.getString("b_cust_lastname")),
-                    rs.getString("account_code"),
-                    ThaiUtil.ASCII2Unicode(rs.getString("TypeName")),
-                    DateFormat.getLocale_ddMMyyyy(rs.getDate("b_start")),
-                    rs.getString("account_type"),
-                    rs.getString("book_no")
-                });
-            }
-
-            rs.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-        }
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void btnFindAccountToCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindAccountToCancelActionPerformed
+        findAccount();
+    }//GEN-LAST:event_btnFindAccountToCancelActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelProcess;
+    private javax.swing.JButton btnFindAccountToCancel;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -309,10 +200,7 @@ public class CancelAccountDialog extends BaseDialogSwing {
 
     private void loadCancelData() {
         DefaultTableModel model = (DefaultTableModel) tbCancelData.getModel();
-        int size = model.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
 
         ArrayList<CbCancelAccountBean> listBean = getCbCancelAccountControl().listCbCancelAccount();
         for (int i = 0; i < listBean.size(); i++) {
@@ -323,6 +211,68 @@ public class CancelAccountDialog extends BaseDialogSwing {
                 bean.getAccount_no(),
                 bean.getUser_code()
             });
+        }
+    }
+
+    private void findAccount() {
+        DefaultTableModel model = (DefaultTableModel) tbMaster.getModel();
+        TableUtil.clearModel(model);
+        
+         ArrayList<Object[]> listModel = CancelAccontControl.getAccountToCancel();
+         for(Object []data: listModel){
+             model.addRow(data);
+         }
+    }
+
+    private void processToCancel() {
+        int rowSel = tbMaster.getSelectedRow();
+        if (rowSel != -1) {
+            String accountNo = tbMaster.getValueAt(rowSel, 2).toString();
+            String accountType = tbMaster.getValueAt(rowSel, 5).toString();
+            int bookNo = Integer.parseInt(tbMaster.getValueAt(rowSel, 6).toString());
+            int conf = JOptionPane.showConfirmDialog(this, "ท่านต้องการยกเลิกบัญชีเลขที่ " + accountNo + " ใช่หรือไม่ ?");
+            if (conf == JOptionPane.YES_OPTION) {
+                CancelPwdDialog c = new CancelPwdDialog(null, true);
+                c.setVisible(true);
+
+                if (c.isPwdOk()) {
+                    //action
+                    /*
+                     1. ต้องยกเลิกภายในวันนั้น ข้ามวันไม่ได้ (ผ่าน)
+                     2. ยังไม่มีการฝากเงินเข้าไปในบัญชี (ผ่าน)
+                     3. ยังไม่มีการเปิดบัญชีต่อจากบัญชีที่เปิดผิดนี้                    
+                     */
+                    int maxBookNo = CbSaveAccountControl.getMaxBookNo();
+                    if (bookNo == maxBookNo) {
+                        /*
+                         1. ลบรายการออกจาก cb_save_account
+                         2. อัพเดต Running ย้อนกลับไป 1 ค่า
+                         */
+                        if (CbSaveAccountControl.deleteAccountAndBookNo(accountNo, bookNo)) {
+                            if (CbSaveConfigControl.updateSaveRunningAndNoRunning(accountType)) {
+                                JOptionPane.showMessageDialog(this, "ยกเลิกบัญชี " + accountNo + " เรียบร้อยแล้ว");
+
+                                findAccount();
+
+                                CbCancelAccountBean bean = new CbCancelAccountBean();
+                                bean.setAccount_no(accountNo);
+                                bean.setAccount_type(accountType);
+                                bean.setUser_code(Value.USER_CODE);
+
+                                getCbCancelAccountControl().saveCbCancelAccount(bean);
+
+                                loadCancelData();
+                            }
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "มีบัญชีที่เปิดหลังบัญชีนี้ ไม่สามารถลบข้อมูลนี้ได้ \n"
+                                + "ท่านสามารถยกเลิกบัญชีล่าสุดได้เท่านั้น !");
+                    }
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "กรุณาเลือกบัญชีที่ท่านต้องการยกเลิก !!!");
+            tbMaster.requestFocus();
         }
     }
 }

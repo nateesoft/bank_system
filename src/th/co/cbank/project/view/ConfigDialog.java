@@ -14,6 +14,7 @@ import javax.swing.table.JTableHeader;
 import org.apache.log4j.Logger;
 import th.co.cbank.util.ThaiUtil;
 import th.co.cbank.project.constants.AppConstants;
+import th.co.cbank.util.TableUtil;
 
 public class ConfigDialog extends BaseDialogSwing {
     private final Logger logger = Logger.getLogger(ConfigDialog.class);
@@ -1655,10 +1656,7 @@ public class ConfigDialog extends BaseDialogSwing {
             String sql = "select * from cb_group";
             ResultSet rs = MySQLConnect.getResultSet(sql);
             DefaultTableModel model = (DefaultTableModel) tbGroup.getModel();
-            int size = model.getRowCount();
-            for (int i = 0; i < size; i++) {
-                model.removeRow(0);
-            }
+            TableUtil.clearModel(model);
 
             cbGroup.removeAllItems();
 
@@ -1683,10 +1681,7 @@ public class ConfigDialog extends BaseDialogSwing {
             String sql = "select * from cb_user";
             ResultSet rs = MySQLConnect.getResultSet(sql);
             DefaultTableModel model = (DefaultTableModel) tbUser.getModel();
-            int size = model.getRowCount();
-            for (int i = 0; i < size; i++) {
-                model.removeRow(0);
-            }
+            TableUtil.clearModel(model);
 
             while (rs.next()) {
                 model.addRow(new Object[]{

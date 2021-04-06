@@ -21,6 +21,7 @@ import th.co.cbank.project.model.CbMemberTypeBean;
 import th.co.cbank.project.model.ProfileMapping;
 import th.co.cbank.util.DateChooseDialog;
 import th.co.cbank.util.ExcelUtil;
+import th.co.cbank.util.TableUtil;
 
 public class ProfileListDialog extends BaseDialogSwing {
     private final Logger logger = Logger.getLogger(ProfileListDialog.class);
@@ -404,10 +405,7 @@ public class ProfileListDialog extends BaseDialogSwing {
 
     private void loadData() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        int size = model.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
 
         Date d1 = DateFormat.getLocal_ddMMyyyy(txtDate1.getText());
         String sql = "select p.*, group_concat(account_code) listAcc, group_concat(loan_docno) listLoan "

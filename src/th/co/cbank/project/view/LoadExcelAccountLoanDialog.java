@@ -23,6 +23,7 @@ import th.co.cbank.project.model.ConfigBean;
 import th.co.cbank.project.model.CbLoanAccountBean;
 import th.co.cbank.project.model.CbLoanConfigBean;
 import th.co.cbank.project.model.ProfileBean;
+import th.co.cbank.util.TableUtil;
 
 public class LoadExcelAccountLoanDialog extends BaseDialogSwing {
     private final Logger logger = Logger.getLogger(LoadExcelAccountLoanDialog.class);
@@ -464,10 +465,7 @@ public class LoadExcelAccountLoanDialog extends BaseDialogSwing {
         double loanAmt = 0.0;
         double loanIntAmt = 0.0;
 
-        int size = model.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
         try {
             File f = new File(fileName);
             BufferedReader br;

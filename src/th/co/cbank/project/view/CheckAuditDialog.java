@@ -2,15 +2,16 @@ package th.co.cbank.project.view;
 
 import java.awt.Font;
 import java.awt.event.KeyEvent;
-import java.sql.ResultSet;
-import javax.swing.JOptionPane;
+import java.util.ArrayList;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import org.apache.log4j.Logger;
-import th.co.cbank.util.ThaiUtil;
 import th.co.cbank.project.constants.AppConstants;
-import th.co.cbank.project.control.MySQLConnect;
+import th.co.cbank.project.control.CbProfileControl;
+import th.co.cbank.project.control.CbSaveAccountControl;
+import th.co.cbank.project.control.CbTransactionLoanControl;
+import th.co.cbank.project.control.CbTransactionSaveControl;
 import th.co.cbank.util.NumberFormat;
 import th.co.cbank.util.TableUtil;
 
@@ -87,7 +88,7 @@ public class CheckAuditDialog extends BaseDialogSwing {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbSaveAccount = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        btnExit = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tbTransactionLoan = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
@@ -243,12 +244,12 @@ public class CheckAuditDialog extends BaseDialogSwing {
         jLabel3.setForeground(new java.awt.Color(0, 153, 102));
         jLabel3.setText("ตารางความเคลื่อนไหวเงินฝาก-ถอน พร้อมหุ้น");
 
-        jButton2.setBackground(new java.awt.Color(204, 0, 0));
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton2.setText("ออก (Exit)");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnExit.setBackground(new java.awt.Color(204, 0, 0));
+        btnExit.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnExit.setText("ออก (Exit)");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnExitActionPerformed(evt);
             }
         });
 
@@ -295,7 +296,7 @@ public class CheckAuditDialog extends BaseDialogSwing {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton2)
+                            .addComponent(btnExit)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 654, Short.MAX_VALUE)
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 654, Short.MAX_VALUE))
                         .addGap(4, 4, 4))
@@ -315,7 +316,7 @@ public class CheckAuditDialog extends BaseDialogSwing {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(jLabel1)))
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
@@ -368,12 +369,12 @@ public class CheckAuditDialog extends BaseDialogSwing {
         }
     }//GEN-LAST:event_tbProfileKeyPressed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnExitActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnExit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -402,46 +403,14 @@ public class CheckAuditDialog extends BaseDialogSwing {
         DefaultTableModel model3 = (DefaultTableModel) tbTransaction.getModel();
         DefaultTableModel model4 = (DefaultTableModel) tbTransactionLoan.getModel();
 
-        int size1 = model1.getRowCount();
-        for (int i = 0; i < size1; i++) {
-            model1.removeRow(0);
-        }
-
-        int size2 = model2.getRowCount();
-        for (int i = 0; i < size2; i++) {
-            model2.removeRow(0);
-        }
-
-        int size3 = model3.getRowCount();
-        for (int i = 0; i < size3; i++) {
-            model3.removeRow(0);
-        }
+        TableUtil.clearModel(model1);
+        TableUtil.clearModel(model2);
+        TableUtil.clearModel(model3);
+        TableUtil.clearModel(model4);
         
-        int size4 = model4.getRowCount();
-        for (int i = 0; i < size4; i++) {
-            model4.removeRow(0);
-        }
-
-        try {
-            String sql = "select p_custcode,p_custname,p_custsurname,save_balance,hoon_qty,loan_balance "
-                    + "from cb_profile order by p_custcode";
-            ResultSet rs = MySQLConnect.getResultSet(sql);
-            int count = 1;
-            while (rs.next()) {
-                model1.addRow(new Object[]{
-                    count,
-                    rs.getString("p_custcode"),
-                    ThaiUtil.ASCII2Unicode(rs.getString("p_custname")+" "+rs.getString("p_custsurname")),
-                    NumberFormat.showDouble2(rs.getString("save_balance")),
-                    NumberFormat.showDouble2(rs.getString("hoon_qty")),
-                    NumberFormat.showDouble2(rs.getString("loan_balance"))
-                });
-                count++;
-            }
-
-            rs.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
+        ArrayList<Object[]> listModel4 = CbProfileControl.getProfileListOrderByCustCode();
+        for(Object []data: listModel4){
+            model1.addRow(data);
         }
     }
 
@@ -450,96 +419,31 @@ public class CheckAuditDialog extends BaseDialogSwing {
         DefaultTableModel model3 = (DefaultTableModel) tbTransaction.getModel();
         DefaultTableModel model4 = (DefaultTableModel) tbTransactionLoan.getModel();
 
-        int size2 = model2.getRowCount();
-        for (int i = 0; i < size2; i++) {
-            model2.removeRow(0);
-        }
-
-        int size3 = model3.getRowCount();
-        for (int i = 0; i < size3; i++) {
-            model3.removeRow(0);
-        }
+        TableUtil.clearModel(model2);
+        TableUtil.clearModel(model3);
+        TableUtil.clearModel(model4);
         
-        int size4 = model4.getRowCount();
-        for (int i = 0; i < size4; i++) {
-            model4.removeRow(0);
-        }
-
         String custCode = "" + tbProfile.getValueAt(tbProfile.getSelectedRow(), 1);
-
-        try {
-            String sql = "select b_cust_code,account_code, b_balance,b_fee "
-                    + "from cb_save_account where b_cust_code='" + custCode + "'";
-            ResultSet rs1 = MySQLConnect.getResultSet(sql);
-            while (rs1.next()) {
-                model2.addRow(new Object[]{
-                    rs1.getString("b_cust_code"),
-                    rs1.getString("account_code"),
-                    NumberFormat.showDouble2(rs1.getString("b_balance")),
-                    NumberFormat.showDouble2(rs1.getString("b_fee"))
-                });
-            }
-
-            rs1.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-
-        try {
-            String sql = "select t_date, t_time, t_custcode, t_acccode, t_balance, t_amount,"
-                    + "money_in,money_out,t_fee,t_description "
-                    + "from cb_transaction_save "
-                    + "where t_custcode='" + custCode + "' "
-                    + "order by t_date, t_time";
-            ResultSet rs1 = MySQLConnect.getResultSet(sql);
-            double deposit = 0.00;
-            double withdraw = 0.00;
-            double hoon = 0.00;
-            while (rs1.next()) {
-                model3.addRow(new Object[]{
-                    rs1.getString("t_acccode"),
-                    rs1.getString("t_date")+" "+rs1.getString("t_time"),
-                    ThaiUtil.ASCII2Unicode(rs1.getString("t_description")),
-                    NumberFormat.showDouble2(rs1.getString("t_amount")),
-                    NumberFormat.showDouble2(rs1.getString("money_in")),
-                    NumberFormat.showDouble2(rs1.getString("money_out")),
-                    NumberFormat.showDouble2(rs1.getString("t_fee")),
-                    NumberFormat.showDouble2(rs1.getString("t_balance"))
-                });
-
-                deposit += rs1.getDouble(5);
-                withdraw += rs1.getDouble(6);
-                hoon = rs1.getDouble(4);
-            }
-
-            txtDeposit.setText(NumberFormat.showDouble2(deposit));
-            txtWithdraw.setText(NumberFormat.showDouble2(withdraw));
-
-            rs1.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+        ArrayList<Object[]> listModel2 = CbSaveAccountControl.getAccountWhereCustCode(custCode);
+        for(Object[] data: listModel2){
+            model2.addRow(data);
         }
         
+        ArrayList<Object[]> listModel3 = CbTransactionSaveControl.getTransactionListWhereCustCode(custCode);
+        double deposit = 0.00;
+        double withdraw = 0.00;
+        for(Object[] data: listModel3){
+            model3.addRow(data);
+            deposit += Double.parseDouble(""+data[5]);
+            withdraw += Double.parseDouble(""+data[6]);
+        }
+        txtDeposit.setText(NumberFormat.showDouble2(deposit));
+        txtWithdraw.setText(NumberFormat.showDouble2(withdraw));
+
         // รายละเอียดเงินกู้
-        try {
-            String sql = "select t_date, t_time, t_custcode, t_acccode, t_balance, t_amount,t_interest,t_description "
-                    + "from cb_transaction_loan "
-                    + "where t_custcode='" + custCode + "' "
-                    + "order by t_date, t_time";
-            ResultSet rs1 = MySQLConnect.getResultSet(sql);
-            while (rs1.next()) {
-                model4.addRow(new Object[]{
-                    rs1.getString("t_acccode"),
-                    rs1.getString("t_date")+" "+rs1.getString("t_time"),
-                    ThaiUtil.ASCII2Unicode(rs1.getString("t_description")),
-                    NumberFormat.showDouble2(rs1.getString("t_amount")),
-                    NumberFormat.showDouble2(rs1.getString("t_interest")),
-                    NumberFormat.showDouble2(rs1.getString("t_balance"))
-                });
-            }
-            rs1.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+        ArrayList<Object[]> listModel4 = CbTransactionLoanControl.getTransactionListWhereCustCode(custCode);
+        for(Object []data: listModel4){
+            model4.addRow(data);
         }
     }
 }

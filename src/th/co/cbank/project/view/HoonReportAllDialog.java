@@ -22,6 +22,7 @@ import th.co.cbank.project.constants.AppConstants;
 import th.co.cbank.project.control.MySQLConnect;
 import th.co.cbank.project.control.ViewReport;
 import th.co.cbank.util.DateChooseDialog;
+import th.co.cbank.util.TableUtil;
 
 public class HoonReportAllDialog extends BaseDialogSwing {
     private final Logger logger = Logger.getLogger(HoonReportAllDialog.class);
@@ -583,10 +584,7 @@ public class HoonReportAllDialog extends BaseDialogSwing {
 
     private void showAll() {
         DefaultTableModel model = (DefaultTableModel) tbTransaction.getModel();
-        int size = model.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
 
         String t_status;
         if (cbAccItem.getSelectedIndex() == 1) {

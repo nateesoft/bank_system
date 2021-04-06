@@ -2,16 +2,14 @@ package th.co.cbank.project.view;
 
 import java.awt.Font;
 import java.awt.event.KeyEvent;
-import java.sql.ResultSet;
-import javax.swing.JOptionPane;
+import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import org.apache.log4j.Logger;
-import th.co.cbank.util.ThaiUtil;
 import th.co.cbank.project.constants.AppConstants;
-import th.co.cbank.project.control.MySQLConnect;
+import th.co.cbank.project.control.CbProfileControl;
 import th.co.cbank.project.control.Value;
-import th.co.cbank.project.log.Log;
+import th.co.cbank.util.TableUtil;
 
 public class ApproveDialog extends BaseDialogSwing {
 
@@ -184,61 +182,21 @@ public class ApproveDialog extends BaseDialogSwing {
         tHeader.setFont(new Font(AppConstants.DEFAULT_FONT, Font.BOLD, AppConstants.DEFAULT_FONT_SIZE));
 
         DefaultTableModel model = (DefaultTableModel) tbApprove.getModel();
-        int size = model.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
 
-        try {
-            String sql = "select p_custCode, p_custName,p_custsurname,ApproveLimit "
-                    + "from cb_profile "
-                    + "where ApproveLimit>0 "
-                    + "and p_custCode<>'" + Value.CUST_CODE + "'";
-            ResultSet rs = MySQLConnect.getResultSet(sql);
-            while (rs.next()) {
-                model.addRow(new Object[]{
-                    rs.getString("p_custCode"),
-                    ThaiUtil.ASCII2Unicode(rs.getString("p_custName")),
-                    ThaiUtil.ASCII2Unicode(rs.getString("p_custSurname")),
-                    rs.getInt("ApproveLimit")
-                });
-            }
-
-            rs.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-            Log.write.error(e.getMessage());
+        ArrayList<Object[]> listModel = CbProfileControl.getApproveLimitMoreZero(Value.CUST_CODE);
+        for(Object[] data: listModel){
+            model.addRow(data);
         }
     }
 
     private void searchCustomer() {
         DefaultTableModel model = (DefaultTableModel) tbApprove.getModel();
-        int size = model.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
-
-        try {
-            String sql = "select p_custCode, p_custName,p_custsurname,ApproveLimit "
-                    + "from cb_profile "
-                    + "where ApproveLimit>0 "
-                    + "and p_custCode<>'" + Value.CUST_CODE + "' "
-                    + "and p_custName like '%" + ThaiUtil.Unicode2ASCII(txtSearch.getText()) + "%'";
-            System.out.println(sql);
-            ResultSet rs = MySQLConnect.getResultSet(sql);
-            while (rs.next()) {
-                model.addRow(new Object[]{
-                    rs.getString("p_custCode"),
-                    ThaiUtil.ASCII2Unicode(rs.getString("p_custName")),
-                    ThaiUtil.ASCII2Unicode(rs.getString("p_custSurname")),
-                    rs.getInt("ApproveLimit")
-                });
-            }
-
-            rs.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-            Log.write.error(e.getMessage());
+        TableUtil.clearModel(model);
+        
+        ArrayList<Object[]> listModel = CbProfileControl.searchCustomerApproveLimitMoreZero(Value.CUST_CODE, txtSearch.getText());
+        for(Object[] data: listModel){
+            model.addRow(data);
         }
     }
 }

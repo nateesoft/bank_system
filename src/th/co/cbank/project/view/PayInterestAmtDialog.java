@@ -15,6 +15,7 @@ import th.co.cbank.util.ThaiUtil;
 import th.co.cbank.project.model.mapping.PayInterestAmtMapping;
 import th.co.cbank.util.DateChooseDialog;
 import th.co.cbank.util.ExcelUtil;
+import th.co.cbank.util.TableUtil;
 
 public class PayInterestAmtDialog extends BaseDialogSwing {
     private final Logger logger = Logger.getLogger(PayInterestAmtDialog.class);
@@ -229,10 +230,7 @@ public class PayInterestAmtDialog extends BaseDialogSwing {
     }
 
     private void clearModel() {
-        int size = tbData.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
     }
 
     private void exportExcelFile() {

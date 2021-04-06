@@ -17,6 +17,7 @@ import th.co.cbank.project.control.Value;
 import th.co.cbank.project.model.CbExpTransactionBean;
 import th.co.cbank.project.model.CbExpenseBean;
 import th.co.cbank.util.DateChooseDialog;
+import th.co.cbank.util.TableUtil;
 
 public class ExpendFormDialog extends BaseDialogSwing {
     private final Logger logger = Logger.getLogger(ExpendFormDialog.class);
@@ -418,10 +419,7 @@ public class ExpendFormDialog extends BaseDialogSwing {
         tHeader.setFont(new Font(AppConstants.DEFAULT_FONT, Font.BOLD, AppConstants.DEFAULT_FONT_SIZE));
 
         DefaultTableModel model = (DefaultTableModel) tbExpendsTransaction.getModel();
-        int size = model.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
 
         CbExpenseControl ec = new CbExpenseControl();
         ArrayList<CbExpenseBean> listBean = ec.listExpense();
@@ -470,10 +468,7 @@ public class ExpendFormDialog extends BaseDialogSwing {
 
     private void loadDataTransaction() {
         DefaultTableModel model = (DefaultTableModel) tbExpendsTransaction.getModel();
-        int size = model.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
 
         ArrayList<CbExpTransactionBean> listBean = getCbExpTransactionControl().listCbExpTransaction();
         for (int i = 0; i < listBean.size(); i++) {

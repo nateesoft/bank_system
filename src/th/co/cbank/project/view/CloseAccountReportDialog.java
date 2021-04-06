@@ -25,6 +25,7 @@ import th.co.cbank.project.control.MySQLConnect;
 import th.co.cbank.project.control.ViewReport;
 import th.co.cbank.project.model.BranchBean;
 import th.co.cbank.util.DateChooseDialog;
+import th.co.cbank.util.TableUtil;
 
 public class CloseAccountReportDialog extends BaseDialogSwing {
 
@@ -401,10 +402,7 @@ public class CloseAccountReportDialog extends BaseDialogSwing {
 
     private void showAll() {
         DefaultTableModel model = (DefaultTableModel) tableData.getModel();
-        int size = model.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
 
         String sql = " select t_date, t_time, t_acccode, t_amount, t_balance,"
                 + " concat(s.b_cust_name, ' ', s.b_cust_lastname) cust_name, t.t_empcode, t.branch_code "

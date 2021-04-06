@@ -3,6 +3,7 @@ package th.co.cbank.util;
 import java.awt.Font;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import org.apache.log4j.Logger;
 import th.co.cbank.project.constants.AppConstants;
@@ -21,5 +22,12 @@ public class TableUtil {
         DefaultTableCellRenderer render = new DefaultTableCellRenderer();
         render.setHorizontalAlignment(swingConstants);
         table.getColumnModel().getColumn(colsAt).setCellRenderer(render);
+    }
+    
+    public static void clearModel(DefaultTableModel model){
+        int size = model.getRowCount();
+        for (int i = 0; i < size; i++) {
+            model.removeRow(0);
+        }
     }
 }

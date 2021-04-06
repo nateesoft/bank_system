@@ -69,6 +69,7 @@ import th.co.cbank.util.DateUtil;
 import th.co.cbank.util.ImagePreviewPanel;
 import th.co.cbank.util.NumberUtil;
 import th.co.cbank.util.StringUtil;
+import th.co.cbank.util.TableUtil;
 
 public class MainDialog extends BaseSwing {
     private final Logger logger = Logger.getLogger(MainDialog.class);
@@ -673,7 +674,7 @@ public class MainDialog extends BaseSwing {
         jMenuItem37 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("ระบบบริหารธนาคารชุมชน V 1.0.6 05042021");
+        setTitle("ระบบบริหารธนาคารชุมชน V 1.0.7");
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -8222,16 +8223,10 @@ public class MainDialog extends BaseSwing {
         enableComponents(jTabbedPane8, false);
 
         DefaultTableModel model = (DefaultTableModel) tbArGroup1.getModel();
-        int size = model.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
 
         DefaultTableModel model2 = (DefaultTableModel) tbGuarantor.getModel();
-        int size2 = model2.getRowCount();
-        for (int i = 0; i < size2; i++) {
-            model2.removeRow(0);
-        }
+        TableUtil.clearModel(model2);
 
         txtAssetGaruntee1.setText("");
         txtImg1.setText("");
@@ -9345,10 +9340,7 @@ public class MainDialog extends BaseSwing {
         JTableUtil.alignRight(tbArGroup1, 4);
         JTableUtil.alignRight(tbArGroup1, 5);
         JTableUtil.alignCenter(tbArGroup1, 6);
-        int ssize = md.getRowCount();
-        for (int i = 0; i < ssize; i++) {
-            md.removeRow(0);
-        }
+        TableUtil.clearModel(md);
 
         for (int i = 0; i < listTable.size(); i++) {
             CbLoanTablePaymentBean ltb = (CbLoanTablePaymentBean) listTable.get(i);
@@ -9401,10 +9393,7 @@ public class MainDialog extends BaseSwing {
         JTableUtil.alignRight(tbArGroup2, 5);
         JTableUtil.alignRight(tbArGroup2, 6);
         JTableUtil.alignRight(tbArGroup2, 7);
-        int ssize = mdTbArGroup2.getRowCount();
-        for (int i = 0; i < ssize; i++) {
-            mdTbArGroup2.removeRow(0);
-        }
+        TableUtil.clearModel(mdTbArGroup2);
 
         double balanceAmt = 0.00;
         String colorPay = "<html><span style=\"background-color: green; color:white;\">";
@@ -9557,10 +9546,7 @@ public class MainDialog extends BaseSwing {
     private void loadBonsman(String loan_docno) {
         ArrayList<CbBondsmanBean> listBond = getCbBondsmanControl().listCbBondsman(loan_docno);
         DefaultTableModel model = (DefaultTableModel) tbGuarantor.getModel();
-        int size = model.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
 
         for (int i = 0; i < listBond.size(); i++) {
             CbBondsmanBean bean = (CbBondsmanBean) listBond.get(i);
@@ -9593,10 +9579,7 @@ public class MainDialog extends BaseSwing {
         cbLoanTypePayment.setSelectedIndex(1);
 
         DefaultTableModel model = (DefaultTableModel) tbArGroup1.getModel();
-        int size = model.getRowCount();
-        for (int j = 0; j < size; j++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
         if (cbLoanAcc.getItemCount() > 0) {
             cbLoanAcc.setSelectedIndex(0);
         }
@@ -9619,10 +9602,7 @@ public class MainDialog extends BaseSwing {
         txtImg2.setText("");
         txtImg3.setText("");
         DefaultTableModel model2 = (DefaultTableModel) tbGuarantor.getModel();
-        int size2 = model2.getRowCount();
-        for (int j = 0; j < size2; j++) {
-            model2.removeRow(0);
-        }
+        TableUtil.clearModel(model2);
 
         txtLoanAmt.requestFocus();
     }
@@ -9928,10 +9908,7 @@ public class MainDialog extends BaseSwing {
 
             //load table
             DefaultTableModel model = (DefaultTableModel) tbArGroup1.getModel();
-            int size = model.getRowCount();
-            for (int j = 0; j < size; j++) {
-                model.removeRow(0);
-            }
+            TableUtil.clearModel(model);
 
             //สำรองหนี้สูญ
             double intBadDebt = NumberUtil.toDouble(txtIntBadDebt.getText());
@@ -9996,10 +9973,7 @@ public class MainDialog extends BaseSwing {
 
             //load table
             DefaultTableModel model = (DefaultTableModel) tbArGroup1.getModel();
-            int size = model.getRowCount();
-            for (int j = 0; j < size; j++) {
-                model.removeRow(0);
-            }
+            TableUtil.clearModel(model);
 
             int divide = 12 / 30;//วัน
             switch (cbLoanTypePayment.getSelectedIndex()) {
@@ -10331,10 +10305,7 @@ public class MainDialog extends BaseSwing {
         JTableUtil.alignRight(tbTransSave, 3);
         JTableUtil.alignRight(tbTransSave, 4);
         JTableUtil.alignRight(tbTransSave, 5);
-        int size = modelTbTransSave.getRowCount();
-        for (int i = 0; i < size; i++) {
-            modelTbTransSave.removeRow(0);
-        }
+        TableUtil.clearModel(modelTbTransSave);
         String type = "";
         for (CbTransactionSaveBean sBean : listSave) {
             double deposit = 0;
@@ -10647,10 +10618,7 @@ public class MainDialog extends BaseSwing {
     private void loadPaymentHistory() {
         ArrayList<CbTransactionLoanBean> listLoan = getCbTransactionLoanControl().listCbTransactionLoanPayment(txtAccCode.getText());
         DefaultTableModel model = (DefaultTableModel) tbHistoryPayment.getModel();
-        int size = model.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
 
         JTableUtil.alignRight(tbHistoryPayment, 2);
         JTableUtil.alignRight(tbHistoryPayment, 3);

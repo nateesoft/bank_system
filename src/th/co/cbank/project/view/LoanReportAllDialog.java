@@ -489,10 +489,7 @@ public class LoanReportAllDialog extends BaseDialogSwing {
 
     private void showAll() {
         DefaultTableModel model = (DefaultTableModel) tbTransaction.getModel();
-        int size = model.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
-        }
+        TableUtil.clearModel(model);
 
         try {
             String sql = "select a.payPerAmount, a.period_pay, "
