@@ -12,6 +12,7 @@ import th.co.cbank.util.StringUtil;
 import th.co.cbank.util.ThaiUtil;
 
 public class CbTransactionSaveControl extends BaseControl {
+
     private final Logger logger = Logger.getLogger(CbTransactionSaveControl.class);
 
     public ArrayList<CbTransactionSaveBean> mappingBean(ResultSet rs) throws Exception {
@@ -57,7 +58,7 @@ public class CbTransactionSaveControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            
+
             return new ArrayList();
         }
     }
@@ -71,7 +72,7 @@ public class CbTransactionSaveControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            
+
             return new ArrayList();
         }
     }
@@ -83,7 +84,7 @@ public class CbTransactionSaveControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            
+
             return new ArrayList();
         }
     }
@@ -98,7 +99,7 @@ public class CbTransactionSaveControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            
+
             return new ArrayList();
         }
     }
@@ -114,7 +115,7 @@ public class CbTransactionSaveControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            
+
             return new ArrayList();
         }
     }
@@ -131,7 +132,7 @@ public class CbTransactionSaveControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            
+
             return new ArrayList();
         }
     }
@@ -147,7 +148,7 @@ public class CbTransactionSaveControl extends BaseControl {
             ResultSet rs = MySQLConnect.getResultSet(sql);
             return mappingBean(rs);
         } catch (Exception e) {
-            
+
             return new ArrayList();
         }
     }
@@ -163,7 +164,7 @@ public class CbTransactionSaveControl extends BaseControl {
             }
             return listBean.get(0);
         } catch (Exception e) {
-            
+
             return null;
         }
     }
@@ -178,7 +179,7 @@ public class CbTransactionSaveControl extends BaseControl {
             }
             return listBean.get(0);
         } catch (Exception e) {
-            
+
             return null;
         }
     }
@@ -224,7 +225,7 @@ public class CbTransactionSaveControl extends BaseControl {
             update(sql);
             return true;
         } catch (Exception e) {
-            
+
             return false;
         }
     }
@@ -245,7 +246,7 @@ public class CbTransactionSaveControl extends BaseControl {
 
             rs.close();
         } catch (Exception e) {
-            
+
         }
 
         if (LineMax == 0) {
@@ -268,7 +269,7 @@ public class CbTransactionSaveControl extends BaseControl {
 
             rs.close();
         } catch (Exception e) {
-            
+
         }
 
         if (LineMax == 0) {
@@ -287,7 +288,7 @@ public class CbTransactionSaveControl extends BaseControl {
                     + "and t_date='" + t_date + "'";
             update(sql);
         } catch (Exception e) {
-            
+
         }
     }
 
@@ -300,7 +301,7 @@ public class CbTransactionSaveControl extends BaseControl {
                     + "and t_date='" + t_date + "'";
             update(sql);
         } catch (Exception e) {
-            
+
         }
     }
 
@@ -312,15 +313,15 @@ public class CbTransactionSaveControl extends BaseControl {
                     + "and t_booktype='INT'";
             update(sql1);
         } catch (Exception e) {
-            
+
         }
     }
-    
-    public static ArrayList<Object[]> getTransactionListWhereCustCode(String custCode){
+
+    public static ArrayList<Object[]> getTransactionListWhereCustCode(String custCode) {
         ArrayList<Object[]> list = new ArrayList();
         try {
-            String sql = "select t_date, t_time, t_custcode, t_acccode, t_balance, t_amount,"
-                    + "money_in,money_out,t_fee,t_description "
+            String sql = "select t_date, t_time, t_custcode, t_acccode, t_balance, "
+                    + "t_amount,money_in,money_out,t_fee,t_description, t_status "
                     + "from cb_transaction_save "
                     + "where t_custcode='" + custCode + "' "
                     + "order by t_date, t_time";
@@ -328,9 +329,9 @@ public class CbTransactionSaveControl extends BaseControl {
             while (rs1.next()) {
                 list.add(new Object[]{
                     rs1.getString("t_acccode"),
-                    rs1.getString("t_date")+" "+rs1.getString("t_time"),
+                    rs1.getString("t_date") + " " + rs1.getString("t_time"),
                     ThaiUtil.ASCII2Unicode(rs1.getString("t_description")),
-                    NumberFormat.showDouble2(rs1.getString("t_amount")),
+                    rs1.getString("t_status").equals("4") ? NumberFormat.showDouble2(rs1.getString("t_amount")) : 0,
                     NumberFormat.showDouble2(rs1.getString("money_in")),
                     NumberFormat.showDouble2(rs1.getString("money_out")),
                     NumberFormat.showDouble2(rs1.getString("t_fee")),
@@ -341,7 +342,7 @@ public class CbTransactionSaveControl extends BaseControl {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-        
+
         return list;
     }
 

@@ -80,6 +80,9 @@ public class CheckAuditDialog extends BaseDialogSwing {
         txtDeposit = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        txtBalance = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbProfile = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -92,6 +95,7 @@ public class CheckAuditDialog extends BaseDialogSwing {
         jScrollPane4 = new javax.swing.JScrollPane();
         tbTransactionLoan = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
+        btnReProcess = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("รายงานความเคลื่อนไหวรายบุคคล");
@@ -130,6 +134,19 @@ public class CheckAuditDialog extends BaseDialogSwing {
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel6.setText("ยอดเงินถอน");
 
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel8.setText("คงเหลือ");
+
+        txtBalance.setEditable(false);
+        txtBalance.setBackground(new java.awt.Color(255, 255, 204));
+        txtBalance.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtBalance.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtBalance.setText("0.00");
+        txtBalance.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel9.setText("บาท");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -138,15 +155,18 @@ public class CheckAuditDialog extends BaseDialogSwing {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel6)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel8))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtDeposit, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
-                    .addComponent(txtWithdraw))
+                    .addComponent(txtWithdraw)
+                    .addComponent(txtBalance))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
-                    .addComponent(jLabel7))
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel9))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -162,6 +182,11 @@ public class CheckAuditDialog extends BaseDialogSwing {
                     .addComponent(jLabel6)
                     .addComponent(txtWithdraw, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(txtBalance, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -238,6 +263,11 @@ public class CheckAuditDialog extends BaseDialogSwing {
                 return canEdit [columnIndex];
             }
         });
+        tbSaveAccount.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbSaveAccountMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbSaveAccount);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -275,6 +305,15 @@ public class CheckAuditDialog extends BaseDialogSwing {
         jLabel10.setForeground(new java.awt.Color(204, 51, 0));
         jLabel10.setText("ตารางความเคลื่อนไหวเงินกู้");
 
+        btnReProcess.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnReProcess.setText("ตรวจสอบรายการใหม่");
+        btnReProcess.setEnabled(false);
+        btnReProcess.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReProcessActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -287,11 +326,12 @@ public class CheckAuditDialog extends BaseDialogSwing {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel1))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(210, 210, 210)))
+                            .addComponent(jLabel1)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnReProcess, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -319,8 +359,8 @@ public class CheckAuditDialog extends BaseDialogSwing {
                     .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -330,8 +370,10 @@ public class CheckAuditDialog extends BaseDialogSwing {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 27, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnReProcess, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 12, Short.MAX_VALUE))
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -373,8 +415,19 @@ public class CheckAuditDialog extends BaseDialogSwing {
         dispose();
     }//GEN-LAST:event_btnExitActionPerformed
 
+    private void btnReProcessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReProcessActionPerformed
+        reProcess();
+    }//GEN-LAST:event_btnReProcessActionPerformed
+
+    private void tbSaveAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbSaveAccountMouseClicked
+        if(tbSaveAccount.getSelectedRow() != -1){
+            btnReProcess.setEnabled(true);
+        }
+    }//GEN-LAST:event_tbSaveAccountMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnReProcess;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -383,6 +436,8 @@ public class CheckAuditDialog extends BaseDialogSwing {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -393,6 +448,7 @@ public class CheckAuditDialog extends BaseDialogSwing {
     private javax.swing.JTable tbSaveAccount;
     private javax.swing.JTable tbTransaction;
     private javax.swing.JTable tbTransactionLoan;
+    private javax.swing.JTextField txtBalance;
     private javax.swing.JTextField txtDeposit;
     private javax.swing.JTextField txtWithdraw;
     // End of variables declaration//GEN-END:variables
@@ -434,16 +490,38 @@ public class CheckAuditDialog extends BaseDialogSwing {
         double withdraw = 0.00;
         for(Object[] data: listModel3){
             model3.addRow(data);
-            deposit += Double.parseDouble(""+data[5]);
-            withdraw += Double.parseDouble(""+data[6]);
+            deposit += Double.parseDouble((""+data[4]).replace(",", ""));
+            withdraw += Double.parseDouble((""+data[5]).replace(",", ""));
         }
         txtDeposit.setText(NumberFormat.showDouble2(deposit));
         txtWithdraw.setText(NumberFormat.showDouble2(withdraw));
+        txtBalance.setText(NumberFormat.showDouble2(deposit-withdraw));
 
         // รายละเอียดเงินกู้
         ArrayList<Object[]> listModel4 = CbTransactionLoanControl.getTransactionListWhereCustCode(custCode);
         for(Object []data: listModel4){
             model4.addRow(data);
         }
+    }
+
+    private void reProcess() {
+        btnReProcess.setEnabled(false);
+        
+        int colProfile = tbProfile.getSelectedColumn();
+        String profileCode = tbProfile.getValueAt(colProfile, 1).toString();
+        
+        int colAccount = tbSaveAccount.getSelectedColumn();
+        String accCode = tbSaveAccount.getValueAt(colAccount, 1).toString();
+        
+        this.setCursor(new java.awt.Cursor(java.awt.Cursor.WAIT_CURSOR));
+        TransactionAdvanceMethod.findData(profileCode, accCode, false);
+        double all_balance = TransactionAdvanceMethod.balanceAmount;
+        double all_interest = TransactionAdvanceMethod.interestAmount;
+        TransactionAdvanceMethod.saveTransaction(profileCode, accCode, all_balance, all_interest);
+        TransactionAdvanceMethod.updateTransactionSaveRunning(profileCode,  accCode);
+        this.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        
+        // reload data
+        clearAllModel();
     }
 }
