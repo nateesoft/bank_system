@@ -330,7 +330,6 @@ public class LoginDialog extends BaseDialogSwing {
         }
 
         Log.write.info("Start Login: " + txtUser.getText());
-        MySQLConnect mySQLConnect = new MySQLConnect();
         try {
             String sql = "select * "
                     + "from cb_user "
@@ -389,7 +388,7 @@ public class LoginDialog extends BaseDialogSwing {
 
         } catch (Exception e) {
             Log.write.error(e.getMessage());
-
+            JOptionPane.showMessageDialog(this, "ไม่สามารถเข้าสู่ระบบได้ เนื่องจากเกิดปัญหาในการเชื่อมต่อฐานข้อมูล", "Error Login", JOptionPane.ERROR_MESSAGE);
             txtUser.setText("");
             txtUser.requestFocus();
             txtPass.setText("");

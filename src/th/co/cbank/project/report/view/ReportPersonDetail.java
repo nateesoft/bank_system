@@ -28,7 +28,6 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import th.co.cbank.project.control.CbLoanAccountControl;
 import th.co.cbank.project.control.CbSaveAccountControl;
-import th.co.cbank.project.control.MySQLConnect;
 import th.co.cbank.project.control.ProfileControl;
 import th.co.cbank.project.model.CbLoanAccountBean;
 import th.co.cbank.project.model.CbSaveAccountBean;
@@ -208,8 +207,6 @@ public class ReportPersonDetail extends javax.swing.JDialog {
     }
 
     private void loadData() {
-        MySQLConnect mySQLConnect = new MySQLConnect();
-
         ProfileControl pfCon = new ProfileControl();
         List<ProfileBean> listProfile = pfCon.listCbProfile();
 

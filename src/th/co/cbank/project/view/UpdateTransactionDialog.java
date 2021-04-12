@@ -152,7 +152,7 @@ public class UpdateTransactionDialog extends javax.swing.JDialog {
             TransactionAdvanceMethod.findData(custCode, accCode, false);
             double all_balance = TransactionAdvanceMethod.balanceAmount;
             double all_interest = TransactionAdvanceMethod.interestAmount;
-            TransactionAdvanceMethod.saveTransaction(custCode, accCode, all_balance, all_interest);
+            TransactionAdvanceMethod.updateSaveAccountAndProfile(custCode, accCode, all_balance, all_interest);
             TransactionAdvanceMethod.updateTransactionSaveRunning(custCode, accCode);
             count++;
             pb.setValue(count);

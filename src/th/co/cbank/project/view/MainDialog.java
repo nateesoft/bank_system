@@ -38,6 +38,8 @@ import th.co.cbank.util.MoneyToWord;
 import th.co.cbank.util.NumberFormat;
 import th.co.cbank.util.ThaiUtil;
 import th.co.cbank.project.constants.AppConstants;
+import th.co.cbank.project.control.CbSaveAccountControl;
+import th.co.cbank.project.control.MySQLConnect;
 import th.co.cbank.project.model.ConfigBean;
 import th.co.cbank.project.control.PrintCOM;
 import th.co.cbank.project.log.Log;
@@ -674,7 +676,7 @@ public class MainDialog extends BaseSwing {
         jMenuItem37 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("ระบบบริหารธนาคารชุมชน V 1.0.7");
+        setTitle("ระบบบริหารธนาคารชุมชน V 1.0.7-2021.04.07");
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -8254,6 +8256,7 @@ public class MainDialog extends BaseSwing {
             new File("cbanksystem.running").delete();
             PrintCOM printCom = new PrintCOM();
             printCom.printLOG("Logout by ... " + Value.CUST_CODE + "   End time: " + DateFormat.getLocale_ddMMyyyy(new Date()));
+            MySQLConnect.close();
             System.exit(0);
         }
 
@@ -8492,9 +8495,8 @@ public class MainDialog extends BaseSwing {
             txtAccCode.setText(Value.CUST_ACCOUNT_CODE);
         }
         
-        // update interest before load personal data
-        computeInterestAccount();
-        // end process
+        // update summary balance again
+        CbSaveAccountControl.updateSummaryBalanceFromTransaction(txtProfileCode.getText());
         
         ProfileBean pBean = getProfileControl().listCbProfile(txtProfileCode.getText());
         txtStartAcc.setText(DateFormat.getLocale_ddMMyyyy(pBean.getP_member_start()));
@@ -8749,7 +8751,7 @@ public class MainDialog extends BaseSwing {
             getConfigControl().update(sql);
 
             JOptionPane.showMessageDialog(this, "บันทึกข้อมูลการฝากเงินเรียบร้อยแล้ว");
-            TransactionAdvanceMethod.saveTransaction(txtProfileCode.getText(), txtAccCode.getText(), tSave.getT_balance(), tSave.getT_interest());
+            TransactionAdvanceMethod.updateSaveAccountAndProfile(txtProfileCode.getText(), txtAccCode.getText(), tSave.getT_balance(), tSave.getT_interest());
 
             //load transaction
             loadTransactionPerson(txtAccCode.getText());
@@ -8961,7 +8963,7 @@ public class MainDialog extends BaseSwing {
                 getConfigControl().update(sql);
 
                 JOptionPane.showMessageDialog(this, "บันทึกข้อมูลการถอนเงินเรียบร้อยแล้ว");
-                TransactionAdvanceMethod.saveTransaction(txtProfileCode.getText(), txtAccCode.getText(), tSave.getT_balance(), tSave.getT_interest());
+                TransactionAdvanceMethod.updateSaveAccountAndProfile(txtProfileCode.getText(), txtAccCode.getText(), tSave.getT_balance(), tSave.getT_interest());
 
                 loadSummary();
 
@@ -11398,13 +11400,4 @@ public class MainDialog extends BaseSwing {
         txtTotalAccount.setText("" + listSc.size());
     }
 
-    private void computeInterestAccount() {
-        this.setCursor(new java.awt.Cursor(java.awt.Cursor.WAIT_CURSOR));
-        TransactionAdvanceMethod.findData(txtProfileCode.getText(), txtAccCode.getText(), false);
-        double all_balance = TransactionAdvanceMethod.balanceAmount;
-        double all_interest = TransactionAdvanceMethod.interestAmount;
-        TransactionAdvanceMethod.saveTransaction(txtProfileCode.getText(), txtAccCode.getText(), all_balance, all_interest);
-        TransactionAdvanceMethod.updateTransactionSaveRunning(txtProfileCode.getText(),  txtAccCode.getText());
-        this.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-    }
 }

@@ -15,20 +15,20 @@ import th.co.cbank.project.log.Log;
 
 public class MySQLConnect {
     private final Logger logger = Logger.getLogger(MySQLConnect.class);
-    private String CLASS_NAME;
+    private static String CLASS_NAME;
     public static String SERVER;
     public static boolean USE_FINGER = false;
-    private String USER;
-    private String PASS;
+    private static String USER;
+    private static String PASS;
     public static String DATABASE;
     public static String DATABASE_MEMBER;
     public static Connection conn;
-    private int PORT;
-    private String CHARSET;
-
-    public MySQLConnect() {
+    private static int PORT;
+    private static String CHARSET;
+    
+    public static Connection connect() {
+        System.out.println("Call mysql connection connect()");
         CLASS_NAME = "com.mysql.jdbc.Driver";
-
         try {
             Properties prop = new Properties();
             InputStream input = new FileInputStream("itfinger_conf.txt");
@@ -63,15 +63,10 @@ public class MySQLConnect {
         } catch (IOException e) {
             Log.write.error(e.getMessage());
         }
-
-        connect();
-    }
-
-    private Connection connect() {
+        
         try {
             Class.forName(CLASS_NAME);
             System.out.println("Driver Loaded.");
-
             String jdbcUrl = "jdbc:mysql://" + SERVER + ":" + PORT + "/" + DATABASE + "?charset=" + CHARSET;
             conn = DriverManager.getConnection(jdbcUrl, USER, PASS);
             System.out.println("Connected. " + conn);
@@ -89,7 +84,8 @@ public class MySQLConnect {
 
     public static Statement getStatement() throws Exception {
         if (conn == null) {
-            return null;
+            connect();
+            return conn.createStatement();
         } else {
             return conn.createStatement();
         }
@@ -97,7 +93,8 @@ public class MySQLConnect {
 
     public static ResultSet getResultSet(String sql) throws Exception {
         if (conn == null) {
-            return null;
+            connect();
+            return getStatement().executeQuery(sql);
         } else {
             return getStatement().executeQuery(sql);
         }
@@ -105,7 +102,8 @@ public class MySQLConnect {
 
     public static int exeUpdate(String sql) throws Exception {
         if (conn == null) {
-            return -1;
+            connect();
+            return conn.createStatement().executeUpdate(sql);
         } else {
             return conn.createStatement().executeUpdate(sql);
         }

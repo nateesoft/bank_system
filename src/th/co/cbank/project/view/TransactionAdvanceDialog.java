@@ -349,7 +349,7 @@ public class TransactionAdvanceDialog extends BaseDialogSwing {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         double netBalance = Double.parseDouble(txtNetBalance.getText().replace(",", ""));
         double intAmt = Double.parseDouble(txtInt.getText().replace(",", ""));
-        TransactionAdvanceMethod.saveTransaction(txtCustCode.getText(), txtAccCode.getText(), netBalance, intAmt);
+        TransactionAdvanceMethod.updateSaveAccountAndProfile(txtCustCode.getText(), txtAccCode.getText(), netBalance, intAmt);
         JOptionPane.showMessageDialog(this, "บันทึกข้อมูลเรียบร้อย");
     }//GEN-LAST:event_jButton4ActionPerformed
 

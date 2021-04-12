@@ -22,12 +22,13 @@ public class TransactionAdvanceMethod {
     private static final CbSaveConfigControl saveConfigControl = new CbSaveConfigControl();
     private static final CbTransactionLoanControl cbTransactionLoanControl = new CbTransactionLoanControl();
     private static final CbTransactionSaveControl cbTransactionSaveControl = new CbTransactionSaveControl();
+    
     public static double balanceAmount = 0;
     public static double interestAmount = 0;
 
-    public static void saveTransaction(String custCode, String accCode, double netBalance, double textInt) {
+    public static void updateSaveAccountAndProfile(String custCode, String accCode, double netBalance, double textInt) {
         //update cb_save_account
-        System.out.println("saveTransaction: " + custCode + "," + accCode);
+        System.out.println("updateSaveAccountAndProfile: custCode=" + custCode + ",accCode=" + accCode);
         try {
             String sql = "update cb_save_account set "
                     + "b_balance='" + netBalance + "',"
@@ -41,23 +42,12 @@ public class TransactionAdvanceMethod {
 
         //update cb_profile
         try {
-            String sql = "select * from cb_save_account "
-                    + "where b_cust_code='" + custCode + "' "
-                    + "and account_code='" + accCode + "'";
-            ResultSet rs = MySQLConnect.getResultSet(sql);
-            double netTotal = 0.00;
-            while (rs.next()) {
-                netTotal += rs.getDouble("b_balance");
-            }
-            try {
-                String sql1 = "update cb_profile set "
-                        + "save_balance='" + netTotal + "' "
-                        + "where p_custcode='" + custCode + "'";
-                MySQLConnect.exeUpdate(sql1);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e.getMessage());
-            }
-            rs.close();
+            String sql1 = "update cb_profile p set p.save_balance=("
+                + "select sum(s.b_balance) from cb_save_account s"
+                + "where s.b_cust_code=p.p_custcode "
+                + "and s.account_code='" + accCode + "'"
+                + ") where p.p_custcode='" + custCode + "';";
+            MySQLConnect.exeUpdate(sql1);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }

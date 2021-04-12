@@ -517,7 +517,7 @@ public class CheckAuditDialog extends BaseDialogSwing {
         TransactionAdvanceMethod.findData(profileCode, accCode, false);
         double all_balance = TransactionAdvanceMethod.balanceAmount;
         double all_interest = TransactionAdvanceMethod.interestAmount;
-        TransactionAdvanceMethod.saveTransaction(profileCode, accCode, all_balance, all_interest);
+        TransactionAdvanceMethod.updateSaveAccountAndProfile(profileCode, accCode, all_balance, all_interest);
         TransactionAdvanceMethod.updateTransactionSaveRunning(profileCode,  accCode);
         this.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         

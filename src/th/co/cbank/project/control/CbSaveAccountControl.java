@@ -20,6 +20,7 @@ import th.co.cbank.util.NumberFormat;
 import th.co.cbank.util.StringUtil;
 
 public class CbSaveAccountControl extends BaseControl {
+
     private final Logger logger = Logger.getLogger(CbSaveAccountControl.class);
 
     private ArrayList<CbSaveAccountBean> mappingBean(ResultSet rs) throws Exception {
@@ -63,7 +64,7 @@ public class CbSaveAccountControl extends BaseControl {
             ArrayList<CbSaveAccountBean> listBean = mappingBean(rs);
             return listBean;
         } catch (Exception e) {
-            
+
             return new ArrayList();
         }
 
@@ -79,7 +80,7 @@ public class CbSaveAccountControl extends BaseControl {
             ArrayList<CbSaveAccountBean> listBean = mappingBean(rs);
             return listBean;
         } catch (Exception e) {
-            
+
             return new ArrayList();
         }
 
@@ -93,7 +94,7 @@ public class CbSaveAccountControl extends BaseControl {
 
             return listBean;
         } catch (Exception e) {
-            
+
             return new ArrayList();
         }
 
@@ -120,7 +121,7 @@ public class CbSaveAccountControl extends BaseControl {
             }
             rs.close();
         } catch (Exception e) {
-            
+
         }
 
         return listBean;
@@ -164,7 +165,7 @@ public class CbSaveAccountControl extends BaseControl {
             }
             rs.close();
         } catch (Exception e) {
-            
+
         }
 
         return listBean;
@@ -181,7 +182,7 @@ public class CbSaveAccountControl extends BaseControl {
 
             return listBean.get(0);
         } catch (Exception e) {
-            
+
             return null;
         }
 
@@ -201,7 +202,7 @@ public class CbSaveAccountControl extends BaseControl {
 
             return listBean.get(0);
         } catch (Exception e) {
-            
+
             return null;
         }
 
@@ -249,7 +250,7 @@ public class CbSaveAccountControl extends BaseControl {
             rs.close();
             isSave = true;
         } catch (Exception e) {
-            
+
             isSave = false;
         }
 
@@ -290,7 +291,7 @@ public class CbSaveAccountControl extends BaseControl {
             update(sql2);
             isSave = true;
         } catch (Exception e) {
-            
+
         }
 
         return isSave;
@@ -525,7 +526,7 @@ public class CbSaveAccountControl extends BaseControl {
             }
             rs.close();
         } catch (Exception e) {
-            
+
         }
     }
 
@@ -545,7 +546,7 @@ public class CbSaveAccountControl extends BaseControl {
             }
             rs1.close();
         } catch (Exception e) {
-            
+
         }
 
         return totalAmount;
@@ -596,7 +597,7 @@ public class CbSaveAccountControl extends BaseControl {
 
             rs.close();
         } catch (Exception e) {
-            
+
         }
     }
 
@@ -621,7 +622,7 @@ public class CbSaveAccountControl extends BaseControl {
 
             rs.close();
         } catch (Exception e) {
-            
+
         }
     }
 
@@ -641,10 +642,10 @@ public class CbSaveAccountControl extends BaseControl {
 
             rs.close();
         } catch (Exception e) {
-            
+
         }
 
-        //อัพเดตยอดเงินแต่ละบัญชี            
+        //อัพเดตยอดเงินแต่ละบัญชี
         try {
             String sql = "select t_custcode, t_acccode, sum(t_amount) t_amount "
                     + "from cb_transaction_save "
@@ -663,13 +664,13 @@ public class CbSaveAccountControl extends BaseControl {
                             + "and account_code='" + accCode + "'";
                     update(sql2);
                 } catch (Exception e) {
-                    
+
                 }
             }
 
             rs.close();
         } catch (Exception e) {
-            
+
         }
 
         //update ความเคลื่อนไหว
@@ -703,14 +704,14 @@ public class CbSaveAccountControl extends BaseControl {
                             + "and t_index='" + rs.getString("t_index") + "'";
                     update(sqlUpd);
                 } catch (Exception e) {
-                    
+
                 }
             }
 
             //JOptionPane.showMessageDialog(null, "ปรับข้อมูลให้ถูกต้องเรียบร้อยแล้ว");
             rs.close();
         } catch (Exception e) {
-            
+
         }
 
         //update ข้อมูลรวมเงินฝากทุกบัญชี
@@ -726,12 +727,12 @@ public class CbSaveAccountControl extends BaseControl {
                             + "where p_custcode='" + rs.getString("b_cust_code") + "'";
                     update(sql1);
                 } catch (Exception e) {
-                    
+
                 }
             }
             rs.close();
         } catch (Exception e) {
-            
+
         }
     }
 
@@ -748,7 +749,7 @@ public class CbSaveAccountControl extends BaseControl {
                     + "and t_docno='" + t_docno + "'";
             update(sqlUpd);
         } catch (Exception e) {
-            
+
         }
     }
 
@@ -764,7 +765,7 @@ public class CbSaveAccountControl extends BaseControl {
                     + "and account_code='" + t_acccode + "' ";
             update(sqlUpd);
         } catch (Exception e) {
-            
+
         }
     }
 
@@ -1131,7 +1132,7 @@ public class CbSaveAccountControl extends BaseControl {
                     + "(select b_balance from cb_save_account s where s.account_code=t.t_acccode limit 0,1) b_balance "
                     + "from cb_transaction_save t "
                     + "where t_booktype='INT' "
-                    + "and t_date = '"+date+"' "
+                    + "and t_date = '" + date + "' "
                     + "group by t_acccode "
                     + "order by t_custcode, t_acccode, t_date, t_time;";
             ResultSet rs = MySQLConnect.getResultSet(sql);
@@ -1150,12 +1151,12 @@ public class CbSaveAccountControl extends BaseControl {
             }
             rs.close();
         } catch (Exception e) {
-            
+
         }
 
         return listData;
     }
-    
+
     public static int getMaxBookNo() {
         int maxBookNo = 0;
         try {
@@ -1169,10 +1170,10 @@ public class CbSaveAccountControl extends BaseControl {
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(null, e.getMessage());
         }
-        
+
         return maxBookNo;
     }
-    
+
     public static boolean deleteAccountAndBookNo(String accountNo, int bookNo) {
         try {
             String sql = "delete from cb_save_account "
@@ -1180,13 +1181,13 @@ public class CbSaveAccountControl extends BaseControl {
                     + "and book_no='" + bookNo + "'";
             MySQLConnect.exeUpdate(sql);
         } catch (Exception e) {
-             JOptionPane.showConfirmDialog(null, e.getMessage());
-             return false;
+            JOptionPane.showConfirmDialog(null, e.getMessage());
+            return false;
         }
         return true;
     }
-    
-    public static ArrayList<Object[]> getAccountWhereCustCode(String custCode){
+
+    public static ArrayList<Object[]> getAccountWhereCustCode(String custCode) {
         ArrayList<Object[]> list = new ArrayList();
         try {
             String sql = "select b_cust_code,account_code, b_balance,b_fee "
@@ -1205,7 +1206,33 @@ public class CbSaveAccountControl extends BaseControl {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-        
+
         return list;
+    }
+
+    public static void updateSummaryBalanceFromTransaction(String custCode) {
+        try {
+            String sql1 = "select ("
+                    + "	select sum(t_amount) sum_in from cb_transaction_save t1 "
+                    + "	where t_custcode=s.b_cust_code and t_status in(2,11) order by t_date, t_time"
+                    + ")+("
+                    + "	select sum(t_amount) sum_out from cb_transaction_save t2 "
+                    + "	where t_custcode=s.b_cust_code and t_status in(3, 8) order by t_date, t_time"
+                    + ") total_balance from cb_save_account s where s.b_cust_code='" + custCode + "';";
+            ResultSet rs = MySQLConnect.getResultSet(sql1);
+            double totalBalance = 0;
+            if (rs.next()) {
+                totalBalance = rs.getDouble("total_balance");
+            }
+            rs.close();
+
+            // update cb_save_account
+            String sql2 = "update cb_save_account "
+                    + "set b_balance=" + totalBalance + " "
+                    + "where b_cust_code='" + custCode + "';";
+            MySQLConnect.exeUpdate(sql2);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Cannot save balance account", "Error Update SQL", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }
