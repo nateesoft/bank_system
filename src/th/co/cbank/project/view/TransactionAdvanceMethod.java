@@ -43,7 +43,7 @@ public class TransactionAdvanceMethod {
         //update cb_profile
         try {
             String sql1 = "update cb_profile p set p.save_balance=("
-                + "select sum(s.b_balance) from cb_save_account s"
+                + "select sum(s.b_balance) from cb_save_account s "
                 + "where s.b_cust_code=p.p_custcode "
                 + "and s.account_code='" + accCode + "'"
                 + ") where p.p_custcode='" + custCode + "';";
