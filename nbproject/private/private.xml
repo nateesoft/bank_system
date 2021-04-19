@@ -45,6 +45,10 @@
             <file>file:/D:/NetbeansProjects/CBankSystem/src/th/co/cbank/project/control/MySQLConnect.java</file>
             <file>file:/D:/NetbeansProjects/CBankSystem/src/th/co/cbank/project/control/BalanceControl.java</file>
         </group>
-        <group/>
+        <group>
+            <file>file:/D:/OutsourceProject/GitHubProject/bank_system/src/th/co/cbank/project/view/LoginDialog.java</file>
+            <file>file:/D:/OutsourceProject/GitHubProject/bank_system/src/th/co/cbank/project/view/CustomerDialog.java</file>
+            <file>file:/D:/OutsourceProject/GitHubProject/bank_system/src/th/co/cbank/project/control/CbSaveAccountControl.java</file>
+        </group>
     </open-files>
 </project-private>

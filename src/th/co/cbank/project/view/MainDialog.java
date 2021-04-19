@@ -676,7 +676,7 @@ public class MainDialog extends BaseSwing {
         jMenuItem37 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("ระบบบริหารธนาคารชุมชน V 1.0.7-2021.04.07");
+        setTitle("ระบบบริหารธนาคารชุมชน V 1.0.7-2021.04.19.001");
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -8494,10 +8494,7 @@ public class MainDialog extends BaseSwing {
         if ("".equals(txtAccCode.getText())) {
             txtAccCode.setText(Value.CUST_ACCOUNT_CODE);
         }
-        
-        // update summary balance again
-        CbSaveAccountControl.updateSummaryBalanceFromTransaction(txtProfileCode.getText());
-        
+
         ProfileBean pBean = getProfileControl().listCbProfile(txtProfileCode.getText());
         txtStartAcc.setText(DateFormat.getLocale_ddMMyyyy(pBean.getP_member_start()));
         txtTotalValue.setText("" + pBean.getHoon_Qty());

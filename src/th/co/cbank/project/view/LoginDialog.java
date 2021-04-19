@@ -5,10 +5,12 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
+import th.co.cbank.project.control.CbSaveAccountControl;
 import th.co.cbank.util.DateFormat;
 import th.co.cbank.project.control.MySQLConnect;
 import th.co.cbank.project.control.Value;
@@ -18,8 +20,10 @@ import th.co.cbank.util.ThaiUtil;
 import th.co.cbank.project.control.PrintCOM;
 import th.co.cbank.project.log.Log;
 import th.co.cbank.project.model.BranchBean;
+import th.co.cbank.project.model.CbSaveAccountBean;
 
 public class LoginDialog extends BaseDialogSwing {
+
     private final Logger logger = Logger.getLogger(LoginDialog.class);
     private Frame parent;
     private SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
@@ -50,7 +54,7 @@ public class LoginDialog extends BaseDialogSwing {
         jLabel2 = new javax.swing.JLabel();
         txtPass = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnExit = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -117,12 +121,12 @@ public class LoginDialog extends BaseDialogSwing {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("ผู้ใช้งาน :");
 
-        jButton1.setBackground(new java.awt.Color(255, 51, 51));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton1.setText("EXIT");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnExit.setBackground(new java.awt.Color(255, 51, 51));
+        btnExit.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnExit.setText("EXIT");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnExitActionPerformed(evt);
             }
         });
 
@@ -147,7 +151,7 @@ public class LoginDialog extends BaseDialogSwing {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -170,7 +174,7 @@ public class LoginDialog extends BaseDialogSwing {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel7)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -292,9 +296,9 @@ public class LoginDialog extends BaseDialogSwing {
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         exit();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnExitActionPerformed
 
     private void txtUserFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUserFocusGained
         txtUser.selectAll();
@@ -310,8 +314,8 @@ public class LoginDialog extends BaseDialogSwing {
     }//GEN-LAST:event_jLabel4MouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnExit;
     private javax.swing.JButton btnLogin;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -371,6 +375,21 @@ public class LoginDialog extends BaseDialogSwing {
 
                 PrintCOM printCom = new PrintCOM();
                 printCom.printLOG("Login by ... " + Value.USER_CODE + "   Start time: " + DateFormat.getLocale_ddMMyyyy(new Date()));
+
+                // process total balance all account
+                SimpleDateFormat simp = new SimpleDateFormat("ddMMyyyy");
+                if (!new File("process" + simp.format(new Date()) + ".txt").exists()) {
+                    JOptionPane.showMessageDialog(null, "ระบบจะทำการประมวลผล ข้อมูลสมาชิกทั้งหมด กรุณารอสักครู่...\nข้อมูลจะถูกประมวลผล วันละ 1 ครั้งเท่านั้น");
+                    btnLogin.setEnabled(false);
+                    btnExit.setEnabled(false);
+                    ArrayList<CbSaveAccountBean> listBean = getSaveAccountControl().listCbSaveAccount();
+                    for (int i = 0; i < listBean.size(); i++) {
+                        CbSaveAccountBean bean = (CbSaveAccountBean) listBean.get(i);
+                        // update summary balance again
+                        CbSaveAccountControl.updateSummaryBalanceFromTransaction(bean.getB_CUST_CODE(), bean.getAccount_code());
+                    }
+                    new File("process" + simp.format(new Date()) + ".txt").createNewFile();
+                }
 
                 dispose();
                 parent.setVisible(true);

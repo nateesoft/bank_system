@@ -12,6 +12,7 @@ import th.co.cbank.util.JTableUtil;
 import th.co.cbank.util.DateFormat;
 import th.co.cbank.util.NumberFormat;
 import th.co.cbank.project.constants.AppConstants;
+import th.co.cbank.project.control.CbSaveAccountControl;
 import th.co.cbank.project.control.Value;
 import th.co.cbank.project.model.CbLoanAccountBean;
 import th.co.cbank.project.model.CbSaveAccountBean;
@@ -138,11 +139,11 @@ public class CustomerDialog extends BaseDialogSwing {
 
             },
             new String [] {
-                "เลขที่บัญชี", "วันที่เปิดบัญชี", "ประเภทบัญชี", "ยอดเงินคงเหลือ"
+                "เลขที่บัญชี", "วันที่เปิดบัญชี", "ประเภทบัญชี", "ยอดเงินคงเหลือ", "สถานะบัญชี"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -273,7 +274,6 @@ public class CustomerDialog extends BaseDialogSwing {
             Value.CUST_CODE  = "" + tbCustomer.getValueAt(tbCustomer.getSelectedRow(), 1);
             dispose();
         } else {
-            
             //for save account
             int rows = tbCustomer.getSelectedRow();
             modelDetail = (DefaultTableModel) tbAccount.getModel();
@@ -286,7 +286,8 @@ public class CustomerDialog extends BaseDialogSwing {
                     bean.getAccount_code(),
                     DateFormat.getLocale_ddMMyyyy(bean.getB_START()),
                     bean.getAccount_name(),
-                    NumberFormat.showDouble2(bean.getB_BALANCE())
+                    NumberFormat.showDouble2(bean.getB_BALANCE()),
+                    bean.getStatusName()
                 });
             }
             

@@ -28,6 +28,7 @@ public class CbSaveAccountBean {
     private double B_FEE;
     private String Branch_Code;
     private String Emp_Code;
+    private String statusName;
 
     public String getAccount_name() {
         return account_name;
@@ -211,6 +212,14 @@ public class CbSaveAccountBean {
 
     public void setBook_evidence2(String book_evidence2) {
         this.book_evidence2 = book_evidence2;
+    }
+
+    public String getStatusName() {
+        return statusName;
+    }
+
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
     }
 
     @Override

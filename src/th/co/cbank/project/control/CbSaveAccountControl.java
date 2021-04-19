@@ -130,10 +130,11 @@ public class CbSaveAccountControl extends BaseControl {
     public ArrayList<CbSaveAccountBean> listCbSaveAccount(String B_CUST_CODE) {
         ArrayList<CbSaveAccountBean> listBean = new ArrayList<>();
         try {
-            String sql = "select s.*,typeName from cb_save_account s,cb_save_config c "
-                    + "where s.account_type=c.typeCode "
-                    + "and B_CUST_CODE='" + B_CUST_CODE + "' "
-                    + "and account_status='1'";
+            String sql = "select s.*, "
+                    + "(select typeName from cb_save_config c where c.typeCode=s.account_type) typeName, "
+                    + "(select exp_desc from cb_status sts where sts.exp_id=s.account_status) statusName "
+                    + "from cb_save_account s "
+                    + "where b_cust_code='" + B_CUST_CODE + "' and account_status='1'";
             ResultSet rs = MySQLConnect.getResultSet(sql);
             while (rs.next()) {
                 CbSaveAccountBean bean = new CbSaveAccountBean();
@@ -160,6 +161,7 @@ public class CbSaveAccountControl extends BaseControl {
                 bean.setB_TIME(rs.getString("B_TIME"));
                 bean.setBranch_Code(rs.getString("Branch_Code"));
                 bean.setEmp_Code(rs.getString("Emp_Code"));
+                bean.setStatusName(ThaiUtil.ASCII2Unicode(rs.getString("statusName")));
 
                 listBean.add(bean);
             }
@@ -1210,15 +1212,17 @@ public class CbSaveAccountControl extends BaseControl {
         return list;
     }
 
-    public static void updateSummaryBalanceFromTransaction(String custCode) {
+    public static void updateSummaryBalanceFromTransaction(String custCode, String accCode) {
         try {
-            String sql1 = "select ("
-                    + "	select sum(t_amount) sum_in from cb_transaction_save t1 "
-                    + "	where t_custcode=s.b_cust_code and t_status in(2,11) order by t_date, t_time"
-                    + ")+("
-                    + "	select sum(t_amount) sum_out from cb_transaction_save t2 "
-                    + "	where t_custcode=s.b_cust_code and t_status in(3, 8) order by t_date, t_time"
-                    + ") total_balance from cb_save_account s where s.b_cust_code='" + custCode + "';";
+            String sql1 = "select ifnull(("
+                    + "select sum(t_amount) sum_in from cb_transaction_save t1 	"
+                    + "where t_custcode=s.b_cust_code and t_acccode=s.account_code and t_status in(2,11) "
+                    + "order by t_date, t_time"
+                    + "),0)+ifnull(("
+                    + "select sum(t_amount) sum_out from cb_transaction_save t2 "
+                    + "where t_custcode=s.b_cust_code and t_acccode=s.account_code and t_status in(3, 8) order by t_date, t_time"
+                    + "),0) total_balance "
+                    + "from cb_save_account s where s.b_cust_code='" + custCode + "' and s.account_code='" + accCode + "';";
             ResultSet rs = MySQLConnect.getResultSet(sql1);
             double totalBalance = 0;
             if (rs.next()) {
@@ -1226,10 +1230,14 @@ public class CbSaveAccountControl extends BaseControl {
             }
             rs.close();
 
+            if (totalBalance < 0) {
+                totalBalance = 0;
+            }
+
             // update cb_save_account
             String sql2 = "update cb_save_account "
                     + "set b_balance=" + totalBalance + " "
-                    + "where b_cust_code='" + custCode + "';";
+                    + "where b_cust_code='" + custCode + "' and account_code='" + accCode + "';";
             MySQLConnect.exeUpdate(sql2);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Cannot save balance account", "Error Update SQL", JOptionPane.ERROR_MESSAGE);
