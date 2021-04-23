@@ -2,7 +2,6 @@ package th.co.cbank.project.view;
 
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Cursor;
 import th.co.cbank.project.model.BranchBean;
 import th.co.cbank.project.model.ProfileBean;
 import th.co.cbank.project.control.Value;
@@ -38,7 +37,6 @@ import th.co.cbank.util.MoneyToWord;
 import th.co.cbank.util.NumberFormat;
 import th.co.cbank.util.ThaiUtil;
 import th.co.cbank.project.constants.AppConstants;
-import th.co.cbank.project.control.CbSaveAccountControl;
 import th.co.cbank.project.control.MySQLConnect;
 import th.co.cbank.project.model.ConfigBean;
 import th.co.cbank.project.control.PrintCOM;
