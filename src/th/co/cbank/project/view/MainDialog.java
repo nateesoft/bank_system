@@ -124,7 +124,7 @@ public class MainDialog extends BaseSwing {
         checkMenuLoadFile();
 
         txtProfileCode.requestFocus();
-        jMenu7.setVisible(false);
+        mnProgram.setVisible(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -597,28 +597,28 @@ public class MainDialog extends BaseSwing {
         jPanel43 = new javax.swing.JPanel();
         btnTimeShow = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu7 = new javax.swing.JMenu();
-        jMenu8 = new javax.swing.JMenu();
-        jMenuItem12 = new javax.swing.JMenuItem();
+        mnProgram = new javax.swing.JMenu();
+        mnProgramSaving = new javax.swing.JMenu();
+        mnProgramAccOpen = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem13 = new javax.swing.JMenuItem();
-        jMenuItem14 = new javax.swing.JMenuItem();
+        mnProgramAccDeposit = new javax.swing.JMenuItem();
+        mnProgramAccLoan = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem15 = new javax.swing.JMenuItem();
-        jMenu9 = new javax.swing.JMenu();
-        jMenuItem16 = new javax.swing.JMenuItem();
-        jMenuItem17 = new javax.swing.JMenuItem();
+        mnProgramAccClose = new javax.swing.JMenuItem();
+        mnProgramHoon = new javax.swing.JMenu();
+        mnProgramHoonBuy = new javax.swing.JMenuItem();
+        mnProgramHoonSell = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem18 = new javax.swing.JMenuItem();
-        jMenu10 = new javax.swing.JMenu();
-        jMenuItem10 = new javax.swing.JMenuItem();
-        jMenuItem19 = new javax.swing.JMenuItem();
+        mnProgramHoonTranf = new javax.swing.JMenuItem();
+        mnProgramLoan = new javax.swing.JMenu();
+        mnProgramLoanOpen = new javax.swing.JMenuItem();
+        mnProgramLoanPayment = new javax.swing.JMenuItem();
         jSeparator15 = new javax.swing.JPopupMenu.Separator();
-        mnExit = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
+        mnProgramExit = new javax.swing.JMenuItem();
+        mnSettings = new javax.swing.JMenu();
         mnConfigSystem = new javax.swing.JMenuItem();
         mnSetupConfig = new javax.swing.JMenuItem();
-        jMenu6 = new javax.swing.JMenu();
+        mnMaster = new javax.swing.JMenu();
         mnMember = new javax.swing.JMenuItem();
         mnMemberType = new javax.swing.JMenuItem();
         mnExpense = new javax.swing.JMenuItem();
@@ -628,11 +628,11 @@ public class MainDialog extends BaseSwing {
         mnStatus = new javax.swing.JMenuItem();
         jSeparator8 = new javax.swing.JPopupMenu.Separator();
         mnFee = new javax.swing.JMenuItem();
-        jMenu13 = new javax.swing.JMenu();
+        mnAccount = new javax.swing.JMenu();
         mnSaveAccount = new javax.swing.JMenuItem();
         mnLoanAccount = new javax.swing.JMenuItem();
         mnLoadExcel = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        mnProcess = new javax.swing.JMenu();
         mnSaveExpense = new javax.swing.JMenuItem();
         jSeparator9 = new javax.swing.JPopupMenu.Separator();
         mnCloseDialoyDay = new javax.swing.JMenuItem();
@@ -644,7 +644,7 @@ public class MainDialog extends BaseSwing {
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
+        mnReport = new javax.swing.JMenu();
         mnRptMember = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jSeparator10 = new javax.swing.JPopupMenu.Separator();
@@ -670,7 +670,7 @@ public class MainDialog extends BaseSwing {
         mnRptTransaction = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
+        mnHelp = new javax.swing.JMenu();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem38 = new javax.swing.JMenuItem();
         jMenuItem47 = new javax.swing.JMenuItem();
@@ -5532,126 +5532,86 @@ public class MainDialog extends BaseSwing {
                 .addContainerGap())
         );
 
-        jMenu7.setText("โปรแกรม");
-        jMenu7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        mnProgram.setText("โปรแกรม");
+        mnProgram.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
-        jMenu8.setText("บัญชีเงินฝาก");
-        jMenu8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        mnProgramSaving.setText("บัญชีเงินฝาก");
+        mnProgramSaving.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        jMenuItem12.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jMenuItem12.setText("เปิดบัญชี");
-        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+        mnProgramAccOpen.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        mnProgramAccOpen.setText("เปิดบัญชี");
+        mnProgramAccOpen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem12ActionPerformed(evt);
+                mnProgramAccOpenActionPerformed(evt);
             }
         });
-        jMenu8.add(jMenuItem12);
-        jMenu8.add(jSeparator5);
+        mnProgramSaving.add(mnProgramAccOpen);
+        mnProgramSaving.add(jSeparator5);
 
-        jMenuItem13.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jMenuItem13.setText("ฝากเงิน");
-        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+        mnProgramAccDeposit.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        mnProgramAccDeposit.setText("ฝากเงิน");
+        mnProgramSaving.add(mnProgramAccDeposit);
+
+        mnProgramAccLoan.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        mnProgramAccLoan.setText("ถอนเงิน");
+        mnProgramSaving.add(mnProgramAccLoan);
+        mnProgramSaving.add(jSeparator6);
+
+        mnProgramAccClose.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        mnProgramAccClose.setText("ปิดบัญชีเงินฝาก");
+        mnProgramSaving.add(mnProgramAccClose);
+
+        mnProgram.add(mnProgramSaving);
+
+        mnProgramHoon.setText("บัญชีหุ้น");
+        mnProgramHoon.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        mnProgramHoonBuy.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        mnProgramHoonBuy.setText("ซื้อหุ้น");
+        mnProgramHoon.add(mnProgramHoonBuy);
+
+        mnProgramHoonSell.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        mnProgramHoonSell.setText("ขายหุ้น");
+        mnProgramHoon.add(mnProgramHoonSell);
+        mnProgramHoon.add(jSeparator3);
+
+        mnProgramHoonTranf.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        mnProgramHoonTranf.setText("โอนหุ้น");
+        mnProgramHoon.add(mnProgramHoonTranf);
+
+        mnProgram.add(mnProgramHoon);
+
+        mnProgramLoan.setText("บัญชีเงินกู้");
+        mnProgramLoan.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        mnProgramLoanOpen.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        mnProgramLoanOpen.setText("เปิดบัญชีเงินกู้");
+        mnProgramLoan.add(mnProgramLoanOpen);
+
+        mnProgramLoanPayment.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        mnProgramLoanPayment.setText("รับชำระเงินกู้");
+        mnProgramLoan.add(mnProgramLoanPayment);
+
+        mnProgram.add(mnProgramLoan);
+        mnProgram.add(jSeparator15);
+
+        mnProgramExit.setBackground(new java.awt.Color(204, 0, 0));
+        mnProgramExit.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        mnProgramExit.setText("ออกจากระบบ (Exit)");
+        mnProgramExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem13ActionPerformed(evt);
+                mnProgramExitActionPerformed(evt);
             }
         });
-        jMenu8.add(jMenuItem13);
+        mnProgram.add(mnProgramExit);
 
-        jMenuItem14.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jMenuItem14.setText("ถอนเงิน");
-        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+        jMenuBar1.add(mnProgram);
+
+        mnSettings.setText("ตั้งค่าการใช้งาน");
+        mnSettings.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        mnSettings.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem14ActionPerformed(evt);
-            }
-        });
-        jMenu8.add(jMenuItem14);
-        jMenu8.add(jSeparator6);
-
-        jMenuItem15.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jMenuItem15.setText("ปิดบัญชีเงินฝาก");
-        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem15ActionPerformed(evt);
-            }
-        });
-        jMenu8.add(jMenuItem15);
-
-        jMenu7.add(jMenu8);
-
-        jMenu9.setText("บัญชีหุ้น");
-        jMenu9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-
-        jMenuItem16.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jMenuItem16.setText("ซื้อหุ้น");
-        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem16ActionPerformed(evt);
-            }
-        });
-        jMenu9.add(jMenuItem16);
-
-        jMenuItem17.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jMenuItem17.setText("ขายหุ้น");
-        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem17ActionPerformed(evt);
-            }
-        });
-        jMenu9.add(jMenuItem17);
-        jMenu9.add(jSeparator3);
-
-        jMenuItem18.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jMenuItem18.setText("โอนหุ้น");
-        jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem18ActionPerformed(evt);
-            }
-        });
-        jMenu9.add(jMenuItem18);
-
-        jMenu7.add(jMenu9);
-
-        jMenu10.setText("บัญชีเงินกู้");
-        jMenu10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-
-        jMenuItem10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jMenuItem10.setText("เปิดบัญชีเงินกู้");
-        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem10ActionPerformed(evt);
-            }
-        });
-        jMenu10.add(jMenuItem10);
-
-        jMenuItem19.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jMenuItem19.setText("รับชำระเงินกู้");
-        jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem19ActionPerformed(evt);
-            }
-        });
-        jMenu10.add(jMenuItem19);
-
-        jMenu7.add(jMenu10);
-        jMenu7.add(jSeparator15);
-
-        mnExit.setBackground(new java.awt.Color(204, 0, 0));
-        mnExit.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        mnExit.setText("ออกจากระบบ (Exit)");
-        mnExit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnExitActionPerformed(evt);
-            }
-        });
-        jMenu7.add(mnExit);
-
-        jMenuBar1.add(jMenu7);
-
-        jMenu1.setText("ตั้งค่าการใช้งาน");
-        jMenu1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jMenu1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu1ActionPerformed(evt);
+                mnSettingsActionPerformed(evt);
             }
         });
 
@@ -5662,7 +5622,7 @@ public class MainDialog extends BaseSwing {
                 mnConfigSystemActionPerformed(evt);
             }
         });
-        jMenu1.add(mnConfigSystem);
+        mnSettings.add(mnConfigSystem);
 
         mnSetupConfig.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         mnSetupConfig.setText("ตั้งค่าข้อมูลบัญชี/ลูกหนี้/หุ้น");
@@ -5671,12 +5631,12 @@ public class MainDialog extends BaseSwing {
                 mnSetupConfigActionPerformed(evt);
             }
         });
-        jMenu1.add(mnSetupConfig);
+        mnSettings.add(mnSetupConfig);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(mnSettings);
 
-        jMenu6.setText("แฟ้มข้อมูล");
-        jMenu6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        mnMaster.setText("แฟ้มข้อมูล");
+        mnMaster.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
         mnMember.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         mnMember.setText("ข้อมูลสมาชิก");
@@ -5685,7 +5645,7 @@ public class MainDialog extends BaseSwing {
                 mnMemberActionPerformed(evt);
             }
         });
-        jMenu6.add(mnMember);
+        mnMaster.add(mnMember);
 
         mnMemberType.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         mnMemberType.setText("ข้อมูลประเภทสมาชิก");
@@ -5694,7 +5654,7 @@ public class MainDialog extends BaseSwing {
                 mnMemberTypeActionPerformed(evt);
             }
         });
-        jMenu6.add(mnMemberType);
+        mnMaster.add(mnMemberType);
 
         mnExpense.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         mnExpense.setText("ข้อมูลค่าใช้จ่าย");
@@ -5703,7 +5663,7 @@ public class MainDialog extends BaseSwing {
                 mnExpenseActionPerformed(evt);
             }
         });
-        jMenu6.add(mnExpense);
+        mnMaster.add(mnExpense);
 
         mnProject.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         mnProject.setText("ข้อมูลโครงการ");
@@ -5712,8 +5672,8 @@ public class MainDialog extends BaseSwing {
                 mnProjectActionPerformed(evt);
             }
         });
-        jMenu6.add(mnProject);
-        jMenu6.add(jSeparator1);
+        mnMaster.add(mnProject);
+        mnMaster.add(jSeparator1);
 
         mnPrefix.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         mnPrefix.setText("ข้อมูลคำนำหน้า");
@@ -5722,7 +5682,7 @@ public class MainDialog extends BaseSwing {
                 mnPrefixActionPerformed(evt);
             }
         });
-        jMenu6.add(mnPrefix);
+        mnMaster.add(mnPrefix);
 
         mnStatus.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         mnStatus.setText("ข้อมูลสถานะ");
@@ -5731,8 +5691,8 @@ public class MainDialog extends BaseSwing {
                 mnStatusActionPerformed(evt);
             }
         });
-        jMenu6.add(mnStatus);
-        jMenu6.add(jSeparator8);
+        mnMaster.add(mnStatus);
+        mnMaster.add(jSeparator8);
 
         mnFee.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         mnFee.setText("ข้อมูลค่าธรรมเนียม");
@@ -5741,12 +5701,12 @@ public class MainDialog extends BaseSwing {
                 mnFeeActionPerformed(evt);
             }
         });
-        jMenu6.add(mnFee);
+        mnMaster.add(mnFee);
 
-        jMenuBar1.add(jMenu6);
+        jMenuBar1.add(mnMaster);
 
-        jMenu13.setText("บัญชีใช้งาน");
-        jMenu13.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        mnAccount.setText("บัญชีใช้งาน");
+        mnAccount.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
         mnSaveAccount.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         mnSaveAccount.setText("บัญชีเงินฝาก");
@@ -5755,7 +5715,7 @@ public class MainDialog extends BaseSwing {
                 mnSaveAccountActionPerformed(evt);
             }
         });
-        jMenu13.add(mnSaveAccount);
+        mnAccount.add(mnSaveAccount);
 
         mnLoanAccount.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         mnLoanAccount.setText("บัญชีเงินกู้");
@@ -5764,7 +5724,7 @@ public class MainDialog extends BaseSwing {
                 mnLoanAccountActionPerformed(evt);
             }
         });
-        jMenu13.add(mnLoanAccount);
+        mnAccount.add(mnLoanAccount);
 
         mnLoadExcel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         mnLoadExcel.setText("บันทึกข้อมูลเงินกู้จาก Excel");
@@ -5773,12 +5733,12 @@ public class MainDialog extends BaseSwing {
                 mnLoadExcelActionPerformed(evt);
             }
         });
-        jMenu13.add(mnLoadExcel);
+        mnAccount.add(mnLoadExcel);
 
-        jMenuBar1.add(jMenu13);
+        jMenuBar1.add(mnAccount);
 
-        jMenu2.setText("การดำเนินการ");
-        jMenu2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        mnProcess.setText("การดำเนินการ");
+        mnProcess.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
         mnSaveExpense.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         mnSaveExpense.setText("บันทึกค่าใช้จ่าย");
@@ -5787,8 +5747,8 @@ public class MainDialog extends BaseSwing {
                 mnSaveExpenseActionPerformed(evt);
             }
         });
-        jMenu2.add(mnSaveExpense);
-        jMenu2.add(jSeparator9);
+        mnProcess.add(mnSaveExpense);
+        mnProcess.add(jSeparator9);
 
         mnCloseDialoyDay.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         mnCloseDialoyDay.setText("รายการปิดสิ้นวัน");
@@ -5797,8 +5757,8 @@ public class MainDialog extends BaseSwing {
                 mnCloseDialoyDayActionPerformed(evt);
             }
         });
-        jMenu2.add(mnCloseDialoyDay);
-        jMenu2.add(jSeparator13);
+        mnProcess.add(mnCloseDialoyDay);
+        mnProcess.add(jSeparator13);
 
         mnPrintHistorySave.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         mnPrintHistorySave.setText("พิมพ์รายการฝากถอนย้อนหลัง");
@@ -5807,7 +5767,7 @@ public class MainDialog extends BaseSwing {
                 mnPrintHistorySaveActionPerformed(evt);
             }
         });
-        jMenu2.add(mnPrintHistorySave);
+        mnProcess.add(mnPrintHistorySave);
 
         mnSaveHistoryLoan.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         mnSaveHistoryLoan.setText("พิมพ์รายการเงินกู้ย้อนหลัง");
@@ -5816,8 +5776,8 @@ public class MainDialog extends BaseSwing {
                 mnSaveHistoryLoanActionPerformed(evt);
             }
         });
-        jMenu2.add(mnSaveHistoryLoan);
-        jMenu2.add(jSeparator12);
+        mnProcess.add(mnSaveHistoryLoan);
+        mnProcess.add(jSeparator12);
 
         mnCancelOpenAccount.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         mnCancelOpenAccount.setText("ยกเลิกการเปิดบัญชี");
@@ -5826,8 +5786,8 @@ public class MainDialog extends BaseSwing {
                 mnCancelOpenAccountActionPerformed(evt);
             }
         });
-        jMenu2.add(mnCancelOpenAccount);
-        jMenu2.add(jSeparator4);
+        mnProcess.add(mnCancelOpenAccount);
+        mnProcess.add(jSeparator4);
 
         jMenuItem4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jMenuItem4.setText("สรุปรายวันเงินสด");
@@ -5836,7 +5796,7 @@ public class MainDialog extends BaseSwing {
                 jMenuItem4ActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem4);
+        mnProcess.add(jMenuItem4);
 
         jMenuItem6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jMenuItem6.setText("สรุปรายวันทั่วไป");
@@ -5845,12 +5805,12 @@ public class MainDialog extends BaseSwing {
                 jMenuItem6ActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem6);
+        mnProcess.add(jMenuItem6);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(mnProcess);
 
-        jMenu3.setText("รายงาน");
-        jMenu3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        mnReport.setText("รายงาน");
+        mnReport.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
         mnRptMember.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         mnRptMember.setText("รายงานทะเบียนสมาชิก");
@@ -5859,7 +5819,7 @@ public class MainDialog extends BaseSwing {
                 mnRptMemberActionPerformed(evt);
             }
         });
-        jMenu3.add(mnRptMember);
+        mnReport.add(mnRptMember);
 
         jMenuItem1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jMenuItem1.setText("รายงานสรุปการดำเนินงาน");
@@ -5868,8 +5828,8 @@ public class MainDialog extends BaseSwing {
                 jMenuItem1ActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem1);
-        jMenu3.add(jSeparator10);
+        mnReport.add(jMenuItem1);
+        mnReport.add(jSeparator10);
 
         mnRptOpenAccount.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         mnRptOpenAccount.setText("รายงานการเปิดบัญชี");
@@ -5878,7 +5838,7 @@ public class MainDialog extends BaseSwing {
                 mnRptOpenAccountActionPerformed(evt);
             }
         });
-        jMenu3.add(mnRptOpenAccount);
+        mnReport.add(mnRptOpenAccount);
 
         mnRptCloseAccount.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         mnRptCloseAccount.setText("รายงานการปิดบัญชี");
@@ -5887,7 +5847,7 @@ public class MainDialog extends BaseSwing {
                 mnRptCloseAccountActionPerformed(evt);
             }
         });
-        jMenu3.add(mnRptCloseAccount);
+        mnReport.add(mnRptCloseAccount);
 
         jMenu5.setText("รายงานเงินฝาก/ถอน");
         jMenu5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -5910,7 +5870,7 @@ public class MainDialog extends BaseSwing {
         });
         jMenu5.add(jMenuItem3);
 
-        jMenu3.add(jMenu5);
+        mnReport.add(jMenu5);
 
         mnMainRptHoon.setText("รายงานหุ้น");
         mnMainRptHoon.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -5933,7 +5893,7 @@ public class MainDialog extends BaseSwing {
         });
         mnMainRptHoon.add(jMenuItem5);
 
-        jMenu3.add(mnMainRptHoon);
+        mnReport.add(mnMainRptHoon);
 
         mnMainRptLoan.setText("รายงานเงินกู้");
         mnMainRptLoan.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -5975,7 +5935,7 @@ public class MainDialog extends BaseSwing {
         });
         mnMainRptLoan.add(jMenuItem45);
 
-        jMenu3.add(mnMainRptLoan);
+        mnReport.add(mnMainRptLoan);
 
         mnRptFee.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         mnRptFee.setText("รายงานค่าธรรมเนียมต่าง ๆ");
@@ -5984,8 +5944,8 @@ public class MainDialog extends BaseSwing {
                 mnRptFeeActionPerformed(evt);
             }
         });
-        jMenu3.add(mnRptFee);
-        jMenu3.add(jSeparator2);
+        mnReport.add(mnRptFee);
+        mnReport.add(jSeparator2);
 
         mnRptProfitCompany.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         mnRptProfitCompany.setText("รายงานผลประกอบการ");
@@ -5994,7 +5954,7 @@ public class MainDialog extends BaseSwing {
                 mnRptProfitCompanyActionPerformed(evt);
             }
         });
-        jMenu3.add(mnRptProfitCompany);
+        mnReport.add(mnRptProfitCompany);
 
         mnRptCheckAudit.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         mnRptCheckAudit.setForeground(new java.awt.Color(0, 153, 153));
@@ -6004,8 +5964,8 @@ public class MainDialog extends BaseSwing {
                 mnRptCheckAuditActionPerformed(evt);
             }
         });
-        jMenu3.add(mnRptCheckAudit);
-        jMenu3.add(jSeparator14);
+        mnReport.add(mnRptCheckAudit);
+        mnReport.add(jSeparator14);
 
         mnRptTransaction.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         mnRptTransaction.setText("รายงานสรุปความเคลื่อนไหว");
@@ -6014,7 +5974,7 @@ public class MainDialog extends BaseSwing {
                 mnRptTransactionActionPerformed(evt);
             }
         });
-        jMenu3.add(mnRptTransaction);
+        mnReport.add(mnRptTransaction);
 
         jMenuItem8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jMenuItem8.setText("หนังสือแจ้งเงินกู้และค่าหุ้น");
@@ -6023,7 +5983,7 @@ public class MainDialog extends BaseSwing {
                 jMenuItem8ActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem8);
+        mnReport.add(jMenuItem8);
 
         jMenuItem9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jMenuItem9.setText("รายละเอียดสมาชิกทุกรายการ");
@@ -6032,12 +5992,12 @@ public class MainDialog extends BaseSwing {
                 jMenuItem9ActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem9);
+        mnReport.add(jMenuItem9);
 
-        jMenuBar1.add(jMenu3);
+        jMenuBar1.add(mnReport);
 
-        jMenu4.setText("ช่วยเหลือ (Help)");
-        jMenu4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        mnHelp.setText("ช่วยเหลือ (Help)");
+        mnHelp.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
         jMenuItem11.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jMenuItem11.setText("สำรองข้อมูล");
@@ -6046,7 +6006,7 @@ public class MainDialog extends BaseSwing {
                 jMenuItem11ActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem11);
+        mnHelp.add(jMenuItem11);
 
         jMenuItem38.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jMenuItem38.setText("Reset Data");
@@ -6055,7 +6015,7 @@ public class MainDialog extends BaseSwing {
                 jMenuItem38ActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem38);
+        mnHelp.add(jMenuItem38);
 
         jMenuItem47.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jMenuItem47.setText("อัพเดตความเคลื่อนไหว");
@@ -6064,8 +6024,8 @@ public class MainDialog extends BaseSwing {
                 jMenuItem47ActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem47);
-        jMenu4.add(jSeparator7);
+        mnHelp.add(jMenuItem47);
+        mnHelp.add(jSeparator7);
 
         jMenuItem37.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jMenuItem37.setText("อัพเดตโปรแกรม");
@@ -6074,9 +6034,9 @@ public class MainDialog extends BaseSwing {
                 jMenuItem37ActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem37);
+        mnHelp.add(jMenuItem37);
 
-        jMenuBar1.add(jMenu4);
+        jMenuBar1.add(mnHelp);
 
         setJMenuBar(jMenuBar1);
 
@@ -6335,14 +6295,14 @@ public class MainDialog extends BaseSwing {
         }
     }//GEN-LAST:event_txtLoanDateEndKeyPressed
 
-    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
+    private void mnSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnSettingsActionPerformed
         HoonProfitDialog hp = new HoonProfitDialog(this, true);
         hp.setVisible(true);
-    }//GEN-LAST:event_jMenu1ActionPerformed
+    }//GEN-LAST:event_mnSettingsActionPerformed
 
-    private void mnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnExitActionPerformed
+    private void mnProgramExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnProgramExitActionPerformed
         formWindowClosing();
-    }//GEN-LAST:event_mnExitActionPerformed
+    }//GEN-LAST:event_mnProgramExitActionPerformed
 
     private void mnConfigSystemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnConfigSystemActionPerformed
         ConfigDialog cd = new ConfigDialog(this, true);
@@ -7216,42 +7176,10 @@ public class MainDialog extends BaseSwing {
         ih.setVisible(true);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
-    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+    private void mnProgramAccOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnProgramAccOpenActionPerformed
         OpenSavingAccount open = new OpenSavingAccount(this, true);
         open.setVisible(true);
-    }//GEN-LAST:event_jMenuItem12ActionPerformed
-
-    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem13ActionPerformed
-
-    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem14ActionPerformed
-
-    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem15ActionPerformed
-
-    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem16ActionPerformed
-
-    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem17ActionPerformed
-
-    private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem18ActionPerformed
-
-    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem10ActionPerformed
-
-    private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem19ActionPerformed
+    }//GEN-LAST:event_mnProgramAccOpenActionPerformed
 
     public static void main(String args[]) {
         Log.write.info("Start Program");
@@ -7545,29 +7473,10 @@ public class MainDialog extends BaseSwing {
     private javax.swing.JLayeredPane jLayeredPane3;
     private javax.swing.JLayeredPane jLayeredPane6;
     private javax.swing.JLayeredPane jLayeredPane7;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu10;
-    private javax.swing.JMenu jMenu13;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu6;
-    private javax.swing.JMenu jMenu7;
-    private javax.swing.JMenu jMenu8;
-    private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem14;
-    private javax.swing.JMenuItem jMenuItem15;
-    private javax.swing.JMenuItem jMenuItem16;
-    private javax.swing.JMenuItem jMenuItem17;
-    private javax.swing.JMenuItem jMenuItem18;
-    private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem37;
@@ -7700,21 +7609,39 @@ public class MainDialog extends BaseSwing {
     private javax.swing.JLabel lblSellHoonTitle;
     private javax.swing.JLabel lblTransferHoonTitle;
     private javax.swing.JLabel lblWithdrawAccountTitle;
+    private javax.swing.JMenu mnAccount;
     private javax.swing.JMenuItem mnCancelOpenAccount;
     private javax.swing.JMenuItem mnCloseDialoyDay;
     private javax.swing.JMenuItem mnConfigSystem;
-    private javax.swing.JMenuItem mnExit;
     private javax.swing.JMenuItem mnExpense;
     private javax.swing.JMenuItem mnFee;
+    private javax.swing.JMenu mnHelp;
     private javax.swing.JMenuItem mnLoadExcel;
     private javax.swing.JMenuItem mnLoanAccount;
     private javax.swing.JMenu mnMainRptHoon;
     private javax.swing.JMenu mnMainRptLoan;
+    private javax.swing.JMenu mnMaster;
     private javax.swing.JMenuItem mnMember;
     private javax.swing.JMenuItem mnMemberType;
     private javax.swing.JMenuItem mnPrefix;
     private javax.swing.JMenuItem mnPrintHistorySave;
+    private javax.swing.JMenu mnProcess;
+    private javax.swing.JMenu mnProgram;
+    private javax.swing.JMenuItem mnProgramAccClose;
+    private javax.swing.JMenuItem mnProgramAccDeposit;
+    private javax.swing.JMenuItem mnProgramAccLoan;
+    private javax.swing.JMenuItem mnProgramAccOpen;
+    private javax.swing.JMenuItem mnProgramExit;
+    private javax.swing.JMenu mnProgramHoon;
+    private javax.swing.JMenuItem mnProgramHoonBuy;
+    private javax.swing.JMenuItem mnProgramHoonSell;
+    private javax.swing.JMenuItem mnProgramHoonTranf;
+    private javax.swing.JMenu mnProgramLoan;
+    private javax.swing.JMenuItem mnProgramLoanOpen;
+    private javax.swing.JMenuItem mnProgramLoanPayment;
+    private javax.swing.JMenu mnProgramSaving;
     private javax.swing.JMenuItem mnProject;
+    private javax.swing.JMenu mnReport;
     private javax.swing.JMenuItem mnRptCheckAudit;
     private javax.swing.JMenuItem mnRptCloseAccount;
     private javax.swing.JMenuItem mnRptFee;
@@ -7725,6 +7652,7 @@ public class MainDialog extends BaseSwing {
     private javax.swing.JMenuItem mnSaveAccount;
     private javax.swing.JMenuItem mnSaveExpense;
     private javax.swing.JMenuItem mnSaveHistoryLoan;
+    private javax.swing.JMenu mnSettings;
     private javax.swing.JMenuItem mnSetupConfig;
     private javax.swing.JMenuItem mnStatus;
     private javax.swing.JTable tbArGroup1;
