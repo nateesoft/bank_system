@@ -9,6 +9,7 @@ import th.co.cbank.project.control.ViewReport;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
@@ -74,6 +75,7 @@ import th.co.cbank.util.StringUtil;
 import th.co.cbank.util.TableUtil;
 
 public class MainDialog extends BaseSwing {
+
     private final Logger logger = Logger.getLogger(MainDialog.class);
     private final LoginDialog login;
     private boolean profileIsActive = false;
@@ -6114,191 +6116,59 @@ public class MainDialog extends BaseSwing {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
-        btnRegister();
+        btnRegisterActionPerformed();
     }//GEN-LAST:event_btnRegisterActionPerformed
 
     private void txtProfileCodeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtProfileCodeKeyReleased
-        switch (evt.getKeyCode()) {
-            case KeyEvent.VK_F1:
-                SavingDialog reg = new SavingDialog(null, true, true);
-                reg.setVisible(true);
-                break;
-            case KeyEvent.VK_F2:
-                btnFind();
-                break;
-            case KeyEvent.VK_F3:
-                btnEdit();
-                break;
-            default:
-                break;
-        }
+        txtProfileCodeKeyReleasedAction(evt);
     }//GEN-LAST:event_txtProfileCodeKeyReleased
 
     private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
-        btnFind();
+        btnFindActionPerformed();
     }//GEN-LAST:event_btnFindActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        exitConfirm();
+        formWindowClosing();
     }//GEN-LAST:event_formWindowClosing
 
     private void txtProfileCodeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtProfileCodeKeyPressed
-        switch (evt.getKeyCode()) {
-            case KeyEvent.VK_ESCAPE:
-                if (StringUtil.isEmpty(txtProfileCode.getText())) {
-                    exitConfirm();
-                } else {
-                    clearProfile();
-                }
-                break;
-            case KeyEvent.VK_ENTER:
-                if (StringUtil.isNotNullString(txtProfileCode.getText())) {
-                    ProfileBean pBean = getProfileControl().listCbProfile(txtProfileCode.getText());
-                    if (pBean != null) {
-                        jTabbedPane8.setSelectedIndex(0);
-                        Value.CUST_CODE = txtProfileCode.getText();
-
-                        showAccountQty();
-
-                        jTabbedPane1.setEnabledAt(1, true);
-                        jTabbedPane1.setEnabledAt(2, true);
-                        jTabbedPane1.setEnabledAt(3, true);
-                        jTabbedPane1.setEnabledAt(4, true);
-
-                        enterAccount();
-                    } else {
-                        JOptionPane.showMessageDialog(this, "ไม่พบข้อมูลลูกค้าในระบบ กรุณาตรวจสอบ");
-                        txtProfileCode.selectAll();
-                        txtProfileCode.requestFocus();
-                    }
-                }
-                break;
-            case KeyEvent.VK_F1:
-                btnFind();
-                break;
-            default:
-                break;
-        }
+        txtProfileCodeKeyPressedAction(evt);
     }//GEN-LAST:event_txtProfileCodeKeyPressed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        btnEdit();
+        btnEditActionPerformed();
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void txtAccCodeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAccCodeKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (!"".equals(txtAccCode.getText())) {
-                CbSaveAccountBean sBean = getSaveAccountControl().getSaveAccountBean(txtAccCode.getText());
-                if (sBean != null) {
-                    txtProfileCode.setText(sBean.getB_CUST_CODE());
-                    findCustomer();
-                    showAccount();
-
-                    //เข้าหน้าจอ dashboard ก่อน
-                    Value.CUST_ACCOUNT_CODE = txtAccCode.getText();
-                    showListSelect(Value.CUST_ACCOUNT_CODE, "1");
-                } else {
-                    findCustomer();
-                    CbLoanAccountBean lBean = getLoanAccountControl().listLoanAccount(txtAccCode.getText());
-                    if (lBean != null) {
-                        txtProfileCode.setText(lBean.getCust_code());
-                        loadLoan();
-                        loadLoanDetail();
-
-                        //เข้าหน้าจอ dashboard ก่อน
-                        Value.CUST_LOAN_CODE = txtAccCode.getText();
-                        showListSelect(Value.CUST_LOAN_CODE, "2");
-                    }
-                }
-            } else {
-                txtAccCode.requestFocus();
-            }
-        }
-
-        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            if ("".equals(txtAccCode.getText())) {
-                exitConfirm();
-            }
-        }
+        txtAccCodeKeyPressedAction(evt);
     }//GEN-LAST:event_txtAccCodeKeyPressed
 
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
-        if (jTabbedPane1.getSelectedIndex() == 4) {
-            LoanCustID.requestFocus();
-            ProfileBean pBean = getProfileControl().listCbProfile(LoanCustID.getText());
-            if (pBean != null) {
-                LoanCustID.setText(pBean.getP_custCode());
-                txtLoanName.setText(pBean.getP_custName() + " " + pBean.getP_custSurname());
-                txtLoanAge.setText("" + pBean.getP_custAge());
-                txtLoanCardExpire.setText(DateFormat.getLocale_ddMMyyyy(pBean.getCard_Expire()));
-                txtLoanBirthDate.setText(DateFormat.getLocale_ddMMyyyy(pBean.getP_custBirthDay()));
-                switch (pBean.getP_custSex()) {
-                    case "M":
-                        txtLoanSex.setText("ผู้ชาย");
-                        break;
-                    case "F":
-                        txtLoanSex.setText("ผู้หญิง");
-                        break;
-                    default:
-                        txtLoanSex.setText("อื่นๆ");
-                        break;
-                }
-                txtLoanOccu.setText(pBean.getP_custOccupation());
-                txtLoanRegMember.setText(DateFormat.getLocale_ddMMyyyy(pBean.getP_member_start()));
-
-                loadAddressLoan();
-            }
-        }
+        jTabbedPane1StateChanged();
     }//GEN-LAST:event_jTabbedPane1StateChanged
 
     private void txtTotalSellHoonAmountKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTotalSellHoonAmountKeyReleased
-        double price = NumberUtil.toDouble(txtPriceValue.getText());
-        double total = NumberUtil.toDouble(txtTotalSellHoonAmount.getText());
-        total *= price;
-        txtTotalAmount.setText(NumberFormat.showDouble2(total));
+        txtTotalSellHoonAmountKeyReleased();
     }//GEN-LAST:event_txtTotalSellHoonAmountKeyReleased
 
     private void txtTotalSellHoonAmountFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTotalSellHoonAmountFocusGained
-        txtDocNo.setText("");
-        initHoonWithdraw();
-        txtTotalSellHoonAmount.selectAll();
+        txtTotalSellHoonAmountFocusGained();
     }//GEN-LAST:event_txtTotalSellHoonAmountFocusGained
 
     private void btnChooseDateSellHoonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChooseDateSellHoonActionPerformed
-        Point point = txtDateSell.getLocationOnScreen();
-        point.setLocation(point.getX(), point.getY());
-        DateChooseDialog dcd = new DateChooseDialog(this, true, point);
-        dcd.setVisible(true);
-
-        if (dcd.getSelectDate() != null) {
-            txtDateSell.setText(dcd.getDateString());
-            txtDateSell.requestFocus();
-        }
+        btnChooseDateSellHoonActionPerformed();
     }//GEN-LAST:event_btnChooseDateSellHoonActionPerformed
 
     private void txtCashPayKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCashPayKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            btnSaveByHoon.requestFocus();
-        }
+        txtCashPayKeyPressedAction(evt);
     }//GEN-LAST:event_txtCashPayKeyPressed
 
     private void txtCashPayFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCashPayFocusGained
-        txtCashPay.selectAll();
+        txtCashPayFocusGained();
     }//GEN-LAST:event_txtCashPayFocusGained
 
     private void txtHoonQTYKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtHoonQTYKeyReleased
-        double total;
-        double a = 0.00;
-        double b = 0.00;
-        if (!"".equals(txtHoonQTY.getText().trim())) {
-            a = NumberUtil.toDouble(txtHoonQTY.getText());
-        }
-        if (!"".equals(txtValueBaht.getText().trim())) {
-            b = NumberUtil.toDouble(txtValueBaht.getText());
-        }
-
-        total = a * b;
-        txtAmount.setText(NumberFormat.showDouble2(total));
+        txtHoonQTYKeyReleased();
     }//GEN-LAST:event_txtHoonQTYKeyReleased
 
     private void txtHoonQTYKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtHoonQTYKeyPressed
@@ -6352,7 +6222,7 @@ public class MainDialog extends BaseSwing {
 
     private void btnCancelWithdrawMoneyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelWithdrawMoneyActionPerformed
         clearWithdraw();
-        btnRegister();
+        btnRegisterActionPerformed();
     }//GEN-LAST:event_btnCancelWithdrawMoneyActionPerformed
 
     private void btnSaveMoneyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveMoneyActionPerformed
@@ -6420,7 +6290,7 @@ public class MainDialog extends BaseSwing {
 
     private void btnCancelBuyHoonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelBuyHoonActionPerformed
         resetBuyHoon();
-        btnRegister();
+        btnRegisterActionPerformed();
     }//GEN-LAST:event_btnCancelBuyHoonActionPerformed
 
     private void btnSaveByHoonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveByHoonActionPerformed
@@ -6433,7 +6303,7 @@ public class MainDialog extends BaseSwing {
 
     private void btnCancelSellHoonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelSellHoonActionPerformed
         resetSaleHoon();
-        btnRegister();
+        btnRegisterActionPerformed();
     }//GEN-LAST:event_btnCancelSellHoonActionPerformed
 
     private void txtSaveFeeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSaveFeeFocusGained
@@ -6471,7 +6341,7 @@ public class MainDialog extends BaseSwing {
     }//GEN-LAST:event_jMenu1ActionPerformed
 
     private void mnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnExitActionPerformed
-        exitConfirm();
+        formWindowClosing();
     }//GEN-LAST:event_mnExitActionPerformed
 
     private void mnConfigSystemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnConfigSystemActionPerformed
@@ -6662,7 +6532,7 @@ public class MainDialog extends BaseSwing {
 
     private void btnCancelSaveLoanAccountRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelSaveLoanAccountRegisterActionPerformed
         clearFormLoan();
-        btnRegister();
+        btnRegisterActionPerformed();
     }//GEN-LAST:event_btnCancelSaveLoanAccountRegisterActionPerformed
 
     private void mnRptFeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnRptFeeActionPerformed
@@ -6887,7 +6757,7 @@ public class MainDialog extends BaseSwing {
 
     private void btnCancelTransferHoonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelTransferHoonActionPerformed
         clearHoonTransfer();
-        btnRegister();
+        btnRegisterActionPerformed();
     }//GEN-LAST:event_btnCancelTransferHoonActionPerformed
 
     private void btnChooseAccToTranHoonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChooseAccToTranHoonActionPerformed
@@ -7107,78 +6977,7 @@ public class MainDialog extends BaseSwing {
     }//GEN-LAST:event_txtAddrMooName1KeyPressed
 
     private void cbLoanAccItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbLoanAccItemStateChanged
-        if (evt.getStateChange() == 1) {
-            String id = getIDCombobox(cbLoanAcc);
-            CbLoanConfigBean loanBean = getLoanConfigControl().listLoanConfig(id);
-            if (loanBean != null) {
-                switch (loanBean.getIntFixed()) {
-                    case AppConstants.INT_FLAT_RATE:
-                        txtIntFixedName.setText("เงินต้นคงที่ (Flat Interest Rate)");
-                        break;
-                    case AppConstants.INT_EFFITIVE_RATE:
-                        txtIntFixedName.setText("ลดต้นลดดอก (Effective Interest Rate)");
-                        break;
-                    default:
-                        txtIntFixedName.setText("");
-                        break;
-                }
-
-                switch (loanBean.getChkPIntTable()) {
-                    case "1":
-                        txtFeeRateName.setText("คิดดอกเบี้ยปรับจากดอกเบี้ยค้าง");
-                        break;
-                    case "2":
-                        txtFeeRateName.setText("คิดดอกเบี้ยปรับจากเงินต้นคงเหลือ");
-                        break;
-                    default:
-                        txtFeeRateName.setText("");
-                        break;
-                }
-
-                txtIntBadDebt.setText(NumberFormat.showDouble2(loanBean.getIntBadDebt()));
-                txtIntTurnover.setText(NumberFormat.showDouble2(loanBean.getIntTurnover()));
-                txtIntNormal.setText(NumberFormat.showDouble2(loanBean.getIntNormal()));
-                txtLoanPenaltyINT.setText(NumberFormat.showDouble2(loanBean.getLoanPenaltyINT()));
-
-                double intPerYear1 = loanBean.getLoanINT();//ต่อปี
-                double intPerMonth1 = intPerYear1 / 12;
-                double intPerDay1 = intPerMonth1 / 30;
-
-                double intPerYear2 = loanBean.getIntBadDebt();//กันหนี้สูญ
-                double intPerMonth2 = intPerYear2 / 12;
-                double intPerDay2 = intPerMonth2 / 30;
-
-                double intPerYear3 = loanBean.getIntTurnover();//ค่าจัดการ
-                double intPerMonth3 = intPerYear3 / 12;
-                double intPerDay3 = intPerMonth3 / 30;
-
-                double intPerYear4 = loanBean.getIntNormal();//ดอกเบี้ยเงินกู้
-                double intPerMonth4 = intPerYear4 / 12;
-                double intPerDay4 = intPerMonth4 / 30;
-                switch (cbLoanTypePayment.getSelectedIndex()) {
-                    case 0:
-                        txtLoanIntPercent.setText(NumberFormat.showDouble2(intPerDay1));
-                        txtIntBadDebt.setText(NumberFormat.showDouble3(intPerDay2));
-                        txtIntTurnover.setText(NumberFormat.showDouble3(intPerDay3));
-                        txtIntNormal.setText(NumberFormat.showDouble3(intPerDay4));
-                        break;
-                    case 1:
-                        txtLoanIntPercent.setText(NumberFormat.showDouble3(intPerMonth1));
-                        txtIntBadDebt.setText(NumberFormat.showDouble3(intPerMonth2));
-                        txtIntTurnover.setText(NumberFormat.showDouble3(intPerMonth3));
-                        txtIntNormal.setText(NumberFormat.showDouble3(intPerMonth4));
-                        break;
-                    default:
-                        txtLoanIntPercent.setText(NumberFormat.showDouble3(intPerYear1));
-                        txtIntBadDebt.setText(NumberFormat.showDouble3(intPerYear2));
-                        txtIntTurnover.setText(NumberFormat.showDouble3(intPerYear3));
-                        txtIntNormal.setText(NumberFormat.showDouble3(intPerYear4));
-                        break;
-                }
-            }
-
-            System.out.println("เลือก " + id);
-        }
+        cbLoanAccItemStateChangedAction(evt);
     }//GEN-LAST:event_cbLoanAccItemStateChanged
 
     private void txtLoanDocCodeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLoanDocCodeKeyPressed
@@ -7196,61 +6995,11 @@ public class MainDialog extends BaseSwing {
     }//GEN-LAST:event_cbAddrTypeItemStateChanged
 
     private void cbLoanTypePaymentItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbLoanTypePaymentItemStateChanged
-        String id = getIDCombobox(cbLoanAcc);
-        CbLoanConfigBean loanBean = getLoanConfigControl().listLoanConfig(id);
-        if (loanBean != null) {
-            double intPerYear = loanBean.getLoanINT();//ต่อปี
-            double intPerMonth = intPerYear / 12;
-            double intPerDay = intPerMonth / 30;
-            switch (cbLoanTypePayment.getSelectedIndex()) {
-                case 0:
-                    txtLoanIntPercent.setText(NumberFormat.showDouble2(intPerDay));
-                    txtIntBadDebt.setText(NumberFormat.showDouble4(loanBean.getIntBadDebt() / 12 / 30));
-                    txtIntTurnover.setText(NumberFormat.showDouble4(loanBean.getIntTurnover() / 12 / 30));
-                    txtIntNormal.setText(NumberFormat.showDouble4(loanBean.getIntNormal() / 12 / 30));
-                    break;
-                case 1:
-                    txtLoanIntPercent.setText(NumberFormat.showDouble2(intPerMonth));
-                    txtIntBadDebt.setText(NumberFormat.showDouble4(loanBean.getIntBadDebt() / 12));
-                    txtIntTurnover.setText(NumberFormat.showDouble4(loanBean.getIntTurnover() / 12));
-                    txtIntNormal.setText(NumberFormat.showDouble4(loanBean.getIntNormal() / 12));
-                    break;
-                default:
-                    txtLoanIntPercent.setText(NumberFormat.showDouble2(intPerYear));
-                    txtIntBadDebt.setText(NumberFormat.showDouble4(loanBean.getIntBadDebt()));
-                    txtIntTurnover.setText(NumberFormat.showDouble4(loanBean.getIntTurnover()));
-                    txtIntNormal.setText(NumberFormat.showDouble4(loanBean.getIntNormal()));
-                    break;
-            }
-
-            computeBahtPerMonth();
-        }
-
+        cbLoanTypePaymentItemStateChanged();
     }//GEN-LAST:event_cbLoanTypePaymentItemStateChanged
 
     private void txtLoanPerMonthKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLoanPerMonthKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if ("".equals(txtLoanPerMonth.getText().trim())) {
-                txtLoanPerMonth.setText("1");
-                txtLoanPerMonth.requestFocus();
-                return;
-            }
-
-            int loanPerMonth = NumberUtil.toInt(txtLoanPerMonth.getText());
-            if (loanPerMonth <= 0) {
-                txtLoanPerMonth.setText("1");
-                loanPerMonth = 1;
-            }
-            String docType = getIDCombobox(cbLoanAcc);
-            CbLoanConfigBean lBean = getLoanConfigControl().listLoanConfig(docType);
-            if (loanPerMonth > lBean.getLoanPerMonth()) {
-                JOptionPane.showMessageDialog(this, "ท่านกู้เกินจำนวนงวดตามที่สัญญากำหนดไว้ ต้องไม่เกิน " + lBean.getLoanPerMonth() + " งวด");
-                txtLoanPerMonth.requestFocus();
-            } else {
-                computeFinishPay();
-                txtLoanDateStart.requestFocus();
-            }
-        }
+        txtLoanPerMonthKeyPressedAction(evt);
     }//GEN-LAST:event_txtLoanPerMonthKeyPressed
 
     private void txtLoanPerMonthFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtLoanPerMonthFocusGained
@@ -7317,7 +7066,7 @@ public class MainDialog extends BaseSwing {
             updateDialog.setVisible(true);
             btnRegister.setText("เริ่มใหม่");
             //reset form
-            btnRegister();
+            btnRegisterActionPerformed();
         }
     }//GEN-LAST:event_jMenuItem47ActionPerformed
 
@@ -7326,25 +7075,7 @@ public class MainDialog extends BaseSwing {
     }//GEN-LAST:event_txtPaymentDateFocusGained
 
     private void txtPaymentDateKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPaymentDateKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (!"".equals(txtAccCode.getText())) {
-                CbLoanAccountBean lBean = getLoanAccountControl().listLoanAccount(txtAccCode.getText());
-                if (lBean != null) {
-                    txtPaymentFee.setEditable(true);
-                    txtPaymentAmountCash.setEditable(true);
-
-                    loadLoanDetailPayment();
-
-                    txtPaymentAmountCash.requestFocus();
-                } else {
-                    JOptionPane.showMessageDialog(this, "กรุณาเลือกเลขที่บัญชีเงินกู้สำหรับรับชำระ !!!");
-                    txtAccCode.requestFocus();
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "กรุณาเลือกเลขที่บัญชีเงินกู้ที่ต้องการรับชำระ !!!");
-                txtAccCode.requestFocus();
-            }
-        }
+        txtPaymentDateKeyPressedAction(evt);
     }//GEN-LAST:event_txtPaymentDateKeyPressed
 
     private void txtStartLoanDateFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtStartLoanDateFocusGained
@@ -7369,23 +7100,23 @@ public class MainDialog extends BaseSwing {
     }//GEN-LAST:event_mnRptTransactionActionPerformed
 
     private void btnCancelOpenAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelOpenAccountActionPerformed
-        btnRegister();
+        btnRegisterActionPerformed();
     }//GEN-LAST:event_btnCancelOpenAccountActionPerformed
 
     private void btnCancelSaveMoneyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelSaveMoneyActionPerformed
-        btnRegister();
+        btnRegisterActionPerformed();
     }//GEN-LAST:event_btnCancelSaveMoneyActionPerformed
 
     private void btnCancelCloseSaveAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelCloseSaveAccountActionPerformed
-        btnRegister();
+        btnRegisterActionPerformed();
     }//GEN-LAST:event_btnCancelCloseSaveAccountActionPerformed
 
     private void btnCancelPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelPaymentActionPerformed
-        btnRegister();
+        btnRegisterActionPerformed();
     }//GEN-LAST:event_btnCancelPaymentActionPerformed
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
-        btnRegister();
+        btnRegisterActionPerformed();
     }//GEN-LAST:event_jButton15ActionPerformed
 
     private void txtDepositDateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtDepositDateMouseClicked
@@ -7486,7 +7217,7 @@ public class MainDialog extends BaseSwing {
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
-        OpenSavingAccount open= new OpenSavingAccount(this, true);
+        OpenSavingAccount open = new OpenSavingAccount(this, true);
         open.setVisible(true);
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
@@ -7552,7 +7283,7 @@ public class MainDialog extends BaseSwing {
             try {
                 fExit.createNewFile();
             } catch (IOException ex) {
-                
+
             }
         }
 
@@ -8251,7 +7982,7 @@ public class MainDialog extends BaseSwing {
         enableComponents(jTabbedPane1, true);
     }
 
-    private void exitConfirm() {
+    private void formWindowClosing() {
         int ic = JOptionPane.showConfirmDialog(this, "ท่านต้องการออกจากระบบใช่หรือไม่ ?");
         if (ic == JOptionPane.YES_OPTION) {
             Value.clear();
@@ -8466,7 +8197,7 @@ public class MainDialog extends BaseSwing {
 
                 JOptionPane.showMessageDialog(this, "บันทึกข้อมูลการกู้เงินเรียบร้อยแล้ว");
                 btnPrintLoanPaper();
-                btnRegister();
+                btnRegisterActionPerformed();
             }
         }
     }
@@ -8991,7 +8722,7 @@ public class MainDialog extends BaseSwing {
                 txtWithdrawalBaht.requestFocus();
             }
         } catch (Exception e) {
-            
+
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
 
@@ -9090,7 +8821,7 @@ public class MainDialog extends BaseSwing {
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException ex) {
-                        
+
                     }
 
                     btnTimeShow.setText(sTime.format(new Date()));
@@ -9214,7 +8945,7 @@ public class MainDialog extends BaseSwing {
             resetBuyHoon();
             jTabbedPane5.setSelectedIndex(0);
         } catch (Exception e) {
-            
+
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
@@ -9273,7 +9004,7 @@ public class MainDialog extends BaseSwing {
             resetSaleHoon();
             jTabbedPane5.setSelectedIndex(1);
         } catch (Exception e) {
-            
+
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
@@ -9408,7 +9139,7 @@ public class MainDialog extends BaseSwing {
                 c1 = "";
                 c2 = "";
             }
-            
+
             mdTbArGroup2.addRow(new Object[]{
                 DateFormat.getLocale_ddMMyyyy(ltb.getDue_date()),
                 NumberFormat.showDouble2(ltb.getPayment_fee()),
@@ -9481,7 +9212,7 @@ public class MainDialog extends BaseSwing {
 
                 rs.close();
             } catch (Exception e) {
-                
+
                 JOptionPane.showMessageDialog(this, e.getMessage());
             }
         }
@@ -9512,7 +9243,7 @@ public class MainDialog extends BaseSwing {
                     rs.close();
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, e.getMessage());
-                    
+
                 }
 
                 int dayCheckINT = DateUtil.getDayDiff(lastPaymentDate, new Date());
@@ -9637,7 +9368,7 @@ public class MainDialog extends BaseSwing {
         try {
             depositMoney();
         } catch (Exception e) {
-            
+
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
 
@@ -10155,7 +9886,7 @@ public class MainDialog extends BaseSwing {
                 loadSummary();
             }
         } catch (Exception e) {
-            
+
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
 
@@ -10198,7 +9929,7 @@ public class MainDialog extends BaseSwing {
                 getProfileControl().update(sql3);
             }
         } catch (Exception e) {
-            
+
         }
 
         // อัพเดต Running
@@ -10288,11 +10019,11 @@ public class MainDialog extends BaseSwing {
                 ListCloseSaveConfirmDialog listD = new ListCloseSaveConfirmDialog(this, true, psBean);
                 listD.setVisible(true);
 
-                btnRegister();
+                btnRegisterActionPerformed();
             }
 
         } catch (Exception e) {
-            
+
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
@@ -10538,7 +10269,7 @@ public class MainDialog extends BaseSwing {
                     + "and cust_code='" + txtProfileCode.getText() + "'";
             getLoanAccountControl().update(sql);
         } catch (Exception e) {
-            
+
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
 
@@ -10584,7 +10315,7 @@ public class MainDialog extends BaseSwing {
 
             rs.close();
         } catch (Exception e) {
-            
+
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
 
@@ -10779,7 +10510,7 @@ public class MainDialog extends BaseSwing {
         } else {
             //lock panel
             jTabbedPane1.setSelectedIndex(0);
-            btnRegister();
+            btnRegisterActionPerformed();
         }
     }
 
@@ -10820,7 +10551,7 @@ public class MainDialog extends BaseSwing {
                         try {
                             confirmPaymentEff();
                         } catch (Exception e) {
-                            
+
                             JOptionPane.showMessageDialog(this, e.getMessage());
                         }
 
@@ -10837,7 +10568,7 @@ public class MainDialog extends BaseSwing {
                     try {
                         confirmPaymentEff();
                     } catch (Exception e) {
-                        
+
                         JOptionPane.showMessageDialog(this, e.getMessage());
                     }
 
@@ -11040,7 +10771,7 @@ public class MainDialog extends BaseSwing {
             pc.printPaymentLoan(loanBean);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "พบปัญหาในการพิมพ์ข้อมูล !!!\n" + e.getMessage());
-            
+
         }
 
         txtPaymentDate.setText("");
@@ -11082,7 +10813,7 @@ public class MainDialog extends BaseSwing {
         withdrawAccountAct();
     }
 
-    private void btnRegister() {
+    private void btnRegisterActionPerformed() {
         if ("N".equals(Value.ACCESS[0])) {
             JOptionPane.showMessageDialog(this, "ท่านไม่มีสิทธิ์เข้าใช้งานฟังก์ชั่นการทำงานนี้");
             return;
@@ -11124,7 +10855,7 @@ public class MainDialog extends BaseSwing {
         }
     }
 
-    private void btnEdit() {
+    private void btnEditActionPerformed() {
         if (Value.ACCESS[1].equals("N")) {
             JOptionPane.showMessageDialog(this, "ท่านไม่มีสิทธิ์เข้าใช้งานฟังก์ชั่นการทำงานนี้");
             return;
@@ -11146,12 +10877,12 @@ public class MainDialog extends BaseSwing {
             ed.setVisible(true);
             if (Value.CUST_CODE != null) {
                 profileIsActive = true;
-                btnEdit();
+                btnEditActionPerformed();
             }
         }
     }
 
-    private void btnFind() {
+    private void btnFindActionPerformed() {
         if (Value.ACCESS[2].equals("N")) {
             JOptionPane.showMessageDialog(this, "ท่านไม่มีสิทธิ์เข้าใช้งานฟังก์ชั่นการทำงานนี้");
             return;
@@ -11397,6 +11128,332 @@ public class MainDialog extends BaseSwing {
     private void showAccountQty() {
         ArrayList<CbSaveAccountBean> listSc = getSaveAccountControl().listCbSaveAccount(txtProfileCode.getText());
         txtTotalAccount.setText("" + listSc.size());
+    }
+
+    private void txtProfileCodeKeyPressedAction(java.awt.event.KeyEvent evt) {
+        switch (evt.getKeyCode()) {
+            case KeyEvent.VK_ESCAPE:
+                if (StringUtil.isEmpty(txtProfileCode.getText())) {
+                    formWindowClosing();
+                } else {
+                    clearProfile();
+                }
+                break;
+            case KeyEvent.VK_ENTER:
+                if (StringUtil.isNotNullString(txtProfileCode.getText())) {
+                    ProfileBean pBean = getProfileControl().listCbProfile(txtProfileCode.getText());
+                    if (pBean != null) {
+                        jTabbedPane8.setSelectedIndex(0);
+                        Value.CUST_CODE = txtProfileCode.getText();
+
+                        showAccountQty();
+
+                        jTabbedPane1.setEnabledAt(1, true);
+                        jTabbedPane1.setEnabledAt(2, true);
+                        jTabbedPane1.setEnabledAt(3, true);
+                        jTabbedPane1.setEnabledAt(4, true);
+
+                        enterAccount();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "ไม่พบข้อมูลลูกค้าในระบบ กรุณาตรวจสอบ");
+                        txtProfileCode.selectAll();
+                        txtProfileCode.requestFocus();
+                    }
+                }
+                break;
+            case KeyEvent.VK_F1:
+                btnFindActionPerformed();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void txtProfileCodeKeyReleasedAction(KeyEvent evt) {
+        switch (evt.getKeyCode()) {
+            case KeyEvent.VK_F1:
+                SavingDialog reg = new SavingDialog(null, true, true);
+                reg.setVisible(true);
+                break;
+            case KeyEvent.VK_F2:
+                btnFindActionPerformed();
+                break;
+            case KeyEvent.VK_F3:
+                btnEditActionPerformed();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void txtAccCodeKeyPressedAction(KeyEvent evt) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (!"".equals(txtAccCode.getText())) {
+                CbSaveAccountBean sBean = getSaveAccountControl().getSaveAccountBean(txtAccCode.getText());
+                if (sBean != null) {
+                    txtProfileCode.setText(sBean.getB_CUST_CODE());
+                    findCustomer();
+                    showAccount();
+
+                    //เข้าหน้าจอ dashboard ก่อน
+                    Value.CUST_ACCOUNT_CODE = txtAccCode.getText();
+                    showListSelect(Value.CUST_ACCOUNT_CODE, "1");
+                } else {
+                    findCustomer();
+                    CbLoanAccountBean lBean = getLoanAccountControl().listLoanAccount(txtAccCode.getText());
+                    if (lBean != null) {
+                        txtProfileCode.setText(lBean.getCust_code());
+                        loadLoan();
+                        loadLoanDetail();
+
+                        //เข้าหน้าจอ dashboard ก่อน
+                        Value.CUST_LOAN_CODE = txtAccCode.getText();
+                        showListSelect(Value.CUST_LOAN_CODE, "2");
+                    }
+                }
+            } else {
+                txtAccCode.requestFocus();
+            }
+        }
+
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            if ("".equals(txtAccCode.getText())) {
+                formWindowClosing();
+            }
+        }
+    }
+
+    private void jTabbedPane1StateChanged() {
+        if (jTabbedPane1.getSelectedIndex() == 4) {
+            LoanCustID.requestFocus();
+            ProfileBean pBean = getProfileControl().listCbProfile(LoanCustID.getText());
+            if (pBean != null) {
+                LoanCustID.setText(pBean.getP_custCode());
+                txtLoanName.setText(pBean.getP_custName() + " " + pBean.getP_custSurname());
+                txtLoanAge.setText("" + pBean.getP_custAge());
+                txtLoanCardExpire.setText(DateFormat.getLocale_ddMMyyyy(pBean.getCard_Expire()));
+                txtLoanBirthDate.setText(DateFormat.getLocale_ddMMyyyy(pBean.getP_custBirthDay()));
+                switch (pBean.getP_custSex()) {
+                    case "M":
+                        txtLoanSex.setText("ผู้ชาย");
+                        break;
+                    case "F":
+                        txtLoanSex.setText("ผู้หญิง");
+                        break;
+                    default:
+                        txtLoanSex.setText("อื่นๆ");
+                        break;
+                }
+                txtLoanOccu.setText(pBean.getP_custOccupation());
+                txtLoanRegMember.setText(DateFormat.getLocale_ddMMyyyy(pBean.getP_member_start()));
+
+                loadAddressLoan();
+            }
+        }
+    }
+
+    private void txtTotalSellHoonAmountKeyReleased() {
+        double price = NumberUtil.toDouble(txtPriceValue.getText());
+        double total = NumberUtil.toDouble(txtTotalSellHoonAmount.getText());
+        total *= price;
+        txtTotalAmount.setText(NumberFormat.showDouble2(total));
+    }
+
+    private void txtTotalSellHoonAmountFocusGained() {
+        txtDocNo.setText("");
+        initHoonWithdraw();
+        txtTotalSellHoonAmount.selectAll();
+    }
+
+    private void btnChooseDateSellHoonActionPerformed() {
+        Point point = txtDateSell.getLocationOnScreen();
+        point.setLocation(point.getX(), point.getY());
+        DateChooseDialog dcd = new DateChooseDialog(this, true, point);
+        dcd.setVisible(true);
+
+        if (dcd.getSelectDate() != null) {
+            txtDateSell.setText(dcd.getDateString());
+            txtDateSell.requestFocus();
+        }
+    }
+
+    private void txtCashPayKeyPressedAction(KeyEvent evt) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            btnSaveByHoon.requestFocus();
+        }
+    }
+
+    private void txtCashPayFocusGained() {
+        txtCashPay.selectAll();
+    }
+
+    private void txtHoonQTYKeyReleased() {
+        double total;
+        double a = 0.00;
+        double b = 0.00;
+        if (!"".equals(txtHoonQTY.getText().trim())) {
+            a = NumberUtil.toDouble(txtHoonQTY.getText());
+        }
+        if (!"".equals(txtValueBaht.getText().trim())) {
+            b = NumberUtil.toDouble(txtValueBaht.getText());
+        }
+
+        total = a * b;
+        txtAmount.setText(NumberFormat.showDouble2(total));
+    }
+
+    private void cbLoanAccItemStateChangedAction(ItemEvent evt) {
+        if (evt.getStateChange() == 1) {
+            String id = getIDCombobox(cbLoanAcc);
+            CbLoanConfigBean loanBean = getLoanConfigControl().listLoanConfig(id);
+            if (loanBean != null) {
+                switch (loanBean.getIntFixed()) {
+                    case AppConstants.INT_FLAT_RATE:
+                        txtIntFixedName.setText("เงินต้นคงที่ (Flat Interest Rate)");
+                        break;
+                    case AppConstants.INT_EFFITIVE_RATE:
+                        txtIntFixedName.setText("ลดต้นลดดอก (Effective Interest Rate)");
+                        break;
+                    default:
+                        txtIntFixedName.setText("");
+                        break;
+                }
+
+                switch (loanBean.getChkPIntTable()) {
+                    case "1":
+                        txtFeeRateName.setText("คิดดอกเบี้ยปรับจากดอกเบี้ยค้าง");
+                        break;
+                    case "2":
+                        txtFeeRateName.setText("คิดดอกเบี้ยปรับจากเงินต้นคงเหลือ");
+                        break;
+                    default:
+                        txtFeeRateName.setText("");
+                        break;
+                }
+
+                txtIntBadDebt.setText(NumberFormat.showDouble2(loanBean.getIntBadDebt()));
+                txtIntTurnover.setText(NumberFormat.showDouble2(loanBean.getIntTurnover()));
+                txtIntNormal.setText(NumberFormat.showDouble2(loanBean.getIntNormal()));
+                txtLoanPenaltyINT.setText(NumberFormat.showDouble2(loanBean.getLoanPenaltyINT()));
+
+                double intPerYear1 = loanBean.getLoanINT();//ต่อปี
+                double intPerMonth1 = intPerYear1 / 12;
+                double intPerDay1 = intPerMonth1 / 30;
+
+                double intPerYear2 = loanBean.getIntBadDebt();//กันหนี้สูญ
+                double intPerMonth2 = intPerYear2 / 12;
+                double intPerDay2 = intPerMonth2 / 30;
+
+                double intPerYear3 = loanBean.getIntTurnover();//ค่าจัดการ
+                double intPerMonth3 = intPerYear3 / 12;
+                double intPerDay3 = intPerMonth3 / 30;
+
+                double intPerYear4 = loanBean.getIntNormal();//ดอกเบี้ยเงินกู้
+                double intPerMonth4 = intPerYear4 / 12;
+                double intPerDay4 = intPerMonth4 / 30;
+                switch (cbLoanTypePayment.getSelectedIndex()) {
+                    case 0:
+                        txtLoanIntPercent.setText(NumberFormat.showDouble2(intPerDay1));
+                        txtIntBadDebt.setText(NumberFormat.showDouble3(intPerDay2));
+                        txtIntTurnover.setText(NumberFormat.showDouble3(intPerDay3));
+                        txtIntNormal.setText(NumberFormat.showDouble3(intPerDay4));
+                        break;
+                    case 1:
+                        txtLoanIntPercent.setText(NumberFormat.showDouble3(intPerMonth1));
+                        txtIntBadDebt.setText(NumberFormat.showDouble3(intPerMonth2));
+                        txtIntTurnover.setText(NumberFormat.showDouble3(intPerMonth3));
+                        txtIntNormal.setText(NumberFormat.showDouble3(intPerMonth4));
+                        break;
+                    default:
+                        txtLoanIntPercent.setText(NumberFormat.showDouble3(intPerYear1));
+                        txtIntBadDebt.setText(NumberFormat.showDouble3(intPerYear2));
+                        txtIntTurnover.setText(NumberFormat.showDouble3(intPerYear3));
+                        txtIntNormal.setText(NumberFormat.showDouble3(intPerYear4));
+                        break;
+                }
+            }
+
+            System.out.println("เลือก " + id);
+        }
+    }
+
+    private void cbLoanTypePaymentItemStateChanged() {
+        String id = getIDCombobox(cbLoanAcc);
+        CbLoanConfigBean loanBean = getLoanConfigControl().listLoanConfig(id);
+        if (loanBean != null) {
+            double intPerYear = loanBean.getLoanINT();//ต่อปี
+            double intPerMonth = intPerYear / 12;
+            double intPerDay = intPerMonth / 30;
+            switch (cbLoanTypePayment.getSelectedIndex()) {
+                case 0:
+                    txtLoanIntPercent.setText(NumberFormat.showDouble2(intPerDay));
+                    txtIntBadDebt.setText(NumberFormat.showDouble4(loanBean.getIntBadDebt() / 12 / 30));
+                    txtIntTurnover.setText(NumberFormat.showDouble4(loanBean.getIntTurnover() / 12 / 30));
+                    txtIntNormal.setText(NumberFormat.showDouble4(loanBean.getIntNormal() / 12 / 30));
+                    break;
+                case 1:
+                    txtLoanIntPercent.setText(NumberFormat.showDouble2(intPerMonth));
+                    txtIntBadDebt.setText(NumberFormat.showDouble4(loanBean.getIntBadDebt() / 12));
+                    txtIntTurnover.setText(NumberFormat.showDouble4(loanBean.getIntTurnover() / 12));
+                    txtIntNormal.setText(NumberFormat.showDouble4(loanBean.getIntNormal() / 12));
+                    break;
+                default:
+                    txtLoanIntPercent.setText(NumberFormat.showDouble2(intPerYear));
+                    txtIntBadDebt.setText(NumberFormat.showDouble4(loanBean.getIntBadDebt()));
+                    txtIntTurnover.setText(NumberFormat.showDouble4(loanBean.getIntTurnover()));
+                    txtIntNormal.setText(NumberFormat.showDouble4(loanBean.getIntNormal()));
+                    break;
+            }
+
+            computeBahtPerMonth();
+        }
+    }
+
+    private void txtLoanPerMonthKeyPressedAction(KeyEvent evt) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if ("".equals(txtLoanPerMonth.getText().trim())) {
+                txtLoanPerMonth.setText("1");
+                txtLoanPerMonth.requestFocus();
+                return;
+            }
+
+            int loanPerMonth = NumberUtil.toInt(txtLoanPerMonth.getText());
+            if (loanPerMonth <= 0) {
+                txtLoanPerMonth.setText("1");
+                loanPerMonth = 1;
+            }
+            String docType = getIDCombobox(cbLoanAcc);
+            CbLoanConfigBean lBean = getLoanConfigControl().listLoanConfig(docType);
+            if (loanPerMonth > lBean.getLoanPerMonth()) {
+                JOptionPane.showMessageDialog(this, "ท่านกู้เกินจำนวนงวดตามที่สัญญากำหนดไว้ ต้องไม่เกิน " + lBean.getLoanPerMonth() + " งวด");
+                txtLoanPerMonth.requestFocus();
+            } else {
+                computeFinishPay();
+                txtLoanDateStart.requestFocus();
+            }
+        }
+    }
+
+    private void txtPaymentDateKeyPressedAction(KeyEvent evt) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (!"".equals(txtAccCode.getText())) {
+                CbLoanAccountBean lBean = getLoanAccountControl().listLoanAccount(txtAccCode.getText());
+                if (lBean != null) {
+                    txtPaymentFee.setEditable(true);
+                    txtPaymentAmountCash.setEditable(true);
+
+                    loadLoanDetailPayment();
+
+                    txtPaymentAmountCash.requestFocus();
+                } else {
+                    JOptionPane.showMessageDialog(this, "กรุณาเลือกเลขที่บัญชีเงินกู้สำหรับรับชำระ !!!");
+                    txtAccCode.requestFocus();
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "กรุณาเลือกเลขที่บัญชีเงินกู้ที่ต้องการรับชำระ !!!");
+                txtAccCode.requestFocus();
+            }
+        }
     }
 
 }
