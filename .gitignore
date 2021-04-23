@@ -5,3 +5,7 @@ lib
 /database
 /itfinger_conf.txt
 /nbproject
+/issue-feature
+/test
+*.zip
+process*

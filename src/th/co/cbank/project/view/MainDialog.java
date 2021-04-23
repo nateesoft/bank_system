@@ -64,6 +64,8 @@ import th.co.cbank.project.control.PassBook_PSiPR9;
 import th.co.cbank.project.model.ReportOrangeBean;
 import th.co.cbank.project.report.view.DialyReportDialog;
 import th.co.cbank.project.report.view.ReportInvoiceHoon;
+import th.co.cbank.project.report.view.ReportOverdueAccountAndSummary;
+import th.co.cbank.project.report.view.ReportOverdueAccountInterest;
 import th.co.cbank.project.report.view.ReportPersonDetail;
 import th.co.cbank.project.view.feature.OpenSavingAccount;
 import th.co.cbank.util.DateChooseDialog;
@@ -658,8 +660,8 @@ public class MainDialog extends BaseSwing {
         jMenuItem43 = new javax.swing.JMenuItem();
         jMenuItem44 = new javax.swing.JMenuItem();
         jSeparator11 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem45 = new javax.swing.JMenuItem();
         jMenuItem46 = new javax.swing.JMenuItem();
+        jMenuItem45 = new javax.swing.JMenuItem();
         mnRptFee = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         mnRptProfitCompany = new javax.swing.JMenuItem();
@@ -5955,23 +5957,23 @@ public class MainDialog extends BaseSwing {
         mnMainRptLoan.add(jMenuItem44);
         mnMainRptLoan.add(jSeparator11);
 
-        jMenuItem45.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jMenuItem45.setText("รายงานลูกหนี้ค้างชำระ/เกินกำหนด");
-        jMenuItem45.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem45ActionPerformed(evt);
-            }
-        });
-        mnMainRptLoan.add(jMenuItem45);
-
         jMenuItem46.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jMenuItem46.setText("รายงานค่าปรับ");
+        jMenuItem46.setText("รายงานลูกหนี้ค้างชำระ และดอกเบี้ย");
         jMenuItem46.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem46ActionPerformed(evt);
             }
         });
         mnMainRptLoan.add(jMenuItem46);
+
+        jMenuItem45.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jMenuItem45.setText("รายงานลูกหนี้ค้างชำระ และดอกเบี้ยสรุป");
+        jMenuItem45.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem45ActionPerformed(evt);
+            }
+        });
+        mnMainRptLoan.add(jMenuItem45);
 
         jMenu3.add(mnMainRptLoan);
 
@@ -7466,11 +7468,13 @@ public class MainDialog extends BaseSwing {
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem45ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem45ActionPerformed
-
+        ReportOverdueAccountAndSummary report = new ReportOverdueAccountAndSummary(this, true);
+        report.setVisible(true);
     }//GEN-LAST:event_jMenuItem45ActionPerformed
 
     private void jMenuItem46ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem46ActionPerformed
-
+        ReportOverdueAccountInterest report = new ReportOverdueAccountInterest(this, true);
+        report.setVisible(true);
     }//GEN-LAST:event_jMenuItem46ActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed

@@ -583,26 +583,26 @@
                 </MenuItem>
                 <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator11">
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem45">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="12" style="0"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="&#xe23;&#xe32;&#xe22;&#xe07;&#xe32;&#xe19;&#xe25;&#xe39;&#xe01;&#xe2b;&#xe19;&#xe35;&#xe49;&#xe04;&#xe49;&#xe32;&#xe07;&#xe0a;&#xe33;&#xe23;&#xe30;/&#xe40;&#xe01;&#xe34;&#xe19;&#xe01;&#xe33;&#xe2b;&#xe19;&#xe14;"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem45ActionPerformed"/>
-                  </Events>
-                </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="jMenuItem46">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="12" style="0"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="&#xe23;&#xe32;&#xe22;&#xe07;&#xe32;&#xe19;&#xe04;&#xe48;&#xe32;&#xe1b;&#xe23;&#xe31;&#xe1a;"/>
+                    <Property name="text" type="java.lang.String" value="&#xe23;&#xe32;&#xe22;&#xe07;&#xe32;&#xe19;&#xe25;&#xe39;&#xe01;&#xe2b;&#xe19;&#xe35;&#xe49;&#xe04;&#xe49;&#xe32;&#xe07;&#xe0a;&#xe33;&#xe23;&#xe30; &#xe41;&#xe25;&#xe30;&#xe14;&#xe2d;&#xe01;&#xe40;&#xe1a;&#xe35;&#xe49;&#xe22;"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem46ActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem45">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="12" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="&#xe23;&#xe32;&#xe22;&#xe07;&#xe32;&#xe19;&#xe25;&#xe39;&#xe01;&#xe2b;&#xe19;&#xe35;&#xe49;&#xe04;&#xe49;&#xe32;&#xe07;&#xe0a;&#xe33;&#xe23;&#xe30; &#xe41;&#xe25;&#xe30;&#xe14;&#xe2d;&#xe01;&#xe40;&#xe1a;&#xe35;&#xe49;&#xe22;&#xe2a;&#xe23;&#xe38;&#xe1b;"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem45ActionPerformed"/>
                   </Events>
                 </MenuItem>
               </SubComponents>
