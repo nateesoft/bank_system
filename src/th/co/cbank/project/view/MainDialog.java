@@ -6401,7 +6401,7 @@ public class MainDialog extends BaseSwing {
                     txtHoonQTY.requestFocus();
                     break;
                 case 2:
-                    ArrayList<CbLoanAccountBean> listBean = getLoanAccountControl().listLoanAccountCust(txtProfileCode.getText());
+                    List<CbLoanAccountBean> listBean = getLoanAccountControl().listLoanAccountCust(txtProfileCode.getText());
                     if (listBean.size() > 0) {
                         enableComponents(jPanel22, false);
                     }
@@ -10577,19 +10577,16 @@ public class MainDialog extends BaseSwing {
 
         //compute interest  
         CbLoanAccountBean loanAccBean = getLoanAccountControl().getLoanAccount(txtAccCode.getText());
-
         CbLoanConfigBean loanConfigBean = getLoanConfigControl().listLoanConfig(loanAccBean.getLoan_type());
 
         if (loanConfigBean.getIntFixed().equals("E")) {
             isEffitiveRate = true;
-
             txtPaymentDate.setEditable(false);
             jButton20.setEnabled(false);
 
             txtLoanStartDate.setText(DateFormat.getLocale_ddMMyyyy(loanAccBean.getLoan_docdate()));
 
             int diff = th.co.cbank.util.DateUtil.diff(loanAccBean.getLoan_datePay(), new Date());
-
             BigDecimal balanceAmount = new BigDecimal("" + loanAccBean.getLoan_amount());
             BigDecimal intPerYear = new BigDecimal("" + (loanConfigBean.getLoanINT() / 100));
             BigDecimal diffDayFrom = new BigDecimal("" + diff);

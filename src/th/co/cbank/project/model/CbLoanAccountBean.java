@@ -17,7 +17,7 @@ public class CbLoanAccountBean {
     private Date sysdate;//
     private int ID = 1;//
     private double pay_amount = 0.00;//
-    private String pay_date;//
+    private Date pay_date;//
     private String pay_time = "00:00:00";//
     private String pay_user;//
     private double pay_ton = 0.00;//
@@ -242,11 +242,11 @@ public class CbLoanAccountBean {
         this.pay_amount = pay_amount;
     }
 
-    public String getPay_date() {
+    public Date getPay_date() {
         return pay_date;
     }
 
-    public void setPay_date(String pay_date) {
+    public void setPay_date(Date pay_date) {
         this.pay_date = pay_date;
     }
 

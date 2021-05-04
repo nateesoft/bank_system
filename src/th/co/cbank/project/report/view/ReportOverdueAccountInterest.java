@@ -2,18 +2,30 @@ package th.co.cbank.project.report.view;
 
 import java.awt.Frame;
 import java.awt.Point;
-import javax.swing.JTextField;
+import java.util.Date;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import th.co.cbank.project.control.CbLoanAccountControl;
 import th.co.cbank.project.modal.ArListDialog;
+import th.co.cbank.project.model.CbLoanAccountBean;
+import th.co.cbank.util.ClipboardUtil;
 import th.co.cbank.util.DateChooseDialog;
+import th.co.cbank.util.DateFormat;
+import th.co.cbank.util.JTableUtil;
+import th.co.cbank.util.NumberFormat;
+import th.co.cbank.util.TableUtil;
 
 public class ReportOverdueAccountInterest extends javax.swing.JDialog {
-    
+
+    private DefaultTableModel model;
     private final Frame parent;
 
     public ReportOverdueAccountInterest(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.parent = parent;
+
+        initTable();
     }
 
     @SuppressWarnings("unchecked")
@@ -28,7 +40,6 @@ public class ReportOverdueAccountInterest extends javax.swing.JDialog {
         btnArCode2 = new javax.swing.JButton();
         btnProcess = new javax.swing.JButton();
         btnExcelFile = new javax.swing.JButton();
-        btnPrint = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         btnCalendar = new javax.swing.JButton();
         txtDate = new javax.swing.JTextField();
@@ -38,13 +49,24 @@ public class ReportOverdueAccountInterest extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("รายงานลูกหนี้ค้างชำระ และดอกเบี้ย");
         setPreferredSize(new java.awt.Dimension(1000, 700));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "รหัสลูกหนี้", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
 
         txtCode1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtCode1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtCode1MouseClicked(evt);
+            }
+        });
 
         txtCode2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtCode2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtCode2MouseClicked(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("ถึง");
@@ -87,11 +109,11 @@ public class ReportOverdueAccountInterest extends javax.swing.JDialog {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCode1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCode2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCode1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCode2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(btnArCode1)
-                    .addComponent(btnArCode2))
+                    .addComponent(btnArCode1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnArCode2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -105,9 +127,6 @@ public class ReportOverdueAccountInterest extends javax.swing.JDialog {
 
         btnExcelFile.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnExcelFile.setText("Excel file");
-
-        btnPrint.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        btnPrint.setText("พิมพ์");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "ณ.วันที่", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
 
@@ -137,8 +156,8 @@ public class ReportOverdueAccountInterest extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCalendar))
+                    .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -147,18 +166,33 @@ public class ReportOverdueAccountInterest extends javax.swing.JDialog {
 
             },
             new String [] {
-                "รหัสลูกหนี้", "ชื่อลูกหนี้/บริษัท", "เครดิต(วัน)", "วันที่เริ่มใช้", "กำหนดชำระ", "ยอดค้างชำระ", "อัตราดอกเบี้ย", "เกินกำหนด(วัน)", "ยอดดอกเบี้ย"
+                "รหัสลูกหนี้", "เลขบัญชี", "ชื่อลูกหนี้/บริษัท", "วันที่เริ่มใช้", "สิ้นสุดสัญญา", "ชำระล่าสุด", "ยอดค้างชำระ", "อัตราดอกเบี้ย(เดือน)", "เกินกำหนด(วัน)", "ยอดดอกเบี้ย"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, true, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        tbReport.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbReportMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbReport);
+        if (tbReport.getColumnModel().getColumnCount() > 0) {
+            tbReport.getColumnModel().getColumn(0).setPreferredWidth(80);
+            tbReport.getColumnModel().getColumn(1).setPreferredWidth(85);
+            tbReport.getColumnModel().getColumn(2).setPreferredWidth(160);
+            tbReport.getColumnModel().getColumn(3).setPreferredWidth(65);
+            tbReport.getColumnModel().getColumn(4).setPreferredWidth(65);
+            tbReport.getColumnModel().getColumn(5).setPreferredWidth(65);
+            tbReport.getColumnModel().getColumn(6).setPreferredWidth(70);
+            tbReport.getColumnModel().getColumn(7).setPreferredWidth(100);
+        }
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -194,13 +228,10 @@ public class ReportOverdueAccountInterest extends javax.swing.JDialog {
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnProcess)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnExcelFile))
-                            .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 269, Short.MAX_VALUE)
+                        .addComponent(btnProcess)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnExcelFile))
                     .addComponent(jScrollPane1))
                 .addContainerGap())
         );
@@ -213,15 +244,12 @@ public class ReportOverdueAccountInterest extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnProcess)
-                            .addComponent(btnExcelFile))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnPrint)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnProcess, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnExcelFile, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -254,12 +282,29 @@ public class ReportOverdueAccountInterest extends javax.swing.JDialog {
         processReport();
     }//GEN-LAST:event_btnProcessActionPerformed
 
+    private void tbReportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbReportMouseClicked
+        if (evt.getButton() == 3) {
+            ClipboardUtil.copyTableContent(tbReport);
+        }
+    }//GEN-LAST:event_tbReportMouseClicked
+
+    private void txtCode1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCode1MouseClicked
+        if (evt.getButton() == 3) {
+            ClipboardUtil.paste();
+        }
+    }//GEN-LAST:event_txtCode1MouseClicked
+
+    private void txtCode2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCode2MouseClicked
+        if (evt.getButton() == 3) {
+            ClipboardUtil.paste();
+        }
+    }//GEN-LAST:event_txtCode2MouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnArCode1;
     private javax.swing.JButton btnArCode2;
     private javax.swing.JButton btnCalendar;
     private javax.swing.JButton btnExcelFile;
-    private javax.swing.JButton btnPrint;
     private javax.swing.JButton btnProcess;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -274,6 +319,49 @@ public class ReportOverdueAccountInterest extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     private void processReport() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        TableUtil.clearModel(model);
+
+        CbLoanAccountControl control = new CbLoanAccountControl();
+        Date dateSelected = null;
+        if (!txtDate.getText().trim().isEmpty()) {
+            dateSelected = DateFormat.getLocal_ddMMyyyy(txtDate.getText());
+        }
+        List<CbLoanAccountBean> list = control.processSummaryByPerson(txtCode1.getText().trim(), txtCode2.getText());
+        for (CbLoanAccountBean bean : list) {
+            Date dateCompute = bean.getPay_amount() > 0 ? bean.getPay_date() : bean.getLoan_end_date();
+            int diff = th.co.cbank.util.DateUtil.diff(dateCompute, dateSelected == null ? new Date() : dateSelected);
+            double totalInt = bean.getLoan_amount() > 0
+                    ? diff * bean.getLoan_interest() * bean.getLoan_amount() / (30 * 100)
+                    : 0;
+            model.addRow(new Object[]{
+                bean.getProfile().getP_custCode(),
+                bean.getLoan_docno(),
+                bean.getProfile().getP_custName() + " " + bean.getProfile().getP_custSurname(),
+                th.co.cbank.util.DateFormat.getLocale_ddMMyyyy(bean.getLoan_docdate()),
+                th.co.cbank.util.DateFormat.getLocale_ddMMyyyy(bean.getLoan_end_date()),
+                bean.getPay_amount() > 0 ? th.co.cbank.util.DateFormat.getLocale_ddMMyyyy(bean.getPay_date()):"<html><font color=blue>ไม่พบข้อมูล</font></html>",
+                NumberFormat.showDouble2(bean.getLoan_amount()),
+                (int) bean.getLoan_interest() + "%",
+                bean.getLoan_amount() > 0 ? NumberFormat.showCommaOnly(diff) : 0,
+                NumberFormat.showDouble2(totalInt),});
+        }
+    }
+
+    public static void main(String[] args) {
+        ReportOverdueAccountInterest d = new ReportOverdueAccountInterest(null, true);
+        d.setVisible(true);
+    }
+
+    private void initTable() {
+        model = (DefaultTableModel) tbReport.getModel();
+        JTableUtil.defaultTemplate(tbReport);
+
+        JTableUtil.alignCenter(tbReport, 3);
+        JTableUtil.alignCenter(tbReport, 4);
+        JTableUtil.alignCenter(tbReport, 5);
+        JTableUtil.alignRight(tbReport, 6);
+        JTableUtil.alignRight(tbReport, 7);
+        JTableUtil.alignRight(tbReport, 8);
+        JTableUtil.alignRight(tbReport, 9);
     }
 }

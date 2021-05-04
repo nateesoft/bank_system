@@ -4,6 +4,7 @@ import th.co.cbank.project.model.ProfileBean;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -294,7 +295,7 @@ public class CustomerDialog extends BaseDialogSwing {
             modelDetail2 = (DefaultTableModel) tbLoanAccount.getModel();
             TableUtil.clearModel(modelDetail2);
             
-            ArrayList<CbLoanAccountBean> listLoan = getLoanAccountControl().listLoanAccountCust("" + tbCustomer.getValueAt(rows, 1));
+           List<CbLoanAccountBean> listLoan = getLoanAccountControl().listLoanAccountCust("" + tbCustomer.getValueAt(rows, 1));
             for(int i=0;i<listLoan.size();i++){
                 CbLoanAccountBean bean = (CbLoanAccountBean)listLoan.get(i);
                 modelDetail2.addRow(new Object[]{

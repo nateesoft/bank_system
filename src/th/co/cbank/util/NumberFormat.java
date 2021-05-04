@@ -13,6 +13,9 @@ public class NumberFormat {
     public static String showCommaOnly(float obj) {
         return dec0.format(obj);
     }
+    public static String showCommaOnly(int obj) {
+        return dec0.format(obj);
+    }
 
     public static String showDouble2(float obj) {
         return dec1.format(obj);
