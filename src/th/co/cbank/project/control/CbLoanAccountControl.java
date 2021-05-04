@@ -530,9 +530,19 @@ public class CbLoanAccountControl extends BaseControl {
         List<ProfileBean> listBean = new ArrayList<>();
         String sql = "select p.* from cb_loan_account l "
                 + "inner join cb_profile p on l.cust_code=p.p_custcode "
-                + "where 1=1 and (p_custcode like '%" + id + "%' "
-                + "or p_custname like '%" + name + "%' or p_custsurname like '%" + surname + "%') "
-                + "group by p_custcode "
+                + "where 1=1 ";
+        if (!id.isEmpty()) {
+            sql += "and p_custcode like '%" + id + "%' ";
+        }
+        if (!name.isEmpty()) {
+            sql += "and p_custname like '%" + ThaiUtil.Unicode2ASCII(name) + "%' ";
+        }
+
+        if (!surname.isEmpty()) {
+            sql += "and p_custsurname like '%" + ThaiUtil.Unicode2ASCII(surname) + "%' ";
+        }
+
+        sql += "group by p_custcode "
                 + "order by p_custcode, p_custname, p_custsurname ";
         try (ResultSet rs = MySQLConnect.getResultSet(sql)) {
             while (rs.next()) {
@@ -557,8 +567,9 @@ public class CbLoanAccountControl extends BaseControl {
     public List<CbLoanAccountBean> processSummary(String date, String code1, String code2) {
         List<CbLoanAccountBean> listBean = new ArrayList<>();
         try {
-            String sql = "select l.*, "
-                    + "concat(p_custname, concat(' ', p_custsurname)) custName "
+            String sql = "select p.p_custcode, p.p_custname, p.p_custsurname,"
+                    + "p.loan_credit_amt, p.loan_balance, p.loan_credit_balance,"
+                    + "l.loan_docno, l.loan_interest "
                     + "from cb_loan_account l "
                     + "inner join cb_profile p on l.cust_code=p.p_custcode "
                     + "where 1=1 ";
@@ -568,47 +579,23 @@ public class CbLoanAccountControl extends BaseControl {
             if (!code1.isEmpty() && !code2.isEmpty()) {
                 sql += "and l.cust_code between '" + code1 + "' and '" + code2 + "' ";
             }
+            sql += "group by p_custcode order by p_custcode";
+            System.out.println(sql);
             try (ResultSet rs = MySQLConnect.getResultSet(sql)) {
                 while (rs.next()) {
                     ProfileBean profile = new ProfileBean();
+                    profile.setP_custCode(rs.getString("p_custcode"));
                     profile.setP_custName(ThaiUtil.ASCII2Unicode(rs.getString("p_custName")));
                     profile.setP_custSurname(ThaiUtil.ASCII2Unicode(rs.getString("p_custSurname")));
+                    profile.setLoan_Credit_Amt(rs.getDouble("loan_credit_amt"));
+                    profile.setLoan_Balance(rs.getDouble("loan_balance"));
+                    profile.setLoan_Credit_Balance(rs.getDouble("loan_credit_balance"));
 
                     CbLoanAccountBean bean = new CbLoanAccountBean();
                     bean.setProfile(profile);
 
-                    bean.setLoan_docno(rs.getString("Loan_docno"));
-                    bean.setCust_code(rs.getString("Cust_code"));
-                    bean.setLoan_docdate(rs.getDate("Loan_docdate"));
-                    bean.setBranch_code(rs.getString("branch_code"));
-                    bean.setLoan_amount(rs.getDouble("Loan_amount"));
-                    bean.setLoan_interest(rs.getDouble("Loan_interest"));
-                    bean.setLoan_datePay(rs.getDate("Loan_datePay"));
-                    bean.setLoan_fee(rs.getDouble("Loan_fee"));
-                    bean.setSysdate(rs.getTimestamp("Sysdate"));
-                    bean.setID(rs.getInt("ID"));
-                    bean.setPay_amount(rs.getDouble("Pay_amount"));
-                    bean.setPay_date(rs.getString("Pay_date"));
-                    bean.setPay_time(rs.getString("Pay_time"));
-                    bean.setPay_user(rs.getString("Pay_user"));
-                    bean.setPay_ton(rs.getDouble("Pay_ton"));
-                    bean.setLoan_person1(rs.getString("Loan_person1"));
-                    bean.setLoan_person2(rs.getString("Loan_person2"));
-                    bean.setPay_interest(rs.getDouble("Pay_interest"));
-                    bean.setBook_evidence1(rs.getString("Book_evidence1"));
-                    bean.setBook_evidence2(rs.getString("Book_evidence2"));
-                    bean.setBook_evidence3(rs.getString("Book_evidence3"));
-                    bean.setBook_evidence4(rs.getString("Book_evidence4"));
-                    bean.setBook_no(rs.getString("Book_No"));
-                    bean.setLoan_type(rs.getString("Loan_Type"));
-                    bean.setLoan_start_date(rs.getDate("loan_start_date"));
-                    bean.setLoan_end_date(rs.getDate("loan_end_date"));
-                    bean.setPayPerAmount(rs.getDouble("payPerAmount"));
-                    bean.setPeriod_pay(rs.getInt("period_pay"));
-                    bean.setChkPersonApprove(rs.getString("chkPersonApprove"));
-                    bean.setLoanCustomerPay(rs.getDouble("LoanCustomerPay"));
-                    bean.setLoanDayQty(rs.getInt("loanDayQty"));
-                    bean.setLoanPayMin(rs.getDouble("loanPayMin"));
+                    bean.setLoan_docno(rs.getString("loan_docno"));
+                    bean.setLoan_interest(rs.getDouble("loan_interest"));
 
                     listBean.add(bean);
                 }
