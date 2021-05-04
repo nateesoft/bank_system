@@ -38,15 +38,16 @@ public class CbLoanAccountBean {
     private double LoanCustomerPay = 0.00;
     private int LoanDayQty=0;
     private double LoanPayMin = 0.00;
-    //not in db
-    private String custName;
+    
+    // reference ProfileBean
+    private ProfileBean profile;
 
-    public String getCustName() {
-        return custName;
+    public ProfileBean getProfile() {
+        return profile;
     }
 
-    public void setCustName(String custName) {
-        this.custName = custName;
+    public void setProfile(ProfileBean profile) {
+        this.profile = profile;
     }
     
     public String getLoan_name() {

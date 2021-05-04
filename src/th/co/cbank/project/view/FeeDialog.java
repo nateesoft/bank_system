@@ -287,7 +287,7 @@ public class FeeDialog extends BaseDialogSwing {
 
         for (int i = 0; i < listExp.size(); i++) {
             CbFeeBean bean = (CbFeeBean) listExp.get(i);
-            model.addRow(new Object[]{bean.getExp_id(), ThaiUtil.ASCII2Unicode(bean.getExp_desc())});
+            model.addRow(new Object[]{bean.getExp_id(), bean.getExp_desc()});
         }
 
         resetData();

@@ -1143,7 +1143,7 @@ public class CbSaveAccountControl extends BaseControl {
                 PayInterestAmtMapping bean = new PayInterestAmtMapping();
                 bean.setIndex(count);
                 bean.setAccountNo(rs.getString("t_acccode"));
-                bean.setAccountName(rs.getString("accountName"));
+                bean.setAccountName(ThaiUtil.ASCII2Unicode(rs.getString("accountName")));
                 bean.setBalanceAmt(rs.getDouble("b_balance"));
                 bean.setIntAmt(rs.getDouble("int_amount"));
                 bean.setCustCode(rs.getString("t_custcode"));

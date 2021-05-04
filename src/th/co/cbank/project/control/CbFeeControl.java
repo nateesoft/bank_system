@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import th.co.cbank.project.model.CbFeeBean;
+import th.co.cbank.util.ThaiUtil;
 
 public class CbFeeControl extends BaseControl {
     private final Logger logger = Logger.getLogger(CbFeeControl.class);
@@ -13,7 +14,7 @@ public class CbFeeControl extends BaseControl {
         while (rs.next()) {
             CbFeeBean bean = new CbFeeBean();
             bean.setExp_id(rs.getString("Exp_id"));
-            bean.setExp_desc(rs.getString("Exp_desc"));
+            bean.setExp_desc(ThaiUtil.ASCII2Unicode(rs.getString("Exp_desc")));
 
             listBean.add(bean);
         }

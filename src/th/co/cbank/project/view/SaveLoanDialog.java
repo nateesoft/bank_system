@@ -14,13 +14,14 @@ import th.co.cbank.util.NumberUtil;
 import th.co.cbank.util.TableUtil;
 
 public class SaveLoanDialog extends BaseDialogSwing {
+
     private final Logger logger = Logger.getLogger(SaveLoanDialog.class);
     private DefaultTableModel model;
 
     public SaveLoanDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+
         initTable();
     }
 
@@ -171,7 +172,7 @@ public class SaveLoanDialog extends BaseDialogSwing {
     private void txtSearchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             dispose();
-        }else if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             loadData();
         }
     }//GEN-LAST:event_txtSearchKeyPressed
@@ -193,28 +194,28 @@ public class SaveLoanDialog extends BaseDialogSwing {
 
     private void loadData() {
         TableUtil.clearModel(model);
-        
+
         List<CbLoanAccountBean> listAccount = getLoanAccountControl().searchLoanAccount(ThaiUtil.Unicode2ASCII(txtSearch.getText()));
-        for(int i=0;i<listAccount.size();i++){
-            CbLoanAccountBean loanAcc = (CbLoanAccountBean)listAccount.get(i);
+        for (int i = 0; i < listAccount.size(); i++) {
+            CbLoanAccountBean loanAcc = (CbLoanAccountBean) listAccount.get(i);
             model.addRow(new Object[]{
-                (i+1),
+                (i + 1),
                 loanAcc.getLoan_docno(),
-                ThaiUtil.ASCII2Unicode(loanAcc.getLoan_name()),
+                loanAcc.getLoan_name(),
                 loanAcc.getCust_code(),
-                ThaiUtil.ASCII2Unicode(loanAcc.getCustName()),
+                loanAcc.getProfile().getP_custName() + " " + loanAcc.getProfile().getP_custSurname(),
                 NumberUtil.toNumberFormat(loanAcc.getLoan_amount())
             });
         }
-        
+
         TableUtil.alignTable(tbData, 0, SwingConstants.CENTER);
         TableUtil.alignTable(tbData, 5, SwingConstants.RIGHT);
-        
-        lbTotal.setText("รวมทั้งหมด "+model.getRowCount()+" รายการ");
+
+        lbTotal.setText("รวมทั้งหมด " + model.getRowCount() + " รายการ");
     }
 
     private void initTable() {
-        model = (DefaultTableModel)tbData.getModel();
+        model = (DefaultTableModel) tbData.getModel();
         tbData.setFont(new Font(AppConstants.DEFAULT_FONT, Font.PLAIN, AppConstants.DEFAULT_FONT_SIZE));
         JTableHeader tHeader = tbData.getTableHeader();
         tHeader.setFont(new Font(AppConstants.DEFAULT_FONT, Font.PLAIN, AppConstants.DEFAULT_FONT_SIZE));

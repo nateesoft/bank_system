@@ -46,7 +46,7 @@ public class SendEmail {
 
     public boolean sendEmailSecret() throws Exception {
         final String subject = "Login CBMart system "+new Date();
-        final String msg = ThaiUtil.ASCII2Unicode(new BranchControl().getData().getName());
+        final String msg = new BranchControl().getData().getName();
         final String username = "natee.live@gmail.com";
         final String password = "p@ssw0rd2535";
 

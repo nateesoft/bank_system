@@ -7786,7 +7786,7 @@ public class MainDialog extends BaseSwing {
         }
 
         for (LoadLoanMapping bean : listData) {
-            cbLoanAcc.setSelectedItem(bean.getLoan_type() + " - " + ThaiUtil.ASCII2Unicode(bean.getLoanName()));
+            cbLoanAcc.setSelectedItem(bean.getLoan_type() + " - " + bean.getLoanName());
             enableComponents(jPanel22, false);
         }
     }
@@ -8141,7 +8141,7 @@ public class MainDialog extends BaseSwing {
         BranchBean bean = getBranchControl().getData();
         txtShowEmpCode.setText(Value.USER_CODE);
         txtShowEmpName.setText(Value.USER_NAME + " " + Value.USER_LAST_NAME);
-        txtBranchName.setText(bean.getCode() + " - " + ThaiUtil.ASCII2Unicode(bean.getName()));
+        txtBranchName.setText(bean.getCode() + " - " + bean.getName());
 
         txtMemQty.setText(getProfileControl().getPMax());
 
@@ -9985,7 +9985,7 @@ public class MainDialog extends BaseSwing {
             if ("INT".equals(sBean.getT_booktype())) {
                 desc = "<html><font color=green>ดอกเบี้ยฝาก</font></html>";
             } else {
-                desc = ThaiUtil.ASCII2Unicode(sBean.getT_description());
+                desc = sBean.getT_description();
             }
 
             modelTbTransSave.addRow(new Object[]{

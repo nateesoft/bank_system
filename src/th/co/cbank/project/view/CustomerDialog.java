@@ -12,7 +12,6 @@ import th.co.cbank.util.JTableUtil;
 import th.co.cbank.util.DateFormat;
 import th.co.cbank.util.NumberFormat;
 import th.co.cbank.project.constants.AppConstants;
-import th.co.cbank.project.control.CbSaveAccountControl;
 import th.co.cbank.project.control.Value;
 import th.co.cbank.project.model.CbLoanAccountBean;
 import th.co.cbank.project.model.CbSaveAccountBean;

@@ -221,7 +221,7 @@ public class PayInterestAmtDialog extends BaseDialogSwing {
             model.addRow(new Object[]{
                 bean.getIndex(),
                 bean.getAccountNo(),
-                ThaiUtil.ASCII2Unicode(bean.getAccountName()),
+                bean.getAccountName(),
                 bean.getBalanceAmt(),
                 bean.getIntAmt(),
                 bean.getCustCode()

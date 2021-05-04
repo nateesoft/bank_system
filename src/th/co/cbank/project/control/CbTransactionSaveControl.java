@@ -23,7 +23,7 @@ public class CbTransactionSaveControl extends BaseControl {
             bean.setT_time(rs.getString("T_time"));
             bean.setT_acccode(rs.getString("T_acccode"));
             bean.setT_custcode(rs.getString("T_custcode"));
-            bean.setT_description(rs.getString("T_description"));
+            bean.setT_description(ThaiUtil.ASCII2Unicode(rs.getString("T_description")));
             bean.setT_amount(rs.getDouble("T_amount"));
             bean.setT_empcode(rs.getString("T_empcode"));
             bean.setT_docno(rs.getString("t_docno"));

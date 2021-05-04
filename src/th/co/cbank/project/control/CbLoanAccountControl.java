@@ -1,16 +1,20 @@
 package th.co.cbank.project.control;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
 import th.co.cbank.util.DateFormat;
 import th.co.cbank.util.ThaiUtil;
 import th.co.cbank.project.log.Log;
 import th.co.cbank.project.model.CbLoanAccountBean;
+import th.co.cbank.project.model.ProfileBean;
 
 public class CbLoanAccountControl extends BaseControl {
+
     private final Logger logger = Logger.getLogger(CbLoanAccountControl.class);
 
     public ArrayList<CbLoanAccountBean> listLoanAccountCust(String custCode) {
@@ -61,7 +65,7 @@ public class CbLoanAccountControl extends BaseControl {
             }
             rs.close();
         } catch (Exception e) {
-            
+
         }
 
         return listBean;
@@ -111,7 +115,7 @@ public class CbLoanAccountControl extends BaseControl {
             }
             rs.close();
         } catch (Exception e) {
-            
+
         }
 
         return listBean;
@@ -124,21 +128,26 @@ public class CbLoanAccountControl extends BaseControl {
                     + "from cb_loan_account ln,cb_profile p,cb_loan_config c "
                     + "where ln.cust_code=p.p_custCode "
                     + "and ln.loan_type=c.loanCode "
-                    + "and p_custName like '%"+custName+"%'";
+                    + "and p_custName like '%" + custName + "%'";
             ResultSet rs = MySQLConnect.getResultSet(sql);
             while (rs.next()) {
+                ProfileBean profile = new ProfileBean();
+                profile.setP_custName(ThaiUtil.ASCII2Unicode(rs.getString("p_custName")));
+                profile.setP_custSurname(ThaiUtil.ASCII2Unicode(rs.getString("p_custSurname")));
+
                 CbLoanAccountBean bean = new CbLoanAccountBean();
+                bean.setProfile(profile);
+
                 bean.setLoan_docno(rs.getString("loan_docno"));
-                bean.setLoan_name(rs.getString("loanName"));
+                bean.setLoan_name(ThaiUtil.ASCII2Unicode(rs.getString("loanName")));
                 bean.setCust_code(rs.getString("cust_code"));
-                bean.setCustName(ThaiUtil.ASCII2Unicode(rs.getString("p_custName"))+" "+ThaiUtil.ASCII2Unicode(rs.getString("p_custSurname")));
                 bean.setLoan_amount(rs.getDouble("loan_amount"));
 
                 listBean.add(bean);
             }
             rs.close();
         } catch (Exception e) {
-            
+
         }
 
         return listBean;
@@ -187,7 +196,7 @@ public class CbLoanAccountControl extends BaseControl {
 
             rs.close();
         } catch (Exception e) {
-            
+
         }
 
         return bean;
@@ -239,7 +248,7 @@ public class CbLoanAccountControl extends BaseControl {
             }
             rs.close();
         } catch (Exception e) {
-            
+
             bean = null;
         }
 
@@ -298,7 +307,7 @@ public class CbLoanAccountControl extends BaseControl {
 
             rs.close();
         } catch (Exception e) {
-            
+
         }
 
         return isSave;
@@ -332,7 +341,7 @@ public class CbLoanAccountControl extends BaseControl {
             }
             isSave = true;
         } catch (Exception e) {
-            
+
             isSave = false;
         }
 
@@ -375,7 +384,7 @@ public class CbLoanAccountControl extends BaseControl {
                     + "where loan_docno='" + bean.getLoan_docno() + "'";
             update(sql);
         } catch (Exception e) {
-            
+
         }
     }
 
@@ -402,7 +411,7 @@ public class CbLoanAccountControl extends BaseControl {
             update(sql);
             isSaveReady = true;
         } catch (Exception e) {
-            
+
             isSaveReady = false;
         }
 
@@ -447,11 +456,11 @@ public class CbLoanAccountControl extends BaseControl {
                     + "where loan_docno='" + bean.getLoan_docno() + "'";
             update(sql);
         } catch (Exception e) {
-            
+
         }
     }
-    
-    public CbLoanAccountBean initBean(){
+
+    public CbLoanAccountBean initBean() {
         CbLoanAccountBean lb = new CbLoanAccountBean();
         lb.setLoan_datePay(DateFormat.getEnglish_ddMMyyyy("01/01/2015"));
         lb.setSysdate(new Date());
@@ -465,7 +474,7 @@ public class CbLoanAccountControl extends BaseControl {
         lb.setBook_no("001");
         lb.setLoan_start_date(new Date());
         lb.setLoan_end_date(new Date());
-        
+
         return lb;
     }
 
@@ -511,9 +520,105 @@ public class CbLoanAccountControl extends BaseControl {
             }
             rs.close();
         } catch (Exception e) {
-            
+
         }
 
         return bean;
+    }
+
+    public List<ProfileBean> searchIdAndName(String id, String name, String surname) {
+        List<ProfileBean> listBean = new ArrayList<>();
+        String sql = "select p.* from cb_loan_account l "
+                + "inner join cb_profile p on l.cust_code=p.p_custcode "
+                + "where 1=1 and (p_custcode like '%" + id + "%' "
+                + "or p_custname like '%" + name + "%' or p_custsurname like '%" + surname + "%') "
+                + "group by p_custcode "
+                + "order by p_custcode, p_custname, p_custsurname ";
+        try (ResultSet rs = MySQLConnect.getResultSet(sql)) {
+            while (rs.next()) {
+                ProfileBean bean = new ProfileBean();
+                bean.setP_index(rs.getInt("P_index"));
+                bean.setP_custCode(rs.getString("P_custCode"));
+                bean.setP_custType(rs.getString("P_custType"));
+                bean.setP_custName(ThaiUtil.ASCII2Unicode(rs.getString("P_custName")));
+                bean.setP_custSurname(ThaiUtil.ASCII2Unicode(rs.getString("P_custSurname")));
+
+                listBean.add(bean);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "SQLException: " + ex.getMessage());
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+
+        return listBean;
+    }
+
+    public List<CbLoanAccountBean> processSummary(String date, String code1, String code2) {
+        List<CbLoanAccountBean> listBean = new ArrayList<>();
+        try {
+            String sql = "select l.*, "
+                    + "concat(p_custname, concat(' ', p_custsurname)) custName "
+                    + "from cb_loan_account l "
+                    + "inner join cb_profile p on l.cust_code=p.p_custcode "
+                    + "where 1=1 ";
+            if (!date.isEmpty()) {
+                sql += "and l.Loan_docdate='" + date + "' ";
+            }
+            if (!code1.isEmpty() && !code2.isEmpty()) {
+                sql += "and l.cust_code between '" + code1 + "' and '" + code2 + "' ";
+            }
+            try (ResultSet rs = MySQLConnect.getResultSet(sql)) {
+                while (rs.next()) {
+                    ProfileBean profile = new ProfileBean();
+                    profile.setP_custName(ThaiUtil.ASCII2Unicode(rs.getString("p_custName")));
+                    profile.setP_custSurname(ThaiUtil.ASCII2Unicode(rs.getString("p_custSurname")));
+
+                    CbLoanAccountBean bean = new CbLoanAccountBean();
+                    bean.setProfile(profile);
+
+                    bean.setLoan_docno(rs.getString("Loan_docno"));
+                    bean.setCust_code(rs.getString("Cust_code"));
+                    bean.setLoan_docdate(rs.getDate("Loan_docdate"));
+                    bean.setBranch_code(rs.getString("branch_code"));
+                    bean.setLoan_amount(rs.getDouble("Loan_amount"));
+                    bean.setLoan_interest(rs.getDouble("Loan_interest"));
+                    bean.setLoan_datePay(rs.getDate("Loan_datePay"));
+                    bean.setLoan_fee(rs.getDouble("Loan_fee"));
+                    bean.setSysdate(rs.getTimestamp("Sysdate"));
+                    bean.setID(rs.getInt("ID"));
+                    bean.setPay_amount(rs.getDouble("Pay_amount"));
+                    bean.setPay_date(rs.getString("Pay_date"));
+                    bean.setPay_time(rs.getString("Pay_time"));
+                    bean.setPay_user(rs.getString("Pay_user"));
+                    bean.setPay_ton(rs.getDouble("Pay_ton"));
+                    bean.setLoan_person1(rs.getString("Loan_person1"));
+                    bean.setLoan_person2(rs.getString("Loan_person2"));
+                    bean.setPay_interest(rs.getDouble("Pay_interest"));
+                    bean.setBook_evidence1(rs.getString("Book_evidence1"));
+                    bean.setBook_evidence2(rs.getString("Book_evidence2"));
+                    bean.setBook_evidence3(rs.getString("Book_evidence3"));
+                    bean.setBook_evidence4(rs.getString("Book_evidence4"));
+                    bean.setBook_no(rs.getString("Book_No"));
+                    bean.setLoan_type(rs.getString("Loan_Type"));
+                    bean.setLoan_start_date(rs.getDate("loan_start_date"));
+                    bean.setLoan_end_date(rs.getDate("loan_end_date"));
+                    bean.setPayPerAmount(rs.getDouble("payPerAmount"));
+                    bean.setPeriod_pay(rs.getInt("period_pay"));
+                    bean.setChkPersonApprove(rs.getString("chkPersonApprove"));
+                    bean.setLoanCustomerPay(rs.getDouble("LoanCustomerPay"));
+                    bean.setLoanDayQty(rs.getInt("loanDayQty"));
+                    bean.setLoanPayMin(rs.getDouble("loanPayMin"));
+
+                    listBean.add(bean);
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "SQLException: " + ex.getMessage());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+        return listBean;
     }
 }

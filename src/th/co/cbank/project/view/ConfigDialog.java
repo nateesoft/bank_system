@@ -1625,16 +1625,16 @@ public class ConfigDialog extends BaseDialogSwing {
         // load data branch
         BranchBean bean = getBranchControl().getData();
         txtBranchCode.setText(bean.getCode());
-        txtBranchName.setText(ThaiUtil.ASCII2Unicode(bean.getName()));
-        txtBranchAt.setText(ThaiUtil.ASCII2Unicode(bean.getAddressNo()));
-        txtTambol.setText(ThaiUtil.ASCII2Unicode(bean.getLocality()));
-        txtAmphur.setText(ThaiUtil.ASCII2Unicode(bean.getSubProvince()));
-        txtProvince.setText(ThaiUtil.ASCII2Unicode(bean.getProvince()));
+        txtBranchName.setText(bean.getName());
+        txtBranchAt.setText(bean.getAddressNo());
+        txtTambol.setText(bean.getLocality());
+        txtAmphur.setText(bean.getSubProvince());
+        txtProvince.setText(bean.getProvince());
         txtPost.setText(bean.getPost());
         txtTel.setText(bean.getTel_No());
         txtEmail.setText(bean.getE_Mail());
         txtFax.setText(bean.getFax_No());
-        txtManager.setText(ThaiUtil.ASCII2Unicode(bean.getManager()));
+        txtManager.setText(bean.getManager());
 
         loadListGroup();
     }

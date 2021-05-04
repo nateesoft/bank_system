@@ -2893,26 +2893,6 @@ public class SavingDialog extends BaseDialogSwing {
         return 0;
     }
 
-    private void loadArGroupData(String custtypeCode) {
-        String sql = "select SP_Type,SP_TypeName,"
-                + "SP_CrAmount,SP_CreditDays,SP_Interest from custtype "
-                + "where SP_Type='" + custtypeCode + "'";
-        DecimalFormat dec = new DecimalFormat("#,##0.00");
-        try {
-            ResultSet rs = MySQLConnect.getResultSet(sql);
-            if (rs.next()) {
-//                lbArGroupName.setText(ThaiUtil.ASCII2Unicode(rs.getString("SP_TypeName")));
-//                txtCreditAmt.setText(dec.format(rs.getDouble("SP_CrAmount")));
-//                txtCreditDays.setText("" + rs.getInt("SP_CreditDays"));
-//                txtCreditInterest.setText("" + rs.getInt("SP_Interest"));
-            }
-
-            rs.close();
-        } catch (Exception e) {
-            Log.write.error(e.getMessage());
-        }
-    }
-
     private boolean saveData() {
         boolean feeCheck = false;
         //บันทึกข้อมูลลูกค้า

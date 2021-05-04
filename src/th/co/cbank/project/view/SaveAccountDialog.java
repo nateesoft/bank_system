@@ -201,7 +201,7 @@ public class SaveAccountDialog extends BaseDialogSwing {
                 (i+1),
                 saveAcc.getAccount_code(),
                 saveAcc.getB_CUST_CODE(),
-                ThaiUtil.ASCII2Unicode(saveAcc.getB_CUST_NAME()+" "+saveAcc.getB_CUST_LASTNAME()),
+                saveAcc.getB_CUST_NAME()+" "+saveAcc.getB_CUST_LASTNAME(),
                 NumberUtil.toNumberFormat(saveAcc.getB_BALANCE())
             });
         }
