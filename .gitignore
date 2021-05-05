@@ -9,3 +9,6 @@ lib
 /test
 *.zip
 process*
+*.xlsx
+*.xml
+*.zip
