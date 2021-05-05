@@ -9,8 +9,9 @@ import org.apache.log4j.Logger;
 import th.co.cbank.project.constants.AppConstants;
 
 public class TableUtil {
+
     private final Logger logger = Logger.getLogger(TableUtil.class);
-    
+
     public static void initTable(JTable table) {
         JTableHeader hTable = table.getTableHeader();
         hTable.setFont(new Font(AppConstants.DEFAULT_FONT, Font.PLAIN, AppConstants.DEFAULT_FONT_SIZE));
@@ -23,11 +24,14 @@ public class TableUtil {
         render.setHorizontalAlignment(swingConstants);
         table.getColumnModel().getColumn(colsAt).setCellRenderer(render);
     }
-    
-    public static void clearModel(DefaultTableModel model){
-        int size = model.getRowCount();
-        for (int i = 0; i < size; i++) {
-            model.removeRow(0);
+
+    public static void clearModel(DefaultTableModel model) {
+        if (model != null) {
+            int size = model.getRowCount();
+            for (int i = 0; i < size; i++) {
+                model.removeRow(0);
+            }
         }
+
     }
 }

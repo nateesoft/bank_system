@@ -127,6 +127,11 @@ public class ReportOverdueAccountInterest extends javax.swing.JDialog {
 
         btnExcelFile.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnExcelFile.setText("Excel file");
+        btnExcelFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcelFileActionPerformed(evt);
+            }
+        });
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "ณ.วันที่", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
 
@@ -177,6 +182,7 @@ public class ReportOverdueAccountInterest extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        tbReport.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         tbReport.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbReportMouseClicked(evt);
@@ -184,14 +190,16 @@ public class ReportOverdueAccountInterest extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tbReport);
         if (tbReport.getColumnModel().getColumnCount() > 0) {
-            tbReport.getColumnModel().getColumn(0).setPreferredWidth(80);
-            tbReport.getColumnModel().getColumn(1).setPreferredWidth(85);
-            tbReport.getColumnModel().getColumn(2).setPreferredWidth(160);
-            tbReport.getColumnModel().getColumn(3).setPreferredWidth(65);
-            tbReport.getColumnModel().getColumn(4).setPreferredWidth(65);
-            tbReport.getColumnModel().getColumn(5).setPreferredWidth(65);
-            tbReport.getColumnModel().getColumn(6).setPreferredWidth(70);
+            tbReport.getColumnModel().getColumn(0).setPreferredWidth(120);
+            tbReport.getColumnModel().getColumn(1).setPreferredWidth(120);
+            tbReport.getColumnModel().getColumn(2).setPreferredWidth(170);
+            tbReport.getColumnModel().getColumn(3).setPreferredWidth(100);
+            tbReport.getColumnModel().getColumn(4).setPreferredWidth(100);
+            tbReport.getColumnModel().getColumn(5).setPreferredWidth(100);
+            tbReport.getColumnModel().getColumn(6).setPreferredWidth(100);
             tbReport.getColumnModel().getColumn(7).setPreferredWidth(100);
+            tbReport.getColumnModel().getColumn(8).setPreferredWidth(100);
+            tbReport.getColumnModel().getColumn(9).setPreferredWidth(100);
         }
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
@@ -299,6 +307,10 @@ public class ReportOverdueAccountInterest extends javax.swing.JDialog {
             ClipboardUtil.paste();
         }
     }//GEN-LAST:event_txtCode2MouseClicked
+
+    private void btnExcelFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcelFileActionPerformed
+        JTableUtil.exportData("Report-Overdue-Account-Interest", tbReport, this);
+    }//GEN-LAST:event_btnExcelFileActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnArCode1;
