@@ -378,7 +378,7 @@ public class LoginDialog extends BaseDialogSwing {
 
                 // process total balance all account
                 SimpleDateFormat simp = new SimpleDateFormat("ddMMyyyy");
-                if (!new File("process" + simp.format(new Date()) + ".txt").exists()) {
+                if (!new File("process/process" + simp.format(new Date()) + ".txt").exists()) {
                     JOptionPane.showMessageDialog(null, "ระบบจะทำการประมวลผล ข้อมูลสมาชิกทั้งหมด กรุณารอสักครู่...\nข้อมูลจะถูกประมวลผล วันละ 1 ครั้งเท่านั้น");
                     btnLogin.setEnabled(false);
                     btnExit.setEnabled(false);
@@ -388,7 +388,7 @@ public class LoginDialog extends BaseDialogSwing {
                         // update summary balance again
                         CbSaveAccountControl.updateSummaryBalanceFromTransaction(bean.getB_CUST_CODE(), bean.getAccount_code());
                     }
-                    new File("process" + simp.format(new Date()) + ".txt").createNewFile();
+                    new File("process/process" + simp.format(new Date()) + ".txt").createNewFile();
                 }
 
                 dispose();

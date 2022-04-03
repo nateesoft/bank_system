@@ -38,6 +38,7 @@ import th.co.cbank.util.MoneyToWord;
 import th.co.cbank.util.NumberFormat;
 import th.co.cbank.util.ThaiUtil;
 import th.co.cbank.project.constants.AppConstants;
+import th.co.cbank.project.control.CbSaveAccountControl;
 import th.co.cbank.project.control.MySQLConnect;
 import th.co.cbank.project.model.ConfigBean;
 import th.co.cbank.project.control.PrintCOM;
@@ -678,7 +679,7 @@ public class MainDialog extends BaseSwing {
         jMenuItem37 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("ระบบบริหารธนาคารชุมชน V 1.0.7-2021.04.19.001");
+        setTitle("ระบบบริหารธนาคารชุมชน V 1.0.7-2021.10.15");
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -8360,6 +8361,10 @@ public class MainDialog extends BaseSwing {
     }
 
     private void depositMoney() throws Exception {
+        
+        // 02/10/2021
+        // update balane all transaction before action
+        CbSaveAccountControl.updateSummaryBalanceFromTransaction(txtProfileCode.getText(), txtAccCode.getText());
 
         //update balance account
         String dMoney = txtDepositBaht.getText();
@@ -8571,6 +8576,10 @@ public class MainDialog extends BaseSwing {
         if (withdrawalBahtAmt < 0) {
             txtWithdrawalBaht.requestFocus();
         }
+        
+        // 02/10/2021
+        // update balane all transaction before action
+        CbSaveAccountControl.updateSummaryBalanceFromTransaction(txtProfileCode.getText(), txtAccCode.getText());
 
         //update balance account
         String wMoney = txtWithdrawalBaht.getText();
@@ -9881,6 +9890,10 @@ public class MainDialog extends BaseSwing {
     }
 
     private void closeAccount() {
+        // 02/10/2021
+        // update balane all transaction before action
+        CbSaveAccountControl.updateSummaryBalanceFromTransaction(txtProfileCode.getText(), txtAccCode.getText());
+
         //update balance account
         String cMoney = txTotalMoneyClose.getText();
         try {

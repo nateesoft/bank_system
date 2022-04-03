@@ -376,9 +376,9 @@ public class ReportInvoiceHoon extends javax.swing.JDialog {
 
     private void printRow() {
         if (tableData.getSelectedRow() != -1) {
-            String idCard = "" + tableData.getValueAt(tableData.getSelectedRow(), 9);
+            String idCard = "" + tableData.getValueAt(tableData.getSelectedRow(), 10);
             String accountCode = "" + tableData.getValueAt(tableData.getSelectedRow(), 1);
-            String address = "" + tableData.getValueAt(tableData.getSelectedRow(), 10);
+            String address = "" + tableData.getValueAt(tableData.getSelectedRow(), 11);
             printPerson(idCard, accountCode, address);
         } else {
             JOptionPane.showMessageDialog(this, "กรุณาเลือกข้อมูลที่ต้องการพิมพ์");

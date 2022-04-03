@@ -372,7 +372,6 @@ public class ProfileControl extends BaseControl {
             }
             if (allow) {
                 update("delete from cb_profile where p_custCode='" + custCode + "'");
-                update("delete from cb_profile_address where cust_code='1100700536032'");
                 //JOptionPane.showMessageDialog(null, "ลบข้อมูลผู้ใช้งานท่านนี้เรียบร้อยแล้ว");
             } else {
                 JOptionPane.showMessageDialog(null, "รหัสผู้ใช้งานนี้ถูกนำไปใช้งานแล้วไม่สามารถลบข้อมูลได้ !");

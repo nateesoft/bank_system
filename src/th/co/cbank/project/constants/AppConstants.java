@@ -15,6 +15,7 @@ public class AppConstants {
     public static final String CB_STATUS_CLOSE_SAVE = "8";
     public static final String CB_STATUS_TRANS_HOON = "9";
     public static final String CB_STATUS_LOAN = "10";
+    public static final String CB_STATUS_ADD_INT = "11";
 
     /* save status */
     public static final String INT_FLAT_RATE = "F";
